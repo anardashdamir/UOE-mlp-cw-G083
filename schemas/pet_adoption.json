@@ -1,0 +1,83 @@
+{
+  "name": "pet_adoption",
+  "row_count": 47158,
+  "columns": {
+    "adoption_fee": {
+      "type": "float",
+      "min": 28.67,
+      "max": 430.7,
+      "median": 176.86
+    },
+    "species": {
+      "type": "categorical",
+      "values": [
+        "Bird",
+        "Cat",
+        "Dog",
+        "Fish",
+        "Guinea Pig",
+        "Hamster",
+        "Rabbit",
+        "Turtle"
+      ]
+    },
+    "age_months": {
+      "type": "int",
+      "min": 22,
+      "max": 215,
+      "median": 214
+    },
+    "weight_kg": {
+      "type": "float",
+      "min": 0.9,
+      "max": 68.93,
+      "median": 46.34
+    },
+    "vaccinated": {
+      "type": "bool"
+    },
+    "neutered": {
+      "type": "bool"
+    },
+    "breed": {
+      "type": "categorical",
+      "values": [
+        "Beagle",
+        "Bulldog",
+        "Corgi",
+        "Husky",
+        "Labrador",
+        "Maine Coon",
+        "Mixed",
+        "Persian",
+        "Poodle",
+        "Siamese"
+      ]
+    },
+    "gender": {
+      "type": "categorical",
+      "values": [
+        "Female",
+        "Male"
+      ]
+    },
+    "color": {
+      "type": "categorical",
+      "values": [
+        "Black",
+        "Brown",
+        "Golden",
+        "Gray",
+        "Orange",
+        "Spotted",
+        "White"
+      ]
+    },
+    "shelter_days": {
+      "type": "int",
+      "min": 16,
+      "max": 288,
+      "median": 55
+    }
+  }
+}

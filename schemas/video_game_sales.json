@@ -1,0 +1,95 @@
+{
+  "name": "video_game_sales",
+  "row_count": 16598,
+  "columns": {
+    "Platform": {
+      "type": "categorical",
+      "values": [
+        "2600",
+        "3DO",
+        "3DS",
+        "DC",
+        "DS",
+        "GB",
+        "GBA",
+        "GC",
+        "GEN",
+        "GG",
+        "N64",
+        "NES",
+        "NG",
+        "PC",
+        "PCFX",
+        "PS",
+        "PS2",
+        "PS3",
+        "PS4",
+        "PSP",
+        "PSV",
+        "SAT",
+        "SCD",
+        "SNES",
+        "TG16",
+        "WS",
+        "Wii",
+        "WiiU",
+        "X360",
+        "XB",
+        "XOne"
+      ]
+    },
+    "Year": {
+      "type": "int",
+      "min": 1980,
+      "max": 2020,
+      "median": 2007
+    },
+    "Genre": {
+      "type": "categorical",
+      "values": [
+        "Action",
+        "Adventure",
+        "Fighting",
+        "Misc",
+        "Platform",
+        "Puzzle",
+        "Racing",
+        "Role-Playing",
+        "Shooter",
+        "Simulation",
+        "Sports",
+        "Strategy"
+      ]
+    },
+    "NA_Sales": {
+      "type": "float",
+      "min": 0.0,
+      "max": 41.49,
+      "median": 0.08
+    },
+    "EU_Sales": {
+      "type": "float",
+      "min": 0.0,
+      "max": 29.02,
+      "median": 0.02
+    },
+    "JP_Sales": {
+      "type": "float",
+      "min": 0.0,
+      "max": 10.22,
+      "median": 0.0
+    },
+    "Other_Sales": {
+      "type": "float",
+      "min": 0.0,
+      "max": 10.57,
+      "median": 0.01
+    },
+    "Global_Sales": {
+      "type": "float",
+      "min": 0.01,
+      "max": 82.74,
+      "median": 0.17
+    }
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "name": "honey_varieties",
+  "row_count": 16770,
+  "columns": {
+    "price_per_jar": {
+      "type": "float",
+      "min": 12.43,
+      "max": 47.41,
+      "median": 20.42
+    },
+    "floral_source": {
+      "type": "categorical",
+      "values": [
+        "Acacia",
+        "Buckwheat",
+        "Clover",
+        "Lavender",
+        "Manuka",
+        "Orange Blossom",
+        "Wildflower"
+      ]
+    },
+    "weight_g": {
+      "type": "int",
+      "min": 165,
+      "max": 836,
+      "median": 576
+    },
+    "is_raw": {
+      "type": "bool"
+    },
+    "is_organic": {
+      "type": "bool"
+    },
+    "color": {
+      "type": "categorical",
+      "values": [
+        "Amber",
+        "Dark",
+        "Light"
+      ]
+    },
+    "moisture_percent": {
+      "type": "float",
+      "min": 14.41,
+      "max": 19.03,
+      "median": 15.12
+    },
+    "rating": {
+      "type": "float",
+      "min": 1.38,
+      "max": 4.12,
+      "median": 3.26
+    }
+  }
+}

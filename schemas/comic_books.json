@@ -1,0 +1,71 @@
+{
+  "name": "comic_books",
+  "row_count": 2916,
+  "columns": {
+    "price": {
+      "type": "float",
+      "min": 190.04,
+      "max": 3760.62,
+      "median": 1937.12
+    },
+    "year_published": {
+      "type": "int",
+      "min": 1946,
+      "max": 2008,
+      "median": 1947
+    },
+    "issue_number": {
+      "type": "int",
+      "min": 92,
+      "max": 824,
+      "median": 148
+    },
+    "publisher": {
+      "type": "categorical",
+      "values": [
+        "Boom!",
+        "DC",
+        "Image"
+      ]
+    },
+    "condition": {
+      "type": "categorical",
+      "values": [
+        "Fair",
+        "Fine",
+        "Good",
+        "Mint",
+        "Near Mint",
+        "Poor",
+        "Very Fine"
+      ]
+    },
+    "genre": {
+      "type": "categorical",
+      "values": [
+        "Comedy",
+        "Crime",
+        "Fantasy",
+        "Horror",
+        "Romance",
+        "Sci-Fi",
+        "Superhero"
+      ]
+    },
+    "is_first_edition": {
+      "type": "bool"
+    },
+    "is_signed": {
+      "type": "bool"
+    },
+    "is_graded": {
+      "type": "bool"
+    },
+    "page_count": {
+      "type": "int",
+      "min": 28,
+      "max": 100,
+      "median": 72
+    }
+  }
+}

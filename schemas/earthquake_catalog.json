@@ -1,0 +1,78 @@
+{
+  "name": "earthquake_catalog",
+  "row_count": 275,
+  "columns": {
+    "magnitude": {
+      "type": "float",
+      "min": 1.0,
+      "max": 9.0,
+      "median": 7.8
+    },
+    "depth_km": {
+      "type": "float",
+      "min": 61.99,
+      "max": 646.47,
+      "median": 110.58
+    },
+    "latitude": {
+      "type": "float",
+      "min": -76.17,
+      "max": 68.44,
+      "median": -3.88
+    },
+    "longitude": {
+      "type": "float",
+      "min": -125.48,
+      "max": 110.85,
+      "median": 25.85
+    },
+    "is_tsunami": {
+      "type": "bool"
+    },
+    "damage_level": {
+      "type": "categorical",
+      "values": [
+        "Major",
+        "Minor",
+        "Moderate",
+        "None"
+      ]
+    },
+    "num_aftershocks": {
+      "type": "int",
+      "min": 7,
+      "max": 424,
+      "median": 70
+    },
+    "plate_boundary_type": {
+      "type": "categorical",
+      "values": [
+        "Convergent",
+        "Divergent",
+        "Hotspot",
+        "Intraplate",
+        "Transform"
+      ]
+    },
+    "region": {
+      "type": "categorical",
+      "values": [
+        "Caribbean",
+        "East Africa Rift",
+        "Himalayan Belt",
+        "Mediterranean Belt",
+        "Mid-Atlantic Ridge",
+        "Pacific Ring"
+      ]
+    },
+    "duration_sec": {
+      "type": "float",
+      "min": 10.6,
+      "max": 276.06,
+      "median": 117.6
+    },
+    "recommended": {
+      "type": "bool"
+    }
+  }
+}

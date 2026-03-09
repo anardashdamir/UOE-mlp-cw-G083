@@ -1,0 +1,51 @@
+{
+  "name": "sushi_restaurant",
+  "row_count": 836,
+  "columns": {
+    "price": {
+      "type": "float",
+      "min": 9.9,
+      "max": 36.33,
+      "median": 10.36
+    },
+    "category": {
+      "type": "categorical",
+      "values": [
+        "Chirashi",
+        "Maki Roll",
+        "Tempura",
+        "Uramaki"
+      ]
+    },
+    "piece_count": {
+      "type": "int",
+      "min": 2,
+      "max": 10,
+      "median": 8
+    },
+    "calories": {
+      "type": "int",
+      "min": 118,
+      "max": 799,
+      "median": 752
+    },
+    "is_raw": {
+      "type": "bool"
+    },
+    "is_spicy": {
+      "type": "bool"
+    },
+    "contains_shellfish": {
+      "type": "bool"
+    },
+    "protein_g": {
+      "type": "float",
+      "min": 3.07,
+      "max": 31.8,
+      "median": 18.76
+    },
+    "is_chef_special": {
+      "type": "bool"
+    }
+  }
+}

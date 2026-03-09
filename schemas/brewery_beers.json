@@ -1,0 +1,63 @@
+{
+  "name": "brewery_beers",
+  "row_count": 236612,
+  "columns": {
+    "price": {
+      "type": "float",
+      "min": 6.56,
+      "max": 20.46,
+      "median": 9.13
+    },
+    "style": {
+      "type": "categorical",
+      "values": [
+        "Brown Ale",
+        "IPA",
+        "Lager",
+        "Pale Ale",
+        "Pilsner",
+        "Porter",
+        "Saison",
+        "Sour",
+        "Stout",
+        "Wheat"
+      ]
+    },
+    "abv": {
+      "type": "float",
+      "min": 2.09,
+      "max": 12.87,
+      "median": 5.14
+    },
+    "ibu": {
+      "type": "int",
+      "min": 31,
+      "max": 105,
+      "median": 90
+    },
+    "volume_ml": {
+      "type": "int",
+      "min": 344,
+      "max": 919,
+      "median": 770
+    },
+    "is_seasonal": {
+      "type": "bool"
+    },
+    "rating": {
+      "type": "float",
+      "min": 1.07,
+      "max": 4.74,
+      "median": 2.51
+    },
+    "calories": {
+      "type": "int",
+      "min": 149,
+      "max": 348,
+      "median": 240
+    },
+    "is_gluten_free": {
+      "type": "bool"
+    }
+  }
+}

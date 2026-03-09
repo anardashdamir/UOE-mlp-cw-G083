@@ -1,0 +1,68 @@
+{
+  "name": "credit_card_fraud",
+  "row_count": 3365,
+  "columns": {
+    "amount": {
+      "type": "float",
+      "min": 3427.7,
+      "max": 23985.73,
+      "median": 17291.19
+    },
+    "merchant_category": {
+      "type": "categorical",
+      "values": [
+        "Electronics",
+        "Entertainment",
+        "Gas Station",
+        "Grocery",
+        "Healthcare",
+        "Online Shopping",
+        "Restaurant",
+        "Travel"
+      ]
+    },
+    "is_fraud": {
+      "type": "bool"
+    },
+    "distance_from_home_km": {
+      "type": "float",
+      "min": 811.47,
+      "max": 4756.09,
+      "median": 998.48
+    },
+    "time_since_last_transaction_min": {
+      "type": "float",
+      "min": 673.37,
+      "max": 9202.2,
+      "median": 8989.49
+    },
+    "transaction_hour": {
+      "type": "int",
+      "min": 2,
+      "max": 21,
+      "median": 7
+    },
+    "is_online": {
+      "type": "bool"
+    },
+    "device_type": {
+      "type": "categorical",
+      "values": [
+        "ATM",
+        "Contactless",
+        "Desktop",
+        "Mobile",
+        "POS Terminal"
+      ]
+    },
+    "repeat_merchant": {
+      "type": "bool"
+    },
+    "year_established": {
+      "type": "int",
+      "min": 1962,
+      "max": 2014,
+      "median": 1994
+    }
+  }
+}

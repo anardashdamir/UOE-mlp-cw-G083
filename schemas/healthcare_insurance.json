@@ -1,0 +1,53 @@
+{
+  "name": "healthcare_insurance",
+  "row_count": 1338,
+  "columns": {
+    "age": {
+      "type": "int",
+      "min": 18,
+      "max": 64,
+      "median": 39.0
+    },
+    "sex": {
+      "type": "categorical",
+      "values": [
+        "female",
+        "male"
+      ]
+    },
+    "bmi": {
+      "type": "float",
+      "min": 15.96,
+      "max": 53.13,
+      "median": 30.4
+    },
+    "children": {
+      "type": "int",
+      "min": 0,
+      "max": 5,
+      "median": 1.0
+    },
+    "smoker": {
+      "type": "categorical",
+      "values": [
+        "no",
+        "yes"
+      ]
+    },
+    "region": {
+      "type": "categorical",
+      "values": [
+        "northeast",
+        "northwest",
+        "southeast",
+        "southwest"
+      ]
+    },
+    "charges": {
+      "type": "float",
+      "min": 1121.87,
+      "max": 63770.43,
+      "median": 9382.03
+    }
+  }
+}

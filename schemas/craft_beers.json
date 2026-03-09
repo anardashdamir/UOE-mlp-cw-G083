@@ -1,0 +1,80 @@
+{
+  "name": "craft_beers",
+  "row_count": 18121,
+  "columns": {
+    "abv_percent": {
+      "type": "float",
+      "min": 3.24,
+      "max": 13.72,
+      "median": 3.35
+    },
+    "ibu": {
+      "type": "int",
+      "min": 8,
+      "max": 99,
+      "median": 34
+    },
+    "price_per_pint": {
+      "type": "float",
+      "min": 4.78,
+      "max": 14.15,
+      "median": 8.58
+    },
+    "style": {
+      "type": "categorical",
+      "values": [
+        "Amber",
+        "IPA",
+        "Lager",
+        "Pale Ale",
+        "Pilsner",
+        "Porter",
+        "Saison",
+        "Sour",
+        "Stout",
+        "Wheat"
+      ]
+    },
+    "rating": {
+      "type": "float",
+      "min": 1.59,
+      "max": 4.34,
+      "median": 2.75
+    },
+    "brewery_size": {
+      "type": "categorical",
+      "values": [
+        "Large",
+        "Micro",
+        "Nano",
+        "Regional"
+      ]
+    },
+    "is_seasonal": {
+      "type": "bool"
+    },
+    "is_organic": {
+      "type": "bool"
+    },
+    "color_srm": {
+      "type": "int",
+      "min": 10,
+      "max": 38,
+      "median": 37
+    },
+    "calories_per_serving": {
+      "type": "int",
+      "min": 142,
+      "max": 358,
+      "median": 159
+    },
+    "city": {
+      "type": "categorical",
+      "values": [
+        "Berlin",
+        "London",
+        "New York"
+      ]
+    }
+  }
+}

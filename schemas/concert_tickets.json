@@ -1,0 +1,61 @@
+{
+  "name": "concert_tickets",
+  "row_count": 166,
+  "columns": {
+    "price": {
+      "type": "float",
+      "min": 177.18,
+      "max": 989.4,
+      "median": 497.74
+    },
+    "genre": {
+      "type": "categorical",
+      "values": [
+        "Classical",
+        "Country",
+        "Electronic",
+        "Hip-Hop",
+        "Indie",
+        "Jazz",
+        "Metal",
+        "Pop",
+        "R&B",
+        "Rock"
+      ]
+    },
+    "venue_capacity": {
+      "type": "int",
+      "min": 1389,
+      "max": 62116,
+      "median": 22190
+    },
+    "section": {
+      "type": "categorical",
+      "values": [
+        "Balcony",
+        "Floor",
+        "GA",
+        "Upper Bowl",
+        "VIP"
+      ]
+    },
+    "is_sold_out": {
+      "type": "bool"
+    },
+    "is_resale": {
+      "type": "bool"
+    },
+    "days_until_event": {
+      "type": "int",
+      "min": 44,
+      "max": 338,
+      "median": 59
+    },
+    "rating": {
+      "type": "float",
+      "min": 1.52,
+      "max": 4.21,
+      "median": 2.01
+    }
+  }
+}

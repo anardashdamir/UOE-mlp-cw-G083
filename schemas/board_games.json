@@ -1,0 +1,79 @@
+{
+  "name": "board_games",
+  "row_count": 20320,
+  "columns": {
+    "Year Published": {
+      "type": "int",
+      "min": -3500,
+      "max": 2022,
+      "median": 2011
+    },
+    "Min Players": {
+      "type": "int",
+      "min": 0,
+      "max": 10,
+      "median": 2
+    },
+    "Max Players": {
+      "type": "int",
+      "min": 0,
+      "max": 999,
+      "median": 4
+    },
+    "Play Time": {
+      "type": "int",
+      "min": 0,
+      "max": 60000,
+      "median": 45
+    },
+    "Min Age": {
+      "type": "int",
+      "min": 0,
+      "max": 25,
+      "median": 10
+    },
+    "Users Rated": {
+      "type": "int",
+      "min": 30,
+      "max": 102214,
+      "median": 120
+    },
+    "Rating Average": {
+      "type": "float",
+      "min": 1.05,
+      "max": 9.58,
+      "median": 6.43
+    },
+    "BGG Rank": {
+      "type": "int",
+      "min": 1,
+      "max": 20344,
+      "median": 10168
+    },
+    "Complexity Average": {
+      "type": "float",
+      "min": 0.0,
+      "max": 5.0,
+      "median": 1.97
+    },
+    "Owned Users": {
+      "type": "int",
+      "min": 0,
+      "max": 155312,
+      "median": 309
+    },
+    "Domains": {
+      "type": "array",
+      "values": [
+        "Abstract Games",
+        "Children's Games",
+        "Customizable Games",
+        "Family Games",
+        "Party Games",
+        "Strategy Games",
+        "Thematic Games",
+        "Wargames"
+      ]
+    }
+  }
+}

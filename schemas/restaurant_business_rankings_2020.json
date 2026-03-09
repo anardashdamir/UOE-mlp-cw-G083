@@ -1,0 +1,77 @@
+{
+  "name": "restaurant_business_rankings_2020",
+  "row_count": 250,
+  "columns": {
+    "Rank": {
+      "type": "int",
+      "min": 1,
+      "max": 250,
+      "median": 125.5
+    },
+    "Sales": {
+      "type": "int",
+      "min": 126,
+      "max": 40412,
+      "median": 330.0
+    },
+    "Units": {
+      "type": "int",
+      "min": 13,
+      "max": 23801,
+      "median": 207.0
+    },
+    "Segment_Category": {
+      "type": "categorical",
+      "values": [
+        "Asian",
+        "Asian/Noodle",
+        "BBQ",
+        "Bakery Cafe",
+        "Burger",
+        "Casual Dining & Asian",
+        "Casual Dining & Italian/Pizza",
+        "Casual Dining & Seafood",
+        "Casual Dining & Sports Bar",
+        "Casual Dining & Steak",
+        "Casual Dining & Varied Menu",
+        "Chicken",
+        "Coffee Cafe",
+        "Ethnic",
+        "Family Casual",
+        "Family Dining & Family Style",
+        "Family Style",
+        "Fast Casual & Asian/Noodle",
+        "Fast Casual & Bakery Cafe",
+        "Fast Casual & Burger",
+        "Fast Casual & Chicken",
+        "Fast Casual & Mexican",
+        "Fast Casual & Pizza",
+        "Fast Casual & Sandwich",
+        "Fine Dining & Steak",
+        "Frozen Desserts",
+        "Healthy",
+        "Italian/Pizza",
+        "Mexican",
+        "Pizza",
+        "Quick Service & Bakery Cafe",
+        "Quick Service & Beverage",
+        "Quick Service & Burger",
+        "Quick Service & Chicken",
+        "Quick Service & Coffee Cafe",
+        "Quick Service & Family Casual",
+        "Quick Service & Frozen Desserts",
+        "Quick Service & Mexican",
+        "Quick Service & Pizza",
+        "Quick Service & Sandwich",
+        "Quick Service & Seafood",
+        "Quick Service & Snack",
+        "Sandwich",
+        "Seafood",
+        "Snack",
+        "Sports Bar",
+        "Steak",
+        "Varied Menu"
+      ]
+    }
+  }
+}

@@ -1,0 +1,64 @@
+{
+  "name": "wedding_venues",
+  "row_count": 18580,
+  "columns": {
+    "rental_price": {
+      "type": "float",
+      "min": 2052.36,
+      "max": 48551.52,
+      "median": 14829.53
+    },
+    "capacity": {
+      "type": "int",
+      "min": 36,
+      "max": 987,
+      "median": 912
+    },
+    "venue_type": {
+      "type": "categorical",
+      "values": [
+        "Barn",
+        "Beach",
+        "Castle",
+        "Church",
+        "Garden",
+        "Hotel",
+        "Restaurant",
+        "Rooftop",
+        "Vineyard"
+      ]
+    },
+    "indoor_outdoor": {
+      "type": "categorical",
+      "values": [
+        "Both",
+        "Indoor",
+        "Outdoor"
+      ]
+    },
+    "has_catering": {
+      "type": "bool"
+    },
+    "has_accommodation": {
+      "type": "bool"
+    },
+    "parking_spaces": {
+      "type": "int",
+      "min": 94,
+      "max": 404,
+      "median": 340
+    },
+    "rating": {
+      "type": "float",
+      "min": 1.99,
+      "max": 4.92,
+      "median": 4.08
+    },
+    "distance_from_city_km": {
+      "type": "float",
+      "min": 15.93,
+      "max": 98.95,
+      "median": 89.46
+    }
+  }
+}

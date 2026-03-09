@@ -1,0 +1,65 @@
+{
+  "name": "reddit_toxicity",
+  "row_count": 17937,
+  "columns": {
+    "toxicity_score": {
+      "type": "float",
+      "min": 0.25,
+      "max": 0.95,
+      "median": 0.72
+    },
+    "upvotes": {
+      "type": "int",
+      "min": 15119,
+      "max": 91439,
+      "median": 21453
+    },
+    "downvotes": {
+      "type": "int",
+      "min": 6918,
+      "max": 46577,
+      "median": 15837
+    },
+    "comment_length": {
+      "type": "int",
+      "min": 483,
+      "max": 9468,
+      "median": 1684
+    },
+    "is_removed": {
+      "type": "bool"
+    },
+    "subreddit_type": {
+      "type": "categorical",
+      "values": [
+        "AskReddit",
+        "Finance",
+        "Gaming",
+        "Memes",
+        "News",
+        "Politics",
+        "Science",
+        "Sports",
+        "Technology"
+      ]
+    },
+    "account_age_days": {
+      "type": "int",
+      "min": 1622,
+      "max": 5463,
+      "median": 3006
+    },
+    "has_links": {
+      "type": "bool"
+    },
+    "is_top_level": {
+      "type": "bool"
+    },
+    "sentiment_score": {
+      "type": "float",
+      "min": -0.73,
+      "max": 0.98,
+      "median": -0.01
+    }
+  }
+}

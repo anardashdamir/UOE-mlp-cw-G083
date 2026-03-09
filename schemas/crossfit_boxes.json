@@ -1,0 +1,63 @@
+{
+  "name": "crossfit_boxes",
+  "row_count": 2460,
+  "columns": {
+    "monthly_fee": {
+      "type": "float",
+      "min": 107.89,
+      "max": 210.27,
+      "median": 182.56
+    },
+    "class_duration_min": {
+      "type": "int",
+      "min": 45,
+      "max": 75,
+      "median": 68
+    },
+    "max_class_size": {
+      "type": "int",
+      "min": 10,
+      "max": 25,
+      "median": 16
+    },
+    "coach_count": {
+      "type": "int",
+      "min": 4,
+      "max": 8,
+      "median": 4
+    },
+    "equipment_quality": {
+      "type": "categorical",
+      "values": [
+        "Basic",
+        "Competition",
+        "Good",
+        "Premium"
+      ]
+    },
+    "has_olympic_platform": {
+      "type": "bool"
+    },
+    "has_rope_climb": {
+      "type": "bool"
+    },
+    "has_open_gym": {
+      "type": "bool"
+    },
+    "area_sqm": {
+      "type": "int",
+      "min": 106,
+      "max": 838,
+      "median": 650
+    },
+    "rating": {
+      "type": "float",
+      "min": 1.64,
+      "max": 4.16,
+      "median": 3.03
+    },
+    "competition_team": {
+      "type": "bool"
+    }
+  }
+}

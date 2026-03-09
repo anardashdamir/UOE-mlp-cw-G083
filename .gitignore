@@ -1,0 +1,27 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Virtual environments
+.venv/
+
+# Training outputs
+output/
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+
+# Wandb
+wandb/
+
+# Model cache
+*.safetensors
+*.bin

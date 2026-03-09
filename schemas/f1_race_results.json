@@ -1,0 +1,161 @@
+{
+  "name": "f1_race_results",
+  "row_count": 25000,
+  "columns": {
+    "points": {
+      "type": "float",
+      "min": 0.0,
+      "max": 50.0,
+      "median": 0.0
+    },
+    "grid_position": {
+      "type": "int",
+      "min": 0,
+      "max": 34,
+      "median": 11
+    },
+    "finish_position": {
+      "type": "int",
+      "min": 1,
+      "max": 39,
+      "median": 12
+    },
+    "laps_completed": {
+      "type": "int",
+      "min": 0,
+      "max": 200,
+      "median": 53
+    },
+    "fastest_lap_rank": {
+      "type": "int",
+      "min": 0,
+      "max": 24,
+      "median": 0
+    },
+    "season_round": {
+      "type": "int",
+      "min": 1,
+      "max": 24,
+      "median": 8
+    },
+    "race_date": {
+      "type": "date",
+      "min": "1950-05-13",
+      "max": "2024-12-08"
+    },
+    "result_status": {
+      "type": "categorical",
+      "values": [
+        "Accident",
+        "Clutch",
+        "Collision",
+        "Disqualified",
+        "Engine",
+        "Finished",
+        "Gearbox",
+        "Hydraulics",
+        "Mechanical",
+        "Retired",
+        "Suspension",
+        "Transmission"
+      ]
+    },
+    "constructor": {
+      "type": "str"
+    },
+    "driver_nationality": {
+      "type": "categorical",
+      "values": [
+        "American",
+        "American-Italian",
+        "Argentine",
+        "Argentine-Italian",
+        "Argentinian ",
+        "Australian",
+        "Austrian",
+        "Belgian",
+        "Brazilian",
+        "British",
+        "Canadian",
+        "Chilean",
+        "Chinese",
+        "Colombian",
+        "Czech",
+        "Danish",
+        "Dutch",
+        "East German",
+        "Finnish",
+        "French",
+        "German",
+        "Hungarian",
+        "Indian",
+        "Indonesian",
+        "Irish",
+        "Italian",
+        "Japanese",
+        "Liechtensteiner",
+        "Malaysian",
+        "Mexican",
+        "Monegasque",
+        "New Zealander",
+        "Polish",
+        "Portuguese",
+        "Rhodesian",
+        "Russian",
+        "South African",
+        "Spanish",
+        "Swedish",
+        "Swiss",
+        "Thai",
+        "Uruguayan",
+        "Venezuelan"
+      ]
+    },
+    "circuit_country": {
+      "type": "categorical",
+      "values": [
+        "Argentina",
+        "Australia",
+        "Austria",
+        "Azerbaijan",
+        "Bahrain",
+        "Belgium",
+        "Brazil",
+        "Canada",
+        "China",
+        "France",
+        "Germany",
+        "Hungary",
+        "India",
+        "Italy",
+        "Japan",
+        "Korea",
+        "Malaysia",
+        "Mexico",
+        "Monaco",
+        "Morocco",
+        "Netherlands",
+        "Portugal",
+        "Qatar",
+        "Russia",
+        "Saudi Arabia",
+        "Singapore",
+        "South Africa",
+        "Spain",
+        "Sweden",
+        "Switzerland",
+        "Turkey",
+        "UAE",
+        "UK",
+        "USA"
+      ]
+    },
+    "circuit_type": {
+      "type": "categorical",
+      "values": [
+        "race",
+        "street"
+      ]
+    }
+  }
+}

@@ -1,0 +1,68 @@
+{
+  "name": "fishing_spots",
+  "row_count": 114771,
+  "columns": {
+    "depth_meters": {
+      "type": "float",
+      "min": 41.55,
+      "max": 158.3,
+      "median": 54.89
+    },
+    "distance_from_shore_km": {
+      "type": "float",
+      "min": 6.73,
+      "max": 49.46,
+      "median": 18.68
+    },
+    "fish_type": {
+      "type": "categorical",
+      "values": [
+        "Bass",
+        "Carp",
+        "Catfish",
+        "Pike",
+        "Salmon",
+        "Trout",
+        "Walleye"
+      ]
+    },
+    "water_type": {
+      "type": "categorical",
+      "values": [
+        "Brackish",
+        "Freshwater",
+        "Saltwater"
+      ]
+    },
+    "best_season": {
+      "type": "categorical",
+      "values": [
+        "Fall",
+        "Spring",
+        "Summer",
+        "Winter"
+      ]
+    },
+    "requires_license": {
+      "type": "bool"
+    },
+    "boat_required": {
+      "type": "bool"
+    },
+    "catch_rate": {
+      "type": "float",
+      "min": 1.47,
+      "max": 9.5,
+      "median": 7.36
+    },
+    "elevation_m": {
+      "type": "int",
+      "min": 394,
+      "max": 3502,
+      "median": 1009
+    },
+    "has_amenities": {
+      "type": "bool"
+    }
+  }
+}

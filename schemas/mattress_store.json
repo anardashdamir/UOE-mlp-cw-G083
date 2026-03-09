@@ -1,0 +1,74 @@
+{
+  "name": "mattress_store",
+  "row_count": 345098,
+  "columns": {
+    "price": {
+      "type": "float",
+      "min": 568.37,
+      "max": 2634.92,
+      "median": 2245.97
+    },
+    "mattress_type": {
+      "type": "categorical",
+      "values": [
+        "Gel",
+        "Hybrid",
+        "Innerspring",
+        "Pillow Top"
+      ]
+    },
+    "firmness": {
+      "type": "categorical",
+      "values": [
+        "Firm",
+        "Medium",
+        "Medium-Firm",
+        "Medium-Soft",
+        "Soft"
+      ]
+    },
+    "thickness_cm": {
+      "type": "int",
+      "min": 18,
+      "max": 38,
+      "median": 38
+    },
+    "size": {
+      "type": "categorical",
+      "values": [
+        "California King",
+        "Full",
+        "King",
+        "Queen",
+        "Twin"
+      ]
+    },
+    "trial_nights": {
+      "type": "int",
+      "min": 94,
+      "max": 298,
+      "median": 268
+    },
+    "warranty_years": {
+      "type": "int",
+      "min": 5,
+      "max": 25,
+      "median": 13
+    },
+    "has_cooling": {
+      "type": "bool"
+    },
+    "rating": {
+      "type": "float",
+      "min": 1.5,
+      "max": 4.75,
+      "median": 2.01
+    },
+    "num_reviews": {
+      "type": "int",
+      "min": 1240,
+      "max": 9272,
+      "median": 1804
+    }
+  }
+}

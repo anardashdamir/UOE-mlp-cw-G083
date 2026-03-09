@@ -1,0 +1,74 @@
+{
+  "name": "drone_products",
+  "row_count": 1527,
+  "columns": {
+    "price": {
+      "type": "float",
+      "min": 276.83,
+      "max": 4376.89,
+      "median": 4327.85
+    },
+    "flight_time_minutes": {
+      "type": "int",
+      "min": 6,
+      "max": 40,
+      "median": 13
+    },
+    "range_km": {
+      "type": "float",
+      "min": 1.4,
+      "max": 13.2,
+      "median": 1.98
+    },
+    "camera_resolution_mp": {
+      "type": "int",
+      "min": 4,
+      "max": 47,
+      "median": 43
+    },
+    "weight_g": {
+      "type": "int",
+      "min": 182,
+      "max": 1833,
+      "median": 1819
+    },
+    "max_speed_kmh": {
+      "type": "int",
+      "min": 32,
+      "max": 92,
+      "median": 82
+    },
+    "has_gps": {
+      "type": "bool"
+    },
+    "foldable": {
+      "type": "bool"
+    },
+    "obstacle_avoidance": {
+      "type": "bool"
+    },
+    "skill_level": {
+      "type": "categorical",
+      "values": [
+        "Beginner",
+        "Intermediate",
+        "Professional"
+      ]
+    },
+    "city": {
+      "type": "categorical",
+      "values": [
+        "Berlin",
+        "Dubai",
+        "London",
+        "Mumbai",
+        "New York",
+        "Paris",
+        "Singapore",
+        "Sydney",
+        "Tokyo",
+        "Toronto"
+      ]
+    }
+  }
+}

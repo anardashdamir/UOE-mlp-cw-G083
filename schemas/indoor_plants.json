@@ -1,0 +1,68 @@
+{
+  "name": "indoor_plants",
+  "row_count": 2037,
+  "columns": {
+    "price": {
+      "type": "float",
+      "min": 16.3,
+      "max": 130.85,
+      "median": 115.32
+    },
+    "height_cm": {
+      "type": "int",
+      "min": 16,
+      "max": 193,
+      "median": 163
+    },
+    "light_requirement": {
+      "type": "categorical",
+      "values": [
+        "Bright Indirect",
+        "Direct Sun",
+        "Low",
+        "Medium"
+      ]
+    },
+    "water_frequency": {
+      "type": "categorical",
+      "values": [
+        "Biweekly",
+        "Daily",
+        "Monthly",
+        "Twice Weekly",
+        "Weekly"
+      ]
+    },
+    "difficulty": {
+      "type": "categorical",
+      "values": [
+        "Easy",
+        "Hard",
+        "Moderate"
+      ]
+    },
+    "is_pet_safe": {
+      "type": "bool"
+    },
+    "is_air_purifying": {
+      "type": "bool"
+    },
+    "is_flowering": {
+      "type": "bool"
+    },
+    "growth_rate": {
+      "type": "categorical",
+      "values": [
+        "Fast",
+        "Medium",
+        "Slow"
+      ]
+    },
+    "pot_size_cm": {
+      "type": "int",
+      "min": 13,
+      "max": 39,
+      "median": 23
+    }
+  }
+}

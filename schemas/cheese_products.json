@@ -1,0 +1,74 @@
+{
+  "name": "cheese_products",
+  "row_count": 396689,
+  "columns": {
+    "price_per_kg": {
+      "type": "float",
+      "min": 21.1,
+      "max": 70.16,
+      "median": 37.98
+    },
+    "aging_months": {
+      "type": "int",
+      "min": 4,
+      "max": 59,
+      "median": 12
+    },
+    "fat_percent": {
+      "type": "float",
+      "min": 8.46,
+      "max": 58.15,
+      "median": 21.53
+    },
+    "origin_country": {
+      "type": "categorical",
+      "values": [
+        "France",
+        "Greece",
+        "Netherlands",
+        "Spain",
+        "USA"
+      ]
+    },
+    "milk_type": {
+      "type": "categorical",
+      "values": [
+        "Buffalo",
+        "Cow",
+        "Goat",
+        "Sheep"
+      ]
+    },
+    "texture": {
+      "type": "categorical",
+      "values": [
+        "Blue",
+        "Hard",
+        "Semi-Hard",
+        "Semi-Soft",
+        "Soft"
+      ]
+    },
+    "is_pasteurized": {
+      "type": "bool"
+    },
+    "is_organic": {
+      "type": "bool"
+    },
+    "flavor_intensity": {
+      "type": "categorical",
+      "values": [
+        "Medium",
+        "Mild",
+        "Strong",
+        "Very Strong"
+      ]
+    },
+    "calories_per_100g": {
+      "type": "int",
+      "min": 186,
+      "max": 448,
+      "median": 366
+    }
+  }
+}

@@ -1,0 +1,61 @@
+{
+  "name": "pottery_classes",
+  "row_count": 136,
+  "columns": {
+    "price_per_session": {
+      "type": "float",
+      "min": 34.95,
+      "max": 118.34,
+      "median": 82.99
+    },
+    "duration_hours": {
+      "type": "float",
+      "min": 1.19,
+      "max": 3.27,
+      "median": 2.27
+    },
+    "skill_level": {
+      "type": "categorical",
+      "values": [
+        "Advanced",
+        "Beginner",
+        "Intermediate"
+      ]
+    },
+    "technique": {
+      "type": "categorical",
+      "values": [
+        "Glazing",
+        "Hand Building",
+        "Wheel Throwing"
+      ]
+    },
+    "class_size": {
+      "type": "int",
+      "min": 4,
+      "max": 12,
+      "median": 6
+    },
+    "includes_materials": {
+      "type": "bool"
+    },
+    "includes_firing": {
+      "type": "bool"
+    },
+    "rating": {
+      "type": "float",
+      "min": 1.12,
+      "max": 4.7,
+      "median": 1.67
+    },
+    "instructor_experience_years": {
+      "type": "int",
+      "min": 7,
+      "max": 25,
+      "median": 24
+    },
+    "has_kiln_access": {
+      "type": "bool"
+    }
+  }
+}

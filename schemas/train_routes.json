@@ -1,0 +1,60 @@
+{
+  "name": "train_routes",
+  "row_count": 422,
+  "columns": {
+    "ticket_price": {
+      "type": "float",
+      "min": 74.7,
+      "max": 474.0,
+      "median": 382.86
+    },
+    "distance_km": {
+      "type": "int",
+      "min": 19,
+      "max": 1573,
+      "median": 1353
+    },
+    "duration_hours": {
+      "type": "float",
+      "min": 5.24,
+      "max": 21.58,
+      "median": 20.19
+    },
+    "train_type": {
+      "type": "categorical",
+      "values": [
+        "Commuter",
+        "High-Speed",
+        "Regional",
+        "Scenic",
+        "Sleeper"
+      ]
+    },
+    "class": {
+      "type": "categorical",
+      "values": [
+        "Business",
+        "Economy",
+        "First Class"
+      ]
+    },
+    "stops_count": {
+      "type": "int",
+      "min": 8,
+      "max": 28,
+      "median": 14
+    },
+    "has_wifi": {
+      "type": "bool"
+    },
+    "has_dining_car": {
+      "type": "bool"
+    },
+    "on_time_percent": {
+      "type": "float",
+      "min": 51.78,
+      "max": 92.13,
+      "median": 74.42
+    }
+  }
+}

@@ -1,0 +1,74 @@
+{
+  "name": "uber_rides",
+  "row_count": 24245,
+  "columns": {
+    "trip_distance_km": {
+      "type": "float",
+      "min": 8.25,
+      "max": 86.01,
+      "median": 42.25
+    },
+    "fare_usd": {
+      "type": "float",
+      "min": 5.33,
+      "max": 198.0,
+      "median": 64.55
+    },
+    "surge_multiplier": {
+      "type": "float",
+      "min": 1.32,
+      "max": 4.39,
+      "median": 4.18
+    },
+    "wait_time_min": {
+      "type": "float",
+      "min": 0.88,
+      "max": 24.86,
+      "median": 20.78
+    },
+    "ride_duration_min": {
+      "type": "float",
+      "min": 29.42,
+      "max": 152.1,
+      "median": 139.22
+    },
+    "vehicle_type": {
+      "type": "categorical",
+      "values": [
+        "UberBlack",
+        "UberComfort",
+        "UberGreen",
+        "UberPool",
+        "UberX",
+        "UberXL"
+      ]
+    },
+    "is_shared": {
+      "type": "bool"
+    },
+    "tip_amount": {
+      "type": "float",
+      "min": 9.25,
+      "max": 45.22,
+      "median": 24.72
+    },
+    "passenger_count": {
+      "type": "int",
+      "min": 1,
+      "max": 5,
+      "median": 5
+    },
+    "rating": {
+      "type": "float",
+      "min": 1.76,
+      "max": 4.47,
+      "median": 4.16
+    },
+    "popularity_score": {
+      "type": "float",
+      "min": 4.14,
+      "max": 78.65,
+      "median": 49.33
+    }
+  }
+}

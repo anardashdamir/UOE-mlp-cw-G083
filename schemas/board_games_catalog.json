@@ -1,0 +1,71 @@
+{
+  "name": "board_games_catalog",
+  "row_count": 14936,
+  "columns": {
+    "price": {
+      "type": "float",
+      "min": 21.91,
+      "max": 98.21,
+      "median": 50.18
+    },
+    "min_players": {
+      "type": "int",
+      "min": 1,
+      "max": 4,
+      "median": 4
+    },
+    "max_players": {
+      "type": "int",
+      "min": 2,
+      "max": 12,
+      "median": 10
+    },
+    "play_time_minutes": {
+      "type": "int",
+      "min": 54,
+      "max": 288,
+      "median": 179
+    },
+    "age_min": {
+      "type": "int",
+      "min": 4,
+      "max": 14,
+      "median": 5
+    },
+    "complexity_rating": {
+      "type": "float",
+      "min": 1.82,
+      "max": 4.19,
+      "median": 3.52
+    },
+    "category": {
+      "type": "categorical",
+      "values": [
+        "Card",
+        "Cooperative",
+        "Deduction",
+        "Dice",
+        "Family",
+        "Party",
+        "Strategy",
+        "Trivia",
+        "Worker Placement"
+      ]
+    },
+    "rating": {
+      "type": "float",
+      "min": 2.94,
+      "max": 8.28,
+      "median": 4.33
+    },
+    "year_published": {
+      "type": "int",
+      "min": 1998,
+      "max": 2021,
+      "median": 2013
+    },
+    "is_expansion": {
+      "type": "bool"
+    }
+  }
+}

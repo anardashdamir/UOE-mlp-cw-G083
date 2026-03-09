@@ -1,0 +1,97 @@
+{
+  "name": "netflix_shows",
+  "row_count": 8807,
+  "columns": {
+    "type": {
+      "type": "categorical",
+      "values": [
+        "Movie",
+        "TV Show"
+      ]
+    },
+    "release_year": {
+      "type": "int",
+      "min": 1925,
+      "max": 2021,
+      "median": 2017.0
+    },
+    "rating": {
+      "type": "categorical",
+      "values": [
+        "G",
+        "NC-17",
+        "NR",
+        "PG",
+        "PG-13",
+        "R",
+        "TV-14",
+        "TV-G",
+        "TV-MA",
+        "TV-PG",
+        "TV-Y",
+        "TV-Y7",
+        "TV-Y7-FV",
+        "UR"
+      ]
+    },
+    "listed_in": {
+      "type": "array",
+      "values": [
+        "Action & Adventure",
+        "Anime Features",
+        "Anime Series",
+        "British TV Shows",
+        "Children & Family Movies",
+        "Classic & Cult TV",
+        "Classic Movies",
+        "Comedies",
+        "Crime TV Shows",
+        "Cult Movies",
+        "Documentaries",
+        "Docuseries",
+        "Dramas",
+        "Faith & Spirituality",
+        "Horror Movies",
+        "Independent Movies",
+        "International Movies",
+        "International TV Shows",
+        "Kids' TV",
+        "Korean TV Shows",
+        "LGBTQ Movies",
+        "Movies",
+        "Music & Musicals",
+        "Reality TV",
+        "Romantic Movies",
+        "Romantic TV Shows",
+        "Sci-Fi & Fantasy",
+        "Science & Nature TV",
+        "Spanish-Language TV Shows",
+        "Sports Movies",
+        "Stand-Up Comedy",
+        "Stand-Up Comedy & Talk Shows",
+        "TV Action & Adventure",
+        "TV Comedies",
+        "TV Dramas",
+        "TV Horror",
+        "TV Mysteries",
+        "TV Sci-Fi & Fantasy",
+        "TV Shows",
+        "TV Thrillers",
+        "Teen TV Shows",
+        "Thrillers"
+      ]
+    },
+    "duration_minutes": {
+      "type": "int",
+      "min": 3,
+      "max": 312,
+      "median": 98
+    },
+    "duration_seasons": {
+      "type": "int",
+      "min": 1,
+      "max": 17,
+      "median": 1
+    }
+  }
+}

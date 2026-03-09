@@ -1,0 +1,51 @@
+{
+  "name": "laundromat",
+  "row_count": 289695,
+  "columns": {
+    "wash_price": {
+      "type": "float",
+      "min": 3.53,
+      "max": 8.26,
+      "median": 6.37
+    },
+    "dry_price": {
+      "type": "float",
+      "min": 2.62,
+      "max": 7.68,
+      "median": 2.77
+    },
+    "machine_type": {
+      "type": "categorical",
+      "values": [
+        "Delicate",
+        "Industrial",
+        "Large",
+        "Standard"
+      ]
+    },
+    "has_wifi": {
+      "type": "bool"
+    },
+    "has_folding_service": {
+      "type": "bool"
+    },
+    "is_24_hours": {
+      "type": "bool"
+    },
+    "machines_available": {
+      "type": "int",
+      "min": 5,
+      "max": 50,
+      "median": 32
+    },
+    "rating": {
+      "type": "float",
+      "min": 1.16,
+      "max": 4.26,
+      "median": 3.88
+    },
+    "has_dry_cleaning": {
+      "type": "bool"
+    }
+  }
+}

@@ -1,0 +1,68 @@
+{
+  "name": "imdb_movies",
+  "row_count": 749,
+  "columns": {
+    "Released_Year": {
+      "type": "int",
+      "min": 1925,
+      "max": 2019,
+      "median": 2001
+    },
+    "Runtime": {
+      "type": "str"
+    },
+    "Genre": {
+      "type": "array",
+      "values": [
+        "Action",
+        "Adventure",
+        "Animation",
+        "Biography",
+        "Comedy",
+        "Crime",
+        "Drama",
+        "Family",
+        "Fantasy",
+        "Film-Noir",
+        "History",
+        "Horror",
+        "Music",
+        "Musical",
+        "Mystery",
+        "Romance",
+        "Sci-Fi",
+        "Sport",
+        "Thriller",
+        "War",
+        "Western"
+      ]
+    },
+    "IMDB_Rating": {
+      "type": "float",
+      "min": 7.6,
+      "max": 9.3,
+      "median": 7.9
+    },
+    "Meta_score": {
+      "type": "float",
+      "min": 28.0,
+      "max": 100.0,
+      "median": 78.0
+    },
+    "Director": {
+      "type": "str"
+    },
+    "No_of_Votes": {
+      "type": "int",
+      "min": 25198,
+      "max": 2343110,
+      "median": 219466
+    },
+    "Gross": {
+      "type": "int",
+      "min": 1305,
+      "max": 936662225,
+      "median": 31800000
+    }
+  }
+}

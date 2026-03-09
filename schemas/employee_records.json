@@ -1,0 +1,151 @@
+{
+  "name": "employee_records",
+  "row_count": 30998,
+  "columns": {
+    "salary": {
+      "type": "float",
+      "min": 64658.26,
+      "max": 198683.35,
+      "median": 127796.64
+    },
+    "age": {
+      "type": "int",
+      "min": 21,
+      "max": 65,
+      "median": 27
+    },
+    "years_experience": {
+      "type": "int",
+      "min": 10,
+      "max": 38,
+      "median": 15
+    },
+    "department": {
+      "type": "categorical",
+      "values": [
+        "Data Science",
+        "Design",
+        "Engineering",
+        "Finance",
+        "HR",
+        "Legal",
+        "Marketing",
+        "Operations",
+        "Product",
+        "QA",
+        "Sales",
+        "Support"
+      ]
+    },
+    "job_level": {
+      "type": "categorical",
+      "values": [
+        "Director",
+        "Junior",
+        "Lead",
+        "Mid",
+        "Principal",
+        "Senior",
+        "VP"
+      ]
+    },
+    "education": {
+      "type": "categorical",
+      "values": [
+        "Associate",
+        "Bachelor",
+        "High School",
+        "MBA",
+        "Master",
+        "PhD"
+      ]
+    },
+    "remote_status": {
+      "type": "categorical",
+      "values": [
+        "Hybrid",
+        "On-Site",
+        "Remote"
+      ]
+    },
+    "performance_score": {
+      "type": "float",
+      "min": 1.21,
+      "max": 4.83,
+      "median": 1.68
+    },
+    "bonus_percent": {
+      "type": "float",
+      "min": 6.88,
+      "max": 28.99,
+      "median": 14.11
+    },
+    "overtime_hours_monthly": {
+      "type": "int",
+      "min": 1,
+      "max": 68,
+      "median": 29
+    },
+    "sick_days_used": {
+      "type": "int",
+      "min": 6,
+      "max": 25,
+      "median": 16
+    },
+    "is_manager": {
+      "type": "bool"
+    },
+    "has_stock_options": {
+      "type": "bool"
+    },
+    "promotion_eligible": {
+      "type": "bool"
+    },
+    "commute_distance_km": {
+      "type": "float",
+      "min": 13.65,
+      "max": 99.04,
+      "median": 61.02
+    },
+    "training_hours_yearly": {
+      "type": "int",
+      "min": 15,
+      "max": 174,
+      "median": 82
+    },
+    "projects_completed": {
+      "type": "int",
+      "min": 3,
+      "max": 49,
+      "median": 11
+    },
+    "team_size": {
+      "type": "int",
+      "min": 13,
+      "max": 43,
+      "median": 15
+    },
+    "contract_type": {
+      "type": "categorical",
+      "values": [
+        "Contract",
+        "Freelance",
+        "Full-Time",
+        "Intern",
+        "Part-Time"
+      ]
+    },
+    "office_location": {
+      "type": "categorical",
+      "values": [
+        "London",
+        "New York",
+        "Tokyo",
+        "Toronto"
+      ]
+    },
+    "is_featured": {
+      "type": "bool"
+    }
+  }
+}

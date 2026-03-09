@@ -1,0 +1,61 @@
+{
+  "name": "tea_shop",
+  "row_count": 27215,
+  "columns": {
+    "price_per_100g": {
+      "type": "float",
+      "min": 7.35,
+      "max": 83.04,
+      "median": 16.62
+    },
+    "tea_type": {
+      "type": "categorical",
+      "values": [
+        "Black",
+        "Herbal",
+        "White"
+      ]
+    },
+    "origin": {
+      "type": "categorical",
+      "values": [
+        "China",
+        "India",
+        "Japan",
+        "Kenya",
+        "Sri Lanka",
+        "Taiwan"
+      ]
+    },
+    "caffeine_level": {
+      "type": "categorical",
+      "values": [
+        "High",
+        "Low",
+        "Medium",
+        "None"
+      ]
+    },
+    "is_organic": {
+      "type": "bool"
+    },
+    "steep_time_minutes": {
+      "type": "int",
+      "min": 2,
+      "max": 9,
+      "median": 6
+    },
+    "temperature_c": {
+      "type": "int",
+      "min": 71,
+      "max": 100,
+      "median": 93
+    },
+    "rating": {
+      "type": "float",
+      "min": 1.92,
+      "max": 4.27,
+      "median": 4.05
+    }
+  }
+}

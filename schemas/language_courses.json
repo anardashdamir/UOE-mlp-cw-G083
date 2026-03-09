@@ -1,0 +1,85 @@
+{
+  "name": "language_courses",
+  "row_count": 81,
+  "columns": {
+    "price_usd": {
+      "type": "float",
+      "min": 109.23,
+      "max": 441.53,
+      "median": 132.68
+    },
+    "duration_weeks": {
+      "type": "int",
+      "min": 4,
+      "max": 52,
+      "median": 37
+    },
+    "language": {
+      "type": "categorical",
+      "values": [
+        "Arabic",
+        "English",
+        "French",
+        "German",
+        "Italian",
+        "Japanese",
+        "Korean",
+        "Mandarin",
+        "Portuguese",
+        "Spanish"
+      ]
+    },
+    "level": {
+      "type": "categorical",
+      "values": [
+        "Advanced",
+        "Beginner",
+        "Elementary",
+        "Intermediate",
+        "Upper-Intermediate"
+      ]
+    },
+    "format": {
+      "type": "categorical",
+      "values": [
+        "Hybrid",
+        "In-Person",
+        "Online",
+        "Self-Paced"
+      ]
+    },
+    "hours_per_week": {
+      "type": "int",
+      "min": 5,
+      "max": 18,
+      "median": 7
+    },
+    "group_size": {
+      "type": "int",
+      "min": 2,
+      "max": 26,
+      "median": 2
+    },
+    "rating": {
+      "type": "float",
+      "min": 1.36,
+      "max": 4.52,
+      "median": 2.26
+    },
+    "includes_certificate": {
+      "type": "bool"
+    },
+    "has_native_teacher": {
+      "type": "bool"
+    },
+    "region": {
+      "type": "categorical",
+      "values": [
+        "Africa",
+        "Asia",
+        "North America",
+        "Oceania"
+      ]
+    }
+  }
+}

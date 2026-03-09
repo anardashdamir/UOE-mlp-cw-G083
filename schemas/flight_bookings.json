@@ -1,0 +1,118 @@
+{
+  "name": "flight_bookings",
+  "row_count": 148,
+  "columns": {
+    "ticket_price": {
+      "type": "float",
+      "min": 1102.93,
+      "max": 4613.03,
+      "median": 3754.04
+    },
+    "distance_km": {
+      "type": "int",
+      "min": 648,
+      "max": 12848,
+      "median": 5272
+    },
+    "flight_duration_hours": {
+      "type": "float",
+      "min": 3.62,
+      "max": 15.4,
+      "median": 12.1
+    },
+    "stops": {
+      "type": "int",
+      "min": 0,
+      "max": 3,
+      "median": 3
+    },
+    "airline_class": {
+      "type": "categorical",
+      "values": [
+        "Business",
+        "Economy",
+        "First",
+        "Premium Economy"
+      ]
+    },
+    "airline": {
+      "type": "categorical",
+      "values": [
+        "American",
+        "British Airways",
+        "Delta",
+        "Emirates",
+        "Lufthansa",
+        "Qatar Airways",
+        "Ryanair",
+        "Singapore Airlines",
+        "United"
+      ]
+    },
+    "booking_lead_days": {
+      "type": "int",
+      "min": 69,
+      "max": 325,
+      "median": 175
+    },
+    "is_round_trip": {
+      "type": "bool"
+    },
+    "is_refundable": {
+      "type": "bool"
+    },
+    "has_wifi": {
+      "type": "bool"
+    },
+    "has_meal": {
+      "type": "bool"
+    },
+    "luggage_included_kg": {
+      "type": "int",
+      "min": 4,
+      "max": 46,
+      "median": 39
+    },
+    "seat_type": {
+      "type": "categorical",
+      "values": [
+        "Aisle",
+        "Middle",
+        "Window"
+      ]
+    },
+    "departure_hour": {
+      "type": "int",
+      "min": 5,
+      "max": 22,
+      "median": 14
+    },
+    "is_red_eye": {
+      "type": "bool"
+    },
+    "on_time_percent": {
+      "type": "float",
+      "min": 61.73,
+      "max": 96.43,
+      "median": 95.32
+    },
+    "passenger_rating": {
+      "type": "float",
+      "min": 1.8,
+      "max": 4.37,
+      "median": 3.17
+    },
+    "frequent_flyer_miles": {
+      "type": "int",
+      "min": 9734,
+      "max": 41581,
+      "median": 33640
+    },
+    "cancellation_fee": {
+      "type": "float",
+      "min": 26.85,
+      "max": 478.86,
+      "median": 443.06
+    }
+  }
+}

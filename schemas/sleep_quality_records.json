@@ -1,0 +1,66 @@
+{
+  "name": "sleep_quality_records",
+  "row_count": 53,
+  "columns": {
+    "sleep_duration_hours": {
+      "type": "float",
+      "min": 4.69,
+      "max": 11.71,
+      "median": 5.17
+    },
+    "rem_percent": {
+      "type": "float",
+      "min": 13.78,
+      "max": 33.95,
+      "median": 25.19
+    },
+    "deep_sleep_percent": {
+      "type": "float",
+      "min": 10.66,
+      "max": 25.28,
+      "median": 14.06
+    },
+    "awakenings": {
+      "type": "int",
+      "min": 0,
+      "max": 13,
+      "median": 1
+    },
+    "sleep_score": {
+      "type": "int",
+      "min": 24,
+      "max": 85,
+      "median": 50
+    },
+    "heart_rate_avg": {
+      "type": "int",
+      "min": 46,
+      "max": 89,
+      "median": 50
+    },
+    "stress_level": {
+      "type": "categorical",
+      "values": [
+        "High",
+        "Low",
+        "Medium",
+        "Very High"
+      ]
+    },
+    "has_caffeine": {
+      "type": "bool"
+    },
+    "exercise_minutes": {
+      "type": "int",
+      "min": 31,
+      "max": 141,
+      "median": 71
+    },
+    "bedtime_hour": {
+      "type": "int",
+      "min": 22,
+      "max": 28,
+      "median": 26
+    }
+  }
+}

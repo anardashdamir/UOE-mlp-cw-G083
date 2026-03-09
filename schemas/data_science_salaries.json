@@ -1,0 +1,142 @@
+{
+  "name": "data_science_salaries",
+  "row_count": 6145,
+  "columns": {
+    "job_title": {
+      "type": "categorical",
+      "values": [
+        "Analytics Engineer",
+        "Business Data Analyst",
+        "Business Intelligence Analyst",
+        "Business Intelligence Engineer",
+        "Computer Vision Engineer",
+        "Data Analyst",
+        "Data Architect",
+        "Data Engineer",
+        "Data Manager",
+        "Data Scientist",
+        "Machine Learning Engineer",
+        "Other",
+        "Research Scientist"
+      ]
+    },
+    "experience_level": {
+      "type": "categorical",
+      "values": [
+        "Entry-level",
+        "Executive-level",
+        "Mid-level",
+        "Senior-level"
+      ]
+    },
+    "employment_type": {
+      "type": "categorical",
+      "values": [
+        "Contract",
+        "Freelance",
+        "Full-time",
+        "Part-time"
+      ]
+    },
+    "work_models": {
+      "type": "categorical",
+      "values": [
+        "Hybrid",
+        "On-site",
+        "Remote"
+      ]
+    },
+    "work_year": {
+      "type": "int",
+      "min": 2020,
+      "max": 2024,
+      "median": 2023
+    },
+    "employee_residence": {
+      "type": "categorical",
+      "values": [
+        "Argentina",
+        "Australia",
+        "Austria",
+        "Belgium",
+        "Brazil",
+        "Canada",
+        "Colombia",
+        "Estonia",
+        "France",
+        "Germany",
+        "Greece",
+        "India",
+        "Ireland",
+        "Italy",
+        "Japan",
+        "Latvia",
+        "Mexico",
+        "Netherlands",
+        "Nigeria",
+        "Other",
+        "Pakistan",
+        "Philippines",
+        "Poland",
+        "Portugal",
+        "Puerto Rico",
+        "Romania",
+        "Russia",
+        "Singapore",
+        "Slovenia",
+        "South Africa",
+        "..."
+      ]
+    },
+    "salary_in_usd": {
+      "type": "int",
+      "min": 24322,
+      "max": 345000,
+      "median": 136197
+    },
+    "company_location": {
+      "type": "categorical",
+      "values": [
+        "Argentina",
+        "Australia",
+        "Austria",
+        "Brazil",
+        "Canada",
+        "Colombia",
+        "Denmark",
+        "Estonia",
+        "France",
+        "Germany",
+        "Greece",
+        "India",
+        "Ireland",
+        "Italy",
+        "Japan",
+        "Latvia",
+        "Mexico",
+        "Netherlands",
+        "Nigeria",
+        "Other",
+        "Poland",
+        "Portugal",
+        "Russia",
+        "Singapore",
+        "Slovenia",
+        "South Africa",
+        "Spain",
+        "Switzerland",
+        "Turkey",
+        "Ukraine",
+        "..."
+      ]
+    },
+    "company_size": {
+      "type": "categorical",
+      "values": [
+        "Large",
+        "Medium",
+        "Small"
+      ]
+    }
+  }
+}

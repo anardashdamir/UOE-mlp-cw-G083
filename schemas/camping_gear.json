@@ -1,0 +1,64 @@
+{
+  "name": "camping_gear",
+  "row_count": 412,
+  "columns": {
+    "price": {
+      "type": "float",
+      "min": 148.21,
+      "max": 794.88,
+      "median": 346.58
+    },
+    "category": {
+      "type": "categorical",
+      "values": [
+        "Backpack",
+        "Chair",
+        "Cooler",
+        "Hammock",
+        "Lantern",
+        "Sleeping Bag",
+        "Stove",
+        "Tent",
+        "Water Filter"
+      ]
+    },
+    "weight_kg": {
+      "type": "float",
+      "min": 3.22,
+      "max": 18.64,
+      "median": 5.49
+    },
+    "waterproof": {
+      "type": "bool"
+    },
+    "season": {
+      "type": "categorical",
+      "values": [
+        "3-Season",
+        "4-Season",
+        "Summer",
+        "Winter"
+      ]
+    },
+    "brand_rating": {
+      "type": "float",
+      "min": 1.97,
+      "max": 4.37,
+      "median": 2.63
+    },
+    "foldable": {
+      "type": "bool"
+    },
+    "material": {
+      "type": "categorical",
+      "values": [
+        "Aluminum",
+        "Cotton",
+        "Gore-Tex",
+        "Nylon",
+        "Polyester",
+        "Titanium"
+      ]
+    }
+  }
+}

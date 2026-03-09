@@ -1,0 +1,74 @@
+{
+  "name": "honey_products",
+  "row_count": 409,
+  "columns": {
+    "price_per_jar": {
+      "type": "float",
+      "min": 14.24,
+      "max": 61.26,
+      "median": 36.35
+    },
+    "weight_g": {
+      "type": "int",
+      "min": 233,
+      "max": 781,
+      "median": 371
+    },
+    "floral_source": {
+      "type": "categorical",
+      "values": [
+        "Acacia",
+        "Buckwheat",
+        "Clover",
+        "Eucalyptus",
+        "Lavender",
+        "Manuka",
+        "Orange Blossom",
+        "Wildflower"
+      ]
+    },
+    "origin": {
+      "type": "categorical",
+      "values": [
+        "Argentina",
+        "Australia",
+        "Canada",
+        "Greece",
+        "New Zealand",
+        "USA"
+      ]
+    },
+    "is_raw": {
+      "type": "bool"
+    },
+    "is_organic": {
+      "type": "bool"
+    },
+    "is_filtered": {
+      "type": "bool"
+    },
+    "color": {
+      "type": "categorical",
+      "values": [
+        "Dark",
+        "Light",
+        "Medium"
+      ]
+    },
+    "umf_rating": {
+      "type": "int",
+      "min": 8,
+      "max": 25,
+      "median": 8
+    },
+    "crystallized": {
+      "type": "bool"
+    },
+    "num_reviews": {
+      "type": "int",
+      "min": 146,
+      "max": 8932,
+      "median": 264
+    }
+  }
+}

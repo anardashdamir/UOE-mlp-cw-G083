@@ -1,0 +1,64 @@
+{
+  "name": "podcast_directory",
+  "row_count": 44879,
+  "columns": {
+    "episodes_count": {
+      "type": "int",
+      "min": 77,
+      "max": 840,
+      "median": 527
+    },
+    "avg_duration_minutes": {
+      "type": "int",
+      "min": 48,
+      "max": 163,
+      "median": 84
+    },
+    "category": {
+      "type": "categorical",
+      "values": [
+        "Business",
+        "Comedy",
+        "Education",
+        "Health",
+        "History",
+        "Music",
+        "News",
+        "Science",
+        "Sports",
+        "Technology",
+        "True Crime"
+      ]
+    },
+    "rating": {
+      "type": "float",
+      "min": 1.24,
+      "max": 4.49,
+      "median": 1.89
+    },
+    "subscriber_count": {
+      "type": "int",
+      "min": 1386637,
+      "max": 9212289,
+      "median": 2958168
+    },
+    "is_explicit": {
+      "type": "bool"
+    },
+    "frequency": {
+      "type": "categorical",
+      "values": [
+        "Bi-Weekly",
+        "Daily",
+        "Monthly",
+        "Weekly"
+      ]
+    },
+    "year_started": {
+      "type": "int",
+      "min": 2009,
+      "max": 2024,
+      "median": 2012
+    }
+  }
+}

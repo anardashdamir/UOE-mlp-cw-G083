@@ -1,0 +1,65 @@
+{
+  "name": "used_cars",
+  "row_count": 106256,
+  "columns": {
+    "year": {
+      "type": "int",
+      "min": 1991,
+      "max": 2020,
+      "median": 2017
+    },
+    "price": {
+      "type": "int",
+      "min": 450,
+      "max": 159999,
+      "median": 14579
+    },
+    "transmission": {
+      "type": "categorical",
+      "values": [
+        "Automatic",
+        "Manual",
+        "Other",
+        "Semi-Auto"
+      ]
+    },
+    "mileage": {
+      "type": "int",
+      "min": 1,
+      "max": 323000,
+      "median": 17515
+    },
+    "fuelType": {
+      "type": "categorical",
+      "values": [
+        "Diesel",
+        "Electric",
+        "Hybrid",
+        "Other",
+        "Petrol"
+      ]
+    },
+    "engineSize": {
+      "type": "float",
+      "min": 0.6,
+      "max": 6.6,
+      "median": 1.6
+    },
+    "brand": {
+      "type": "categorical",
+      "values": [
+        "audi",
+        "bmw",
+        "cclass",
+        "focus",
+        "ford",
+        "hyundi",
+        "merc",
+        "skoda",
+        "toyota",
+        "vauxhall",
+        "vw"
+      ]
+    }
+  }
+}

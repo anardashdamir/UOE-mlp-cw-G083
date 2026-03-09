@@ -1,0 +1,63 @@
+{
+  "name": "terrarium_kits",
+  "row_count": 226,
+  "columns": {
+    "price": {
+      "type": "float",
+      "min": 24.32,
+      "max": 135.06,
+      "median": 98.09
+    },
+    "size_cm": {
+      "type": "int",
+      "min": 18,
+      "max": 59,
+      "median": 32
+    },
+    "type": {
+      "type": "categorical",
+      "values": [
+        "Closed",
+        "Desert",
+        "Moss",
+        "Open",
+        "Succulent",
+        "Tropical"
+      ]
+    },
+    "includes_plants": {
+      "type": "bool"
+    },
+    "includes_soil": {
+      "type": "bool"
+    },
+    "includes_container": {
+      "type": "bool"
+    },
+    "plant_count": {
+      "type": "int",
+      "min": 1,
+      "max": 7,
+      "median": 2
+    },
+    "difficulty": {
+      "type": "categorical",
+      "values": [
+        "Easy",
+        "Hard",
+        "Medium"
+      ]
+    },
+    "is_self_sustaining": {
+      "type": "bool"
+    },
+    "material": {
+      "type": "categorical",
+      "values": [
+        "Glass",
+        "Plastic",
+        "Wood Frame"
+      ]
+    }
+  }
+}

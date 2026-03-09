@@ -1,0 +1,72 @@
+{
+  "name": "sp500_stocks",
+  "row_count": 177389,
+  "columns": {
+    "open": {
+      "type": "float",
+      "min": 1022.63,
+      "max": 4522.94,
+      "median": 3062.73
+    },
+    "close": {
+      "type": "float",
+      "min": 761.84,
+      "max": 3967.92,
+      "median": 764.46
+    },
+    "high": {
+      "type": "float",
+      "min": 827.67,
+      "max": 4719.5,
+      "median": 2675.22
+    },
+    "low": {
+      "type": "float",
+      "min": 322.47,
+      "max": 4265.85,
+      "median": 3750.61
+    },
+    "volume": {
+      "type": "int",
+      "min": 67069583,
+      "max": 450739726,
+      "median": 151329824
+    },
+    "market_cap": {
+      "type": "float",
+      "min": 377021508708.46,
+      "max": 2522466907056.13,
+      "median": 1162383223417.52
+    },
+    "pe_ratio": {
+      "type": "float",
+      "min": 48.4,
+      "max": 233.5,
+      "median": 76.96
+    },
+    "dividend_yield": {
+      "type": "float",
+      "min": 2.72,
+      "max": 9.09,
+      "median": 7.56
+    },
+    "sector": {
+      "type": "categorical",
+      "values": [
+        "Communication Services",
+        "Consumer Discretionary",
+        "Energy",
+        "Financials",
+        "Healthcare",
+        "Industrials",
+        "Materials",
+        "Real Estate",
+        "Technology",
+        "Utilities"
+      ]
+    },
+    "is_dow_component": {
+      "type": "bool"
+    }
+  }
+}

@@ -1,0 +1,83 @@
+{
+  "name": "wine_cellar",
+  "row_count": 3762,
+  "columns": {
+    "price": {
+      "type": "float",
+      "min": 256.24,
+      "max": 1959.69,
+      "median": 876.92
+    },
+    "wine_type": {
+      "type": "categorical",
+      "values": [
+        "Dessert",
+        "Fortified",
+        "Red",
+        "Ros\u00e9",
+        "Sparkling",
+        "White"
+      ]
+    },
+    "grape_variety": {
+      "type": "categorical",
+      "values": [
+        "Cabernet Sauvignon",
+        "Chardonnay",
+        "Malbec",
+        "Merlot",
+        "Pinot Noir",
+        "Riesling",
+        "Sauvignon Blanc",
+        "Syrah"
+      ]
+    },
+    "vintage_year": {
+      "type": "int",
+      "min": 1987,
+      "max": 2024,
+      "median": 1988
+    },
+    "alcohol_percent": {
+      "type": "float",
+      "min": 7.8,
+      "max": 18.4,
+      "median": 15.13
+    },
+    "rating": {
+      "type": "float",
+      "min": 17.69,
+      "max": 75.83,
+      "median": 70.13
+    },
+    "region": {
+      "type": "categorical",
+      "values": [
+        "Barossa Valley",
+        "Bordeaux",
+        "Burgundy",
+        "Champagne",
+        "Napa Valley",
+        "Rioja",
+        "Tuscany"
+      ]
+    },
+    "is_organic": {
+      "type": "bool"
+    },
+    "city": {
+      "type": "categorical",
+      "values": [
+        "Berlin",
+        "Dubai",
+        "London",
+        "New York",
+        "Paris",
+        "Singapore",
+        "Sydney",
+        "Tokyo",
+        "Toronto"
+      ]
+    }
+  }
+}

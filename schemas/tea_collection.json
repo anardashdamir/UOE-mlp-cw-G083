@@ -1,0 +1,76 @@
+{
+  "name": "tea_collection",
+  "row_count": 338776,
+  "columns": {
+    "price_per_100g": {
+      "type": "float",
+      "min": 2.81,
+      "max": 161.84,
+      "median": 117.57
+    },
+    "caffeine_mg": {
+      "type": "int",
+      "min": 8,
+      "max": 81,
+      "median": 35
+    },
+    "steep_temp_c": {
+      "type": "int",
+      "min": 63,
+      "max": 100,
+      "median": 100
+    },
+    "steep_time_min": {
+      "type": "int",
+      "min": 1,
+      "max": 10,
+      "median": 6
+    },
+    "type": {
+      "type": "categorical",
+      "values": [
+        "Green",
+        "Herbal",
+        "Matcha",
+        "Oolong",
+        "Pu-erh",
+        "Rooibos",
+        "White"
+      ]
+    },
+    "origin": {
+      "type": "categorical",
+      "values": [
+        "India",
+        "Kenya",
+        "Sri Lanka",
+        "Taiwan"
+      ]
+    },
+    "is_organic": {
+      "type": "bool"
+    },
+    "is_loose_leaf": {
+      "type": "bool"
+    },
+    "flavor_notes": {
+      "type": "categorical",
+      "values": [
+        "Earthy",
+        "Floral",
+        "Fruity",
+        "Grassy",
+        "Nutty",
+        "Smoky",
+        "Spicy",
+        "Sweet"
+      ]
+    },
+    "rating": {
+      "type": "float",
+      "min": 1.65,
+      "max": 4.99,
+      "median": 1.86
+    }
+  }
+}

@@ -1,0 +1,54 @@
+{
+  "name": "cruise_ships",
+  "row_count": 43672,
+  "columns": {
+    "price_per_night": {
+      "type": "float",
+      "min": 69.38,
+      "max": 790.56,
+      "median": 93.39
+    },
+    "ship_capacity": {
+      "type": "int",
+      "min": 817,
+      "max": 6940,
+      "median": 5451
+    },
+    "year_built": {
+      "type": "int",
+      "min": 1993,
+      "max": 2017,
+      "median": 2017
+    },
+    "destination": {
+      "type": "categorical",
+      "values": [
+        "Alaska",
+        "Asia",
+        "Caribbean",
+        "Norway"
+      ]
+    },
+    "duration_nights": {
+      "type": "int",
+      "min": 6,
+      "max": 29,
+      "median": 13
+    },
+    "has_pool": {
+      "type": "bool"
+    },
+    "has_casino": {
+      "type": "bool"
+    },
+    "has_spa": {
+      "type": "bool"
+    },
+    "rating": {
+      "type": "float",
+      "min": 1.71,
+      "max": 4.55,
+      "median": 2.02
+    }
+  }
+}

@@ -1,0 +1,86 @@
+{
+  "name": "mountain_trails",
+  "row_count": 2196,
+  "columns": {
+    "distance_km": {
+      "type": "float",
+      "min": 13.26,
+      "max": 64.14,
+      "median": 41.17
+    },
+    "elevation_gain_m": {
+      "type": "int",
+      "min": 260,
+      "max": 2852,
+      "median": 1522
+    },
+    "difficulty": {
+      "type": "categorical",
+      "values": [
+        "Easy",
+        "Expert",
+        "Hard",
+        "Moderate"
+      ]
+    },
+    "trail_type": {
+      "type": "categorical",
+      "values": [
+        "Loop",
+        "Out-and-Back",
+        "Point-to-Point"
+      ]
+    },
+    "surface": {
+      "type": "categorical",
+      "values": [
+        "Dirt",
+        "Gravel",
+        "Mixed",
+        "Paved",
+        "Rock"
+      ]
+    },
+    "estimated_hours": {
+      "type": "float",
+      "min": 3.52,
+      "max": 18.2,
+      "median": 13.71
+    },
+    "highest_point_m": {
+      "type": "int",
+      "min": 575,
+      "max": 4666,
+      "median": 1749
+    },
+    "is_dog_friendly": {
+      "type": "bool"
+    },
+    "has_water_source": {
+      "type": "bool"
+    },
+    "rating": {
+      "type": "float",
+      "min": 1.58,
+      "max": 4.05,
+      "median": 1.92
+    },
+    "review_count": {
+      "type": "int",
+      "min": 964,
+      "max": 4769,
+      "median": 2275
+    },
+    "region": {
+      "type": "categorical",
+      "values": [
+        "Africa",
+        "Asia",
+        "Europe",
+        "North America",
+        "Oceania",
+        "South America"
+      ]
+    }
+  }
+}

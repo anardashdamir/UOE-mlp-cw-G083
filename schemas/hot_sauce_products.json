@@ -1,0 +1,73 @@
+{
+  "name": "hot_sauce_products",
+  "row_count": 154580,
+  "columns": {
+    "price": {
+      "type": "float",
+      "min": 2.49,
+      "max": 21.91,
+      "median": 14.22
+    },
+    "scoville_rating": {
+      "type": "int",
+      "min": 60196,
+      "max": 1817741,
+      "median": 1702806
+    },
+    "volume_ml": {
+      "type": "int",
+      "min": 116,
+      "max": 418,
+      "median": 229
+    },
+    "pepper_type": {
+      "type": "categorical",
+      "values": [
+        "Carolina Reaper",
+        "Cayenne",
+        "Chipotle",
+        "Ghost",
+        "Habanero",
+        "Jalapeno",
+        "Serrano"
+      ]
+    },
+    "origin": {
+      "type": "categorical",
+      "values": [
+        "India",
+        "Jamaica",
+        "Mexico",
+        "USA"
+      ]
+    },
+    "ingredients_count": {
+      "type": "int",
+      "min": 3,
+      "max": 14,
+      "median": 12
+    },
+    "is_organic": {
+      "type": "bool"
+    },
+    "is_fermented": {
+      "type": "bool"
+    },
+    "heat_level": {
+      "type": "categorical",
+      "values": [
+        "Extreme",
+        "Hot",
+        "Medium",
+        "Mild",
+        "Very Hot"
+      ]
+    },
+    "rating": {
+      "type": "float",
+      "min": 1.07,
+      "max": 4.21,
+      "median": 1.25
+    }
+  }
+}

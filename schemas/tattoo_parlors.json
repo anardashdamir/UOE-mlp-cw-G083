@@ -1,0 +1,71 @@
+{
+  "name": "tattoo_parlors",
+  "row_count": 4449,
+  "columns": {
+    "price_usd": {
+      "type": "float",
+      "min": 52.86,
+      "max": 4052.59,
+      "median": 2022.38
+    },
+    "artist_experience_years": {
+      "type": "int",
+      "min": 1,
+      "max": 28,
+      "median": 23
+    },
+    "style": {
+      "type": "categorical",
+      "values": [
+        "Blackwork",
+        "Geometric",
+        "Japanese",
+        "Minimalist",
+        "Neo-Traditional",
+        "Realism",
+        "Traditional",
+        "Tribal",
+        "Watercolor"
+      ]
+    },
+    "body_area": {
+      "type": "categorical",
+      "values": [
+        "Arm",
+        "Back",
+        "Chest",
+        "Foot",
+        "Hand",
+        "Leg",
+        "Neck",
+        "Rib",
+        "Shoulder"
+      ]
+    },
+    "duration_hours": {
+      "type": "float",
+      "min": 2.74,
+      "max": 11.52,
+      "median": 10.98
+    },
+    "rating": {
+      "type": "float",
+      "min": 1.89,
+      "max": 4.91,
+      "median": 4.08
+    },
+    "is_walk_in": {
+      "type": "bool"
+    },
+    "color_or_bw": {
+      "type": "categorical",
+      "values": [
+        "Black & White",
+        "Color"
+      ]
+    },
+    "touch_up_included": {
+      "type": "bool"
+    }
+  }
+}

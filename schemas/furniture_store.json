@@ -1,0 +1,60 @@
+{
+  "name": "furniture_store",
+  "row_count": 4094,
+  "columns": {
+    "price": {
+      "type": "float",
+      "min": 242.77,
+      "max": 9161.32,
+      "median": 8829.23
+    },
+    "category": {
+      "type": "categorical",
+      "values": [
+        "Cabinet",
+        "Chair",
+        "Dresser",
+        "Nightstand",
+        "Shelf",
+        "Sofa"
+      ]
+    },
+    "material": {
+      "type": "categorical",
+      "values": [
+        "Bamboo",
+        "Fabric",
+        "Glass",
+        "Leather",
+        "Metal",
+        "Plastic",
+        "Rattan",
+        "Wood"
+      ]
+    },
+    "weight_kg": {
+      "type": "float",
+      "min": 49.19,
+      "max": 156.0,
+      "median": 116.78
+    },
+    "in_stock": {
+      "type": "bool"
+    },
+    "assembly_required": {
+      "type": "bool"
+    },
+    "warranty_years": {
+      "type": "int",
+      "min": 0,
+      "max": 9,
+      "median": 7
+    },
+    "customer_rating": {
+      "type": "float",
+      "min": 1.38,
+      "max": 4.3,
+      "median": 4.26
+    }
+  }
+}

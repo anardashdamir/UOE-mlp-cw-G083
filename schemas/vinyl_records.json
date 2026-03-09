@@ -1,0 +1,68 @@
+{
+  "name": "vinyl_records",
+  "row_count": 193730,
+  "columns": {
+    "price": {
+      "type": "float",
+      "min": 535.28,
+      "max": 3902.12,
+      "median": 1732.08
+    },
+    "year_released": {
+      "type": "int",
+      "min": 1954,
+      "max": 2023,
+      "median": 1966
+    },
+    "genre": {
+      "type": "categorical",
+      "values": [
+        "Blues",
+        "Country",
+        "Rock"
+      ]
+    },
+    "rpm": {
+      "type": "categorical",
+      "values": [
+        "33",
+        "45",
+        "78"
+      ]
+    },
+    "size_inches": {
+      "type": "categorical",
+      "values": [
+        "10",
+        "12",
+        "7"
+      ]
+    },
+    "condition": {
+      "type": "categorical",
+      "values": [
+        "Fair",
+        "Good",
+        "Mint",
+        "Near Mint",
+        "Very Good",
+        "Very Good Plus"
+      ]
+    },
+    "is_first_pressing": {
+      "type": "bool"
+    },
+    "is_colored_vinyl": {
+      "type": "bool"
+    },
+    "weight_g": {
+      "type": "int",
+      "min": 108,
+      "max": 199,
+      "median": 167
+    },
+    "has_insert": {
+      "type": "bool"
+    }
+  }
+}

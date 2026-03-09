@@ -1,0 +1,87 @@
+{
+  "name": "f1_race_results",
+  "row_count": 1821,
+  "columns": {
+    "grid_position": {
+      "type": "int",
+      "min": 3,
+      "max": 16,
+      "median": 5
+    },
+    "finish_position": {
+      "type": "int",
+      "min": 4,
+      "max": 19,
+      "median": 19
+    },
+    "points": {
+      "type": "float",
+      "min": 0.7,
+      "max": 20.53,
+      "median": 3.22
+    },
+    "laps_completed": {
+      "type": "int",
+      "min": 13,
+      "max": 62,
+      "median": 44
+    },
+    "fastest_lap_time_sec": {
+      "type": "float",
+      "min": 60.63,
+      "max": 116.0,
+      "median": 61.97
+    },
+    "pit_stops": {
+      "type": "int",
+      "min": 1,
+      "max": 4,
+      "median": 2
+    },
+    "team": {
+      "type": "categorical",
+      "values": [
+        "AlphaTauri",
+        "Alpine",
+        "Aston Martin",
+        "Ferrari",
+        "Haas",
+        "McLaren",
+        "Mercedes",
+        "Red Bull",
+        "Sauber",
+        "Williams"
+      ]
+    },
+    "dnf_reason": {
+      "type": "categorical",
+      "values": [
+        "Brakes",
+        "Collision",
+        "Electrical",
+        "Engine",
+        "Gearbox",
+        "Hydraulics",
+        "None",
+        "Suspension"
+      ]
+    },
+    "track_type": {
+      "type": "categorical",
+      "values": [
+        "Hybrid",
+        "Permanent Circuit",
+        "Street Circuit"
+      ]
+    },
+    "weather_condition": {
+      "type": "categorical",
+      "values": [
+        "Dry",
+        "Mixed",
+        "Overcast",
+        "Wet"
+      ]
+    }
+  }
+}

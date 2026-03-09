@@ -1,0 +1,66 @@
+{
+  "name": "library_books",
+  "row_count": 10292,
+  "columns": {
+    "publication_year": {
+      "type": "int",
+      "min": 1809,
+      "max": 2012,
+      "median": 1882
+    },
+    "page_count": {
+      "type": "int",
+      "min": 380,
+      "max": 1843,
+      "median": 1383
+    },
+    "genre": {
+      "type": "categorical",
+      "values": [
+        "Biography",
+        "Fantasy",
+        "Fiction",
+        "History",
+        "Mystery",
+        "Non-Fiction",
+        "Philosophy",
+        "Poetry",
+        "Romance",
+        "Science",
+        "Self-Help",
+        "Thriller"
+      ]
+    },
+    "language": {
+      "type": "categorical",
+      "values": [
+        "Arabic",
+        "Chinese",
+        "English",
+        "French",
+        "German",
+        "Japanese",
+        "Russian",
+        "Spanish"
+      ]
+    },
+    "is_available": {
+      "type": "bool"
+    },
+    "times_borrowed": {
+      "type": "int",
+      "min": 117,
+      "max": 425,
+      "median": 123
+    },
+    "rating": {
+      "type": "float",
+      "min": 1.86,
+      "max": 4.49,
+      "median": 3.22
+    },
+    "is_ebook": {
+      "type": "bool"
+    }
+  }
+}

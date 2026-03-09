@@ -1,0 +1,161 @@
+{
+  "name": "job_listings",
+  "row_count": 1615940,
+  "columns": {
+    "Experience": {
+      "type": "categorical",
+      "values": [
+        "0 to 10 Years",
+        "0 to 11 Years",
+        "0 to 12 Years",
+        "0 to 13 Years",
+        "0 to 14 Years",
+        "0 to 15 Years",
+        "0 to 8 Years",
+        "0 to 9 Years",
+        "1 to 10 Years",
+        "1 to 11 Years",
+        "1 to 12 Years",
+        "1 to 13 Years",
+        "1 to 14 Years",
+        "1 to 15 Years",
+        "1 to 8 Years",
+        "1 to 9 Years",
+        "2 to 10 Years",
+        "2 to 11 Years",
+        "2 to 12 Years",
+        "2 to 13 Years",
+        "2 to 14 Years",
+        "2 to 15 Years",
+        "2 to 8 Years",
+        "2 to 9 Years",
+        "3 to 10 Years",
+        "3 to 11 Years",
+        "3 to 12 Years",
+        "3 to 13 Years",
+        "3 to 14 Years",
+        "3 to 15 Years",
+        "3 to 8 Years",
+        "3 to 9 Years",
+        "4 to 10 Years",
+        "4 to 11 Years",
+        "4 to 12 Years",
+        "4 to 13 Years",
+        "4 to 14 Years",
+        "4 to 15 Years",
+        "4 to 8 Years",
+        "4 to 9 Years",
+        "5 to 10 Years",
+        "5 to 11 Years",
+        "5 to 12 Years",
+        "5 to 13 Years",
+        "5 to 14 Years",
+        "5 to 15 Years",
+        "5 to 8 Years",
+        "5 to 9 Years"
+      ]
+    },
+    "Qualifications": {
+      "type": "categorical",
+      "values": [
+        "B.Com",
+        "B.Tech",
+        "BA",
+        "BBA",
+        "BCA",
+        "M.Com",
+        "M.Tech",
+        "MBA",
+        "MCA",
+        "PhD"
+      ]
+    },
+    "Work Type": {
+      "type": "categorical",
+      "values": [
+        "Contract",
+        "Full-Time",
+        "Intern",
+        "Part-Time",
+        "Temporary"
+      ]
+    },
+    "Company Size": {
+      "type": "int",
+      "min": 12646,
+      "max": 134834,
+      "median": 73633.0
+    },
+    "Preference": {
+      "type": "categorical",
+      "values": [
+        "Both",
+        "Female",
+        "Male"
+      ]
+    },
+    "Job Portal": {
+      "type": "categorical",
+      "values": [
+        "CareerBuilder",
+        "Dice",
+        "FlexJobs",
+        "Glassdoor",
+        "Idealist",
+        "Indeed",
+        "Internships.com",
+        "Jobs2Careers",
+        "LinkedIn",
+        "Monster",
+        "SimplyHired",
+        "Snagajob",
+        "Stack Overflow Jobs",
+        "The Muse",
+        "USAJOBS",
+        "ZipRecruiter"
+      ]
+    },
+    "Benefits": {
+      "type": "array",
+      "values": [
+        "Bonuses and Incentive Programs",
+        "Casual Dress Code",
+        "Childcare Assistance",
+        "Employee Assistance Programs (EAP)",
+        "Employee Discounts",
+        "Employee Recognition Programs",
+        "Employee Referral Programs",
+        "Financial Counseling",
+        "Flexible Spending Accounts (FSAs)",
+        "Flexible Work Arrangements",
+        "Health Insurance",
+        "Health and Wellness Facilities",
+        "Legal Assistance",
+        "Life and Disability Insurance",
+        "Paid Time Off (PTO)",
+        "Parental Leave",
+        "Professional Development",
+        "Profit-Sharing",
+        "Relocation Assistance",
+        "Retirement Plans",
+        "Social and Recreational Activities",
+        "Stock Options or Equity Grants",
+        "Transportation Benefits",
+        "Tuition Reimbursement",
+        "Wellness Programs"
+      ]
+    },
+    "Salary Range_min": {
+      "type": "int",
+      "min": 55000,
+      "max": 65000,
+      "median": 60000
+    },
+    "Salary Range_max": {
+      "type": "int",
+      "min": 80000,
+      "max": 130000,
+      "median": 105000
+    }
+  }
+}

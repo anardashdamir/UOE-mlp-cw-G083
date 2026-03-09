@@ -1,0 +1,138 @@
+{
+  "name": "usa_housing_listings",
+  "row_count": 156407,
+  "columns": {
+    "price": {
+      "type": "int",
+      "min": 344,
+      "max": 3395,
+      "median": 1150
+    },
+    "type": {
+      "type": "categorical",
+      "values": [
+        "apartment",
+        "condo",
+        "cottage/cabin",
+        "duplex",
+        "flat",
+        "house",
+        "in-law",
+        "land",
+        "loft",
+        "manufactured",
+        "townhouse"
+      ]
+    },
+    "sqfeet": {
+      "type": "int",
+      "min": 364,
+      "max": 2308,
+      "median": 966
+    },
+    "beds": {
+      "type": "int",
+      "min": 0,
+      "max": 8,
+      "median": 2
+    },
+    "cats_allowed": {
+      "type": "bool",
+      "values": [
+        true,
+        false
+      ]
+    },
+    "dogs_allowed": {
+      "type": "bool",
+      "values": [
+        true,
+        false
+      ]
+    },
+    "smoking_allowed": {
+      "type": "bool",
+      "values": [
+        true,
+        false
+      ]
+    },
+    "wheelchair_access": {
+      "type": "bool",
+      "values": [
+        true,
+        false
+      ]
+    },
+    "electric_vehicle_charge": {
+      "type": "bool",
+      "values": [
+        true,
+        false
+      ]
+    },
+    "comes_furnished": {
+      "type": "bool",
+      "values": [
+        true,
+        false
+      ]
+    },
+    "state": {
+      "type": "categorical",
+      "values": [
+        "ak",
+        "al",
+        "ar",
+        "az",
+        "ca",
+        "co",
+        "ct",
+        "dc",
+        "de",
+        "fl",
+        "ga",
+        "hi",
+        "ia",
+        "id",
+        "il",
+        "in",
+        "ks",
+        "ky",
+        "la",
+        "ma",
+        "md",
+        "me",
+        "mi",
+        "mn",
+        "mo",
+        "ms",
+        "mt",
+        "nc",
+        "nd",
+        "ne",
+        "nh",
+        "nj",
+        "nm",
+        "nv",
+        "ny",
+        "oh",
+        "ok",
+        "or",
+        "pa",
+        "ri",
+        "sc",
+        "sd",
+        "tn",
+        "tx",
+        "ut",
+        "va",
+        "vt",
+        "wa",
+        "wi",
+        "wv",
+        "wy"
+      ]
+    }
+  }
+}

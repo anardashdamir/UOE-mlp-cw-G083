@@ -1,0 +1,63 @@
+{
+  "name": "wind_turbine_output",
+  "row_count": 161223,
+  "columns": {
+    "power_output_kw": {
+      "type": "float",
+      "min": 431.59,
+      "max": 14016.22,
+      "median": 3652.89
+    },
+    "wind_speed_mps": {
+      "type": "float",
+      "min": 7.61,
+      "max": 27.71,
+      "median": 15.11
+    },
+    "blade_pitch_deg": {
+      "type": "float",
+      "min": 16.37,
+      "max": 70.97,
+      "median": 49.13
+    },
+    "rotor_rpm": {
+      "type": "float",
+      "min": 2.41,
+      "max": 23.29,
+      "median": 8.81
+    },
+    "temperature_c": {
+      "type": "float",
+      "min": -25.52,
+      "max": 32.17,
+      "median": -9.79
+    },
+    "humidity_percent": {
+      "type": "float",
+      "min": 22.29,
+      "max": 82.51,
+      "median": 30.55
+    },
+    "turbine_age_years": {
+      "type": "int",
+      "min": 5,
+      "max": 27,
+      "median": 21
+    },
+    "is_offshore": {
+      "type": "bool"
+    },
+    "capacity_factor": {
+      "type": "float",
+      "min": 0.08,
+      "max": 0.96,
+      "median": 0.12
+    },
+    "downtime_hours": {
+      "type": "float",
+      "min": 60.31,
+      "max": 697.96,
+      "median": 276.9
+    }
+  }
+}

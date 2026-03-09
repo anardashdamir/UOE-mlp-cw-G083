@@ -1,0 +1,110 @@
+{
+  "name": "uk_gov_jobs",
+  "row_count": 116526,
+  "columns": {
+    "postingDate": {
+      "type": "date",
+      "min": "2023-07-05",
+      "max": "2023-11-09"
+    },
+    "hours": {
+      "type": "categorical",
+      "values": [
+        "Full time",
+        "Part time"
+      ]
+    },
+    "closingDate": {
+      "type": "date",
+      "min": "2023-11-07",
+      "max": "2024-11-06"
+    },
+    "state": {
+      "type": "categorical",
+      "values": [
+        "Channel Islands",
+        "East Midlands",
+        "Eastern England",
+        "Isle Of Man",
+        "London",
+        "North East England",
+        "North West England",
+        "Northern Ireland",
+        "Scotland",
+        "South East England",
+        "South West England",
+        "Wales",
+        "West Midlands",
+        "Yorkshire And The Humber"
+      ]
+    },
+    "city": {
+      "type": "str"
+    },
+    "company": {
+      "type": "str"
+    },
+    "jobType": {
+      "type": "categorical",
+      "values": [
+        "Apprenticeship",
+        "Contract",
+        "Permanent",
+        "Temporary"
+      ]
+    },
+    "category": {
+      "type": "categorical",
+      "values": [
+        "Accounting & Finance",
+        "Admin",
+        "Agriculture, Fishing & Forestry",
+        "Consultancy",
+        "Creative & Design",
+        "Customer Services",
+        "Domestic Help & Cleaning",
+        "Energy, Oil & Gas",
+        "Engineering",
+        "Graduate",
+        "HR & Recruitment",
+        "Healthcare & Nursing",
+        "Hospitality & Catering",
+        "IT",
+        "Legal",
+        "Logistics & Warehouse",
+        "Maintenance",
+        "Manufacturing",
+        "Other/General",
+        "PR, Advertising & Marketing",
+        "Property",
+        "Retail",
+        "Sales",
+        "Scientific & QA",
+        "Security & Protective Services",
+        "Social Care",
+        "Social Work",
+        "Teaching",
+        "Trade & Construction",
+        "Travel"
+      ]
+    },
+    "salaryType": {
+      "type": "categorical",
+      "values": [
+        "Not specified",
+        "per day",
+        "per fortnight",
+        "per hour",
+        "per month",
+        "per week",
+        "per year"
+      ]
+    },
+    "annual_salary": {
+      "type": "int",
+      "min": 10982,
+      "max": 260000,
+      "median": 29120
+    }
+  }
+}

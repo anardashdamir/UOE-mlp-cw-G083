@@ -1,0 +1,73 @@
+{
+  "name": "ceramics_glazes",
+  "row_count": 490855,
+  "columns": {
+    "price_per_kg": {
+      "type": "float",
+      "min": 16.48,
+      "max": 55.87,
+      "median": 45.68
+    },
+    "firing_temp_c": {
+      "type": "int",
+      "min": 941,
+      "max": 1210,
+      "median": 1159
+    },
+    "finish": {
+      "type": "categorical",
+      "values": [
+        "Celadon",
+        "Crystalline",
+        "Glossy",
+        "Matte",
+        "Satin"
+      ]
+    },
+    "color": {
+      "type": "categorical",
+      "values": [
+        "Black",
+        "Blue",
+        "Brown",
+        "Clear",
+        "Copper",
+        "Green",
+        "Red",
+        "White"
+      ]
+    },
+    "cone_range": {
+      "type": "categorical",
+      "values": [
+        "04-1",
+        "06-04",
+        "1-6",
+        "6-10"
+      ]
+    },
+    "is_food_safe": {
+      "type": "bool"
+    },
+    "is_lead_free": {
+      "type": "bool"
+    },
+    "application_method": {
+      "type": "categorical",
+      "values": [
+        "Brush",
+        "Dip",
+        "Pour",
+        "Spray"
+      ]
+    },
+    "opacity": {
+      "type": "categorical",
+      "values": [
+        "Opaque",
+        "Translucent",
+        "Transparent"
+      ]
+    }
+  }
+}

@@ -1,0 +1,85 @@
+{
+  "name": "candy_products",
+  "row_count": 389111,
+  "columns": {
+    "price": {
+      "type": "float",
+      "min": 4.12,
+      "max": 16.0,
+      "median": 14.3
+    },
+    "weight_g": {
+      "type": "float",
+      "min": 41.75,
+      "max": 392.15,
+      "median": 64.35
+    },
+    "category": {
+      "type": "categorical",
+      "values": [
+        "Caramel",
+        "Chocolate",
+        "Gummy",
+        "Hard Candy",
+        "Licorice",
+        "Lollipop",
+        "Marshmallow",
+        "Mint",
+        "Toffee"
+      ]
+    },
+    "sugar_g": {
+      "type": "float",
+      "min": 12.9,
+      "max": 70.46,
+      "median": 67.95
+    },
+    "calories": {
+      "type": "int",
+      "min": 32,
+      "max": 536,
+      "median": 461
+    },
+    "is_sugar_free": {
+      "type": "bool"
+    },
+    "is_organic": {
+      "type": "bool"
+    },
+    "brand_origin": {
+      "type": "categorical",
+      "values": [
+        "Belgium",
+        "Germany",
+        "Italy",
+        "Japan",
+        "Switzerland",
+        "UK",
+        "USA"
+      ]
+    },
+    "flavor": {
+      "type": "categorical",
+      "values": [
+        "Mint",
+        "Strawberry",
+        "Tropical"
+      ]
+    },
+    "city": {
+      "type": "categorical",
+      "values": [
+        "Berlin",
+        "Dubai",
+        "London",
+        "Mumbai",
+        "New York",
+        "Paris",
+        "Singapore",
+        "Sydney",
+        "Tokyo",
+        "Toronto"
+      ]
+    }
+  }
+}

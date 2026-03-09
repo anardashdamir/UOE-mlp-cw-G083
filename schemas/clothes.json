@@ -1,0 +1,67 @@
+{
+  "name": "clothes",
+  "row_count": 1000,
+  "columns": {
+    "Brand": {
+      "type": "categorical",
+      "values": [
+        "Adidas",
+        "New Balance",
+        "Nike",
+        "Puma",
+        "Reebok",
+        "Under Armour"
+      ]
+    },
+    "Category": {
+      "type": "categorical",
+      "values": [
+        "Dress",
+        "Jacket",
+        "Jeans",
+        "Shoes",
+        "Sweater",
+        "T-shirt"
+      ]
+    },
+    "Color": {
+      "type": "categorical",
+      "values": [
+        "Black",
+        "Blue",
+        "Green",
+        "Red",
+        "White",
+        "Yellow"
+      ]
+    },
+    "Size": {
+      "type": "categorical",
+      "values": [
+        "L",
+        "M",
+        "S",
+        "XL",
+        "XS",
+        "XXL"
+      ]
+    },
+    "Material": {
+      "type": "categorical",
+      "values": [
+        "Cotton",
+        "Denim",
+        "Nylon",
+        "Polyester",
+        "Silk",
+        "Wool"
+      ]
+    },
+    "Price": {
+      "type": "int",
+      "min": 10,
+      "max": 199,
+      "median": 108
+    }
+  }
+}

@@ -1,0 +1,87 @@
+{
+  "name": "dog_breed_stats",
+  "row_count": 20851,
+  "columns": {
+    "intelligence_rank": {
+      "type": "int",
+      "min": 6,
+      "max": 117,
+      "median": 85
+    },
+    "weight_kg": {
+      "type": "float",
+      "min": 16.47,
+      "max": 73.82,
+      "median": 51.2
+    },
+    "height_cm": {
+      "type": "float",
+      "min": 16.11,
+      "max": 82.31,
+      "median": 43.89
+    },
+    "lifespan_years": {
+      "type": "float",
+      "min": 8.89,
+      "max": 16.84,
+      "median": 11.32
+    },
+    "group": {
+      "type": "categorical",
+      "values": [
+        "Herding",
+        "Hound",
+        "Non-Sporting",
+        "Sporting",
+        "Terrier",
+        "Toy",
+        "Working"
+      ]
+    },
+    "shedding_level": {
+      "type": "categorical",
+      "values": [
+        "High",
+        "Low",
+        "Moderate",
+        "Very High"
+      ]
+    },
+    "energy_level": {
+      "type": "categorical",
+      "values": [
+        "High",
+        "Low",
+        "Medium",
+        "Very High"
+      ]
+    },
+    "trainability": {
+      "type": "categorical",
+      "values": [
+        "Easy",
+        "Hard",
+        "Moderate",
+        "Stubborn"
+      ]
+    },
+    "is_hypoallergenic": {
+      "type": "bool"
+    },
+    "popularity_rank": {
+      "type": "int",
+      "min": 39,
+      "max": 155,
+      "median": 92
+    },
+    "price_usd": {
+      "type": "float",
+      "min": 1437.94,
+      "max": 4494.07,
+      "median": 4410.96
+    },
+    "recommended": {
+      "type": "bool"
+    }
+  }
+}

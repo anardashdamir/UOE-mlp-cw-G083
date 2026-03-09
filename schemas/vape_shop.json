@@ -1,0 +1,59 @@
+{
+  "name": "vape_shop",
+  "row_count": 36671,
+  "columns": {
+    "price": {
+      "type": "float",
+      "min": 10.14,
+      "max": 140.31,
+      "median": 139.88
+    },
+    "product_type": {
+      "type": "categorical",
+      "values": [
+        "Box Mod",
+        "Coil",
+        "Disposable",
+        "E-Liquid",
+        "Pen Style",
+        "Pod System"
+      ]
+    },
+    "nicotine_mg": {
+      "type": "int",
+      "min": 1,
+      "max": 41,
+      "median": 8
+    },
+    "battery_mah": {
+      "type": "int",
+      "min": 234,
+      "max": 3889,
+      "median": 1926
+    },
+    "flavor": {
+      "type": "categorical",
+      "values": [
+        "Candy",
+        "Coffee",
+        "Dessert",
+        "Fruit",
+        "Menthol",
+        "Mint",
+        "Tobacco"
+      ]
+    },
+    "is_rechargeable": {
+      "type": "bool"
+    },
+    "is_refillable": {
+      "type": "bool"
+    },
+    "rating": {
+      "type": "float",
+      "min": 1.57,
+      "max": 4.32,
+      "median": 2.41
+    }
+  }
+}

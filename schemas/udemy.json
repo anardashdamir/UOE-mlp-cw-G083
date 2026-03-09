@@ -1,0 +1,66 @@
+{
+  "name": "udemy",
+  "row_count": 3678,
+  "columns": {
+    "is_paid": {
+      "type": "bool",
+      "values": [
+        true,
+        false
+      ]
+    },
+    "price": {
+      "type": "int",
+      "min": 0,
+      "max": 200,
+      "median": 45
+    },
+    "num_subscribers": {
+      "type": "int",
+      "min": 0,
+      "max": 268923,
+      "median": 911
+    },
+    "num_reviews": {
+      "type": "int",
+      "min": 0,
+      "max": 27445,
+      "median": 18
+    },
+    "num_lectures": {
+      "type": "int",
+      "min": 0,
+      "max": 779,
+      "median": 25
+    },
+    "level": {
+      "type": "categorical",
+      "values": [
+        "All Levels",
+        "Beginner Level",
+        "Expert Level",
+        "Intermediate Level"
+      ]
+    },
+    "content_duration": {
+      "type": "float",
+      "min": 0.0,
+      "max": 78.5,
+      "median": 2.0
+    },
+    "published_timestamp": {
+      "type": "date",
+      "min": "2011-07-09",
+      "max": "2017-07-06"
+    },
+    "subject": {
+      "type": "categorical",
+      "values": [
+        "Business Finance",
+        "Graphic Design",
+        "Musical Instruments",
+        "Web Development"
+      ]
+    }
+  }
+}

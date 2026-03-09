@@ -1,0 +1,142 @@
+{
+  "name": "starbucks",
+  "row_count": 242,
+  "columns": {
+    "Beverage_category": {
+      "type": "categorical",
+      "values": [
+        "Classic Espresso Drinks",
+        "Coffee",
+        "Frappuccino® Blended Coffee",
+        "Frappuccino® Blended Crème",
+        "Frappuccino® Light Blended Coffee",
+        "Shaken Iced Beverages",
+        "Signature Espresso Drinks",
+        "Smoothies",
+        "Tazo® Tea Drinks"
+      ]
+    },
+    "Beverage": {
+      "type": "categorical",
+      "values": [
+        "Banana Chocolate Smoothie",
+        "Brewed Coffee",
+        "Caffè Americano",
+        "Caffè Latte",
+        "Caffè Mocha (Without Whipped Cream)",
+        "Cappuccino",
+        "Caramel",
+        "Caramel (Without Whipped Cream)",
+        "Caramel Apple Spice (Without Whipped Cream)",
+        "Caramel Macchiato",
+        "Coffee",
+        "Espresso",
+        "Hot Chocolate (Without Whipped Cream)",
+        "Iced Brewed Coffee (With Classic Syrup)",
+        "Iced Brewed Coffee (With Milk & Classic Syrup)",
+        "Java Chip",
+        "Java Chip (Without Whipped Cream)",
+        "Mocha",
+        "Mocha (Without Whipped Cream)",
+        "Orange Mango Banana Smoothie",
+        "Shaken Iced Tazo® Tea (With Classic Syrup)",
+        "Shaken Iced Tazo® Tea Lemonade (With Classic Syrup)",
+        "Skinny Latte (Any Flavour)",
+        "Strawberries & Crème (Without Whipped Cream)",
+        "Strawberry Banana Smoothie",
+        "Tazo® Chai Tea Latte",
+        "Tazo® Full-Leaf Red Tea Latte (Vanilla Rooibos)",
+        "Tazo® Full-Leaf Tea Latte",
+        "Tazo® Green Tea Latte",
+        "Tazo® Tea",
+        "Vanilla Bean (Without Whipped Cream)",
+        "Vanilla Latte (Or Other Flavoured Latte)",
+        "White Chocolate Mocha (Without Whipped Cream)"
+      ]
+    },
+    "Beverage_prep": {
+      "type": "categorical",
+      "values": [
+        "2% Milk",
+        "Doppio",
+        "Grande",
+        "Grande Nonfat Milk",
+        "Short",
+        "Short Nonfat Milk",
+        "Solo",
+        "Soymilk",
+        "Tall",
+        "Tall Nonfat Milk",
+        "Venti",
+        "Venti Nonfat Milk",
+        "Whole Milk"
+      ]
+    },
+    "Calories": {
+      "type": "int",
+      "min": 0,
+      "max": 510,
+      "median": 185.0
+    },
+    "Total Fat (g)": {
+      "type": "float",
+      "min": 0.0,
+      "max": 15.0,
+      "median": 2.5
+    },
+    "Trans Fat (g)": {
+      "type": "float",
+      "min": 0.0,
+      "max": 9.0,
+      "median": 0.5
+    },
+    "Saturated Fat (g)": {
+      "type": "float",
+      "min": 0.0,
+      "max": 0.3,
+      "median": 0.0
+    },
+    "Sodium (mg)": {
+      "type": "int",
+      "min": 0,
+      "max": 40,
+      "median": 5.0
+    },
+    "Total Carbohydrates (g)": {
+      "type": "int",
+      "min": 0,
+      "max": 340,
+      "median": 125.0
+    },
+    "Cholesterol (mg)": {
+      "type": "int",
+      "min": 0,
+      "max": 90,
+      "median": 34.0
+    },
+    "Dietary Fibre (g)": {
+      "type": "int",
+      "min": 0,
+      "max": 8,
+      "median": 0.0
+    },
+    "Sugars (g)": {
+      "type": "int",
+      "min": 0,
+      "max": 84,
+      "median": 32.0
+    },
+    "Protein (g)": {
+      "type": "float",
+      "min": 0.0,
+      "max": 20.0,
+      "median": 6.0
+    },
+    "Caffeine (mg)": {
+      "type": "int",
+      "min": 0,
+      "max": 410,
+      "median": 75
+    }
+  }
+}

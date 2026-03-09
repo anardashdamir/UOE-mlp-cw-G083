@@ -1,0 +1,74 @@
+{
+  "name": "whiskey_collection",
+  "row_count": 197,
+  "columns": {
+    "price": {
+      "type": "float",
+      "min": 475.32,
+      "max": 4861.27,
+      "median": 1468.84
+    },
+    "age_years": {
+      "type": "int",
+      "min": 14,
+      "max": 42,
+      "median": 34
+    },
+    "abv_percent": {
+      "type": "float",
+      "min": 43.77,
+      "max": 60.11,
+      "median": 48.38
+    },
+    "volume_ml": {
+      "type": "int",
+      "min": 236,
+      "max": 803,
+      "median": 346
+    },
+    "type": {
+      "type": "categorical",
+      "values": [
+        "Bourbon",
+        "Irish",
+        "Scotch"
+      ]
+    },
+    "region": {
+      "type": "categorical",
+      "values": [
+        "Cork",
+        "Highland",
+        "Hokkaido",
+        "Islay",
+        "Kentucky",
+        "Lowland",
+        "Speyside"
+      ]
+    },
+    "rating": {
+      "type": "float",
+      "min": 17.9,
+      "max": 97.96,
+      "median": 56.78
+    },
+    "is_single_malt": {
+      "type": "bool"
+    },
+    "is_cask_strength": {
+      "type": "bool"
+    },
+    "flavor_profile": {
+      "type": "categorical",
+      "values": [
+        "Caramel",
+        "Floral",
+        "Fruity",
+        "Peaty",
+        "Smoky",
+        "Spicy",
+        "Vanilla"
+      ]
+    }
+  }
+}

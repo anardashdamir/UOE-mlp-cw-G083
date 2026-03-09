@@ -1,0 +1,66 @@
+{
+  "name": "podcast_episodes",
+  "row_count": 247021,
+  "columns": {
+    "duration_minutes": {
+      "type": "int",
+      "min": 12,
+      "max": 182,
+      "median": 171
+    },
+    "downloads": {
+      "type": "int",
+      "min": 743859,
+      "max": 3940731,
+      "median": 3915425
+    },
+    "rating": {
+      "type": "float",
+      "min": 1.1,
+      "max": 4.89,
+      "median": 2.32
+    },
+    "episode_number": {
+      "type": "int",
+      "min": 115,
+      "max": 418,
+      "median": 127
+    },
+    "genre": {
+      "type": "categorical",
+      "values": [
+        "Business",
+        "Comedy",
+        "Education",
+        "Health",
+        "History",
+        "News",
+        "Science",
+        "Sports",
+        "Technology",
+        "True Crime"
+      ]
+    },
+    "is_explicit": {
+      "type": "bool"
+    },
+    "has_guest": {
+      "type": "bool"
+    },
+    "has_transcript": {
+      "type": "bool"
+    },
+    "listener_retention_percent": {
+      "type": "float",
+      "min": 14.0,
+      "max": 89.47,
+      "median": 38.96
+    },
+    "ad_count": {
+      "type": "int",
+      "min": 1,
+      "max": 5,
+      "median": 1
+    }
+  }
+}

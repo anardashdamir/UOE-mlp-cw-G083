@@ -1,0 +1,60 @@
+{
+  "name": "cleaning_services",
+  "row_count": 394,
+  "columns": {
+    "price_per_hour": {
+      "type": "float",
+      "min": 29.17,
+      "max": 79.03,
+      "median": 36.57
+    },
+    "service_type": {
+      "type": "categorical",
+      "values": [
+        "Carpet",
+        "Commercial",
+        "Deep Clean",
+        "Move-Out",
+        "Post-Construction",
+        "Residential",
+        "Window"
+      ]
+    },
+    "min_hours": {
+      "type": "int",
+      "min": 1,
+      "max": 4,
+      "median": 2
+    },
+    "rating": {
+      "type": "float",
+      "min": 1.18,
+      "max": 4.72,
+      "median": 1.91
+    },
+    "insured": {
+      "type": "bool"
+    },
+    "eco_friendly_products": {
+      "type": "bool"
+    },
+    "weekend_available": {
+      "type": "bool"
+    },
+    "team_size": {
+      "type": "int",
+      "min": 2,
+      "max": 6,
+      "median": 3
+    },
+    "years_in_business": {
+      "type": "int",
+      "min": 7,
+      "max": 26,
+      "median": 15
+    },
+    "is_active": {
+      "type": "bool"
+    }
+  }
+}

@@ -1,0 +1,99 @@
+{
+  "name": "vintage_cars",
+  "row_count": 424194,
+  "columns": {
+    "price_usd": {
+      "type": "float",
+      "min": 443774.96,
+      "max": 4092348.15,
+      "median": 4066343.09
+    },
+    "year": {
+      "type": "int",
+      "min": 1932,
+      "max": 1985,
+      "median": 1972
+    },
+    "make": {
+      "type": "categorical",
+      "values": [
+        "Chevrolet",
+        "Dodge",
+        "Ferrari",
+        "Ford",
+        "Jaguar",
+        "MG",
+        "Mercedes",
+        "Porsche",
+        "Triumph",
+        "Volkswagen"
+      ]
+    },
+    "mileage_km": {
+      "type": "int",
+      "min": 85932,
+      "max": 432664,
+      "median": 133587
+    },
+    "engine_cc": {
+      "type": "int",
+      "min": 877,
+      "max": 7294,
+      "median": 1785
+    },
+    "horsepower": {
+      "type": "int",
+      "min": 133,
+      "max": 399,
+      "median": 266
+    },
+    "condition": {
+      "type": "categorical",
+      "values": [
+        "Concours",
+        "Excellent",
+        "Fair",
+        "Good",
+        "Project"
+      ]
+    },
+    "transmission": {
+      "type": "categorical",
+      "values": [
+        "Automatic",
+        "Manual"
+      ]
+    },
+    "is_original_engine": {
+      "type": "bool"
+    },
+    "is_numbers_matching": {
+      "type": "bool"
+    },
+    "body_style": {
+      "type": "categorical",
+      "values": [
+        "Convertible",
+        "Coupe",
+        "Roadster",
+        "Sedan",
+        "Wagon"
+      ]
+    },
+    "color": {
+      "type": "categorical",
+      "values": [
+        "Black",
+        "Blue",
+        "British Racing Green",
+        "Green",
+        "Red",
+        "Silver",
+        "White"
+      ]
+    },
+    "recommended": {
+      "type": "bool"
+    }
+  }
+}

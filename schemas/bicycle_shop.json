@@ -1,0 +1,61 @@
+{
+  "name": "bicycle_shop",
+  "row_count": 2690,
+  "columns": {
+    "price": {
+      "type": "float",
+      "min": 980.03,
+      "max": 6296.05,
+      "median": 3919.31
+    },
+    "bike_type": {
+      "type": "categorical",
+      "values": [
+        "BMX",
+        "Cruiser",
+        "Electric",
+        "Folding",
+        "Gravel",
+        "Hybrid",
+        "Mountain",
+        "Road"
+      ]
+    },
+    "frame_material": {
+      "type": "categorical",
+      "values": [
+        "Aluminum",
+        "Carbon",
+        "Steel",
+        "Titanium"
+      ]
+    },
+    "wheel_size_inches": {
+      "type": "int",
+      "min": 12,
+      "max": 28,
+      "median": 19
+    },
+    "gears": {
+      "type": "int",
+      "min": 5,
+      "max": 26,
+      "median": 19
+    },
+    "weight_kg": {
+      "type": "float",
+      "min": 8.6,
+      "max": 24.61,
+      "median": 16.26
+    },
+    "is_electric": {
+      "type": "bool"
+    },
+    "rating": {
+      "type": "float",
+      "min": 1.57,
+      "max": 4.6,
+      "median": 4.25
+    }
+  }
+}

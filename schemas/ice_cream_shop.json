@@ -1,0 +1,63 @@
+{
+  "name": "ice_cream_shop",
+  "row_count": 372707,
+  "columns": {
+    "price": {
+      "type": "float",
+      "min": 3.11,
+      "max": 11.38,
+      "median": 9.38
+    },
+    "flavor": {
+      "type": "categorical",
+      "values": [
+        "Caramel",
+        "Chocolate",
+        "Coffee",
+        "Cookie Dough",
+        "Mango",
+        "Matcha",
+        "Mint",
+        "Pistachio",
+        "Strawberry",
+        "Vanilla"
+      ]
+    },
+    "calories": {
+      "type": "int",
+      "min": 118,
+      "max": 406,
+      "median": 141
+    },
+    "is_dairy_free": {
+      "type": "bool"
+    },
+    "is_sugar_free": {
+      "type": "bool"
+    },
+    "serving_type": {
+      "type": "categorical",
+      "values": [
+        "Cone",
+        "Cup",
+        "Milkshake",
+        "Pint",
+        "Sundae"
+      ]
+    },
+    "size": {
+      "type": "categorical",
+      "values": [
+        "Large",
+        "Medium",
+        "Small"
+      ]
+    },
+    "fat_g": {
+      "type": "float",
+      "min": 4.25,
+      "max": 26.38,
+      "median": 18.03
+    }
+  }
+}

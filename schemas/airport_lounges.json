@@ -1,0 +1,62 @@
+{
+  "name": "airport_lounges",
+  "row_count": 92682,
+  "columns": {
+    "access_fee": {
+      "type": "float",
+      "min": 23.17,
+      "max": 83.96,
+      "median": 45.86
+    },
+    "capacity": {
+      "type": "int",
+      "min": 120,
+      "max": 401,
+      "median": 274
+    },
+    "has_shower": {
+      "type": "bool"
+    },
+    "has_bar": {
+      "type": "bool"
+    },
+    "has_buffet": {
+      "type": "bool"
+    },
+    "has_wifi": {
+      "type": "bool"
+    },
+    "has_sleeping_pods": {
+      "type": "bool"
+    },
+    "noise_level": {
+      "type": "categorical",
+      "values": [
+        "Busy",
+        "Moderate",
+        "Quiet"
+      ]
+    },
+    "rating": {
+      "type": "float",
+      "min": 1.31,
+      "max": 4.61,
+      "median": 1.82
+    },
+    "city": {
+      "type": "categorical",
+      "values": [
+        "Berlin",
+        "Dubai",
+        "London",
+        "Mumbai",
+        "New York",
+        "Paris",
+        "Singapore",
+        "Sydney",
+        "Tokyo",
+        "Toronto"
+      ]
+    }
+  }
+}

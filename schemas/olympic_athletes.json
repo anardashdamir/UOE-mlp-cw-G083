@@ -1,0 +1,120 @@
+{
+  "name": "olympic_athletes",
+  "row_count": 205844,
+  "columns": {
+    "sex": {
+      "type": "categorical",
+      "values": [
+        "female",
+        "male"
+      ]
+    },
+    "age": {
+      "type": "float",
+      "min": 11.0,
+      "max": 71.0,
+      "median": 24.0
+    },
+    "height_cm": {
+      "type": "float",
+      "min": 127.0,
+      "max": 226.0,
+      "median": 175.0
+    },
+    "weight_kg": {
+      "type": "float",
+      "min": 25.0,
+      "max": 214.0,
+      "median": 70.0
+    },
+    "noc": {
+      "type": "str"
+    },
+    "year": {
+      "type": "int",
+      "min": 1896,
+      "max": 2016,
+      "median": 1992
+    },
+    "season": {
+      "type": "categorical",
+      "values": [
+        "Summer",
+        "Winter"
+      ]
+    },
+    "sport": {
+      "type": "categorical",
+      "values": [
+        "Alpine Skiing",
+        "Archery",
+        "Art Competitions",
+        "Athletics",
+        "Badminton",
+        "Baseball",
+        "Basketball",
+        "Beach Volleyball",
+        "Biathlon",
+        "Bobsleigh",
+        "Boxing",
+        "Canoeing",
+        "Cross Country Skiing",
+        "Curling",
+        "Cycling",
+        "Diving",
+        "Equestrianism",
+        "Fencing",
+        "Figure Skating",
+        "Football",
+        "Freestyle Skiing",
+        "Golf",
+        "Gymnastics",
+        "Handball",
+        "Hockey",
+        "Ice Hockey",
+        "Judo",
+        "Lacrosse",
+        "Luge",
+        "Modern Pentathlon",
+        "Motorboating",
+        "Nordic Combined",
+        "Rhythmic Gymnastics",
+        "Rowing",
+        "Rugby",
+        "Rugby Sevens",
+        "Sailing",
+        "Shooting",
+        "Short Track Speed Skating",
+        "Skeleton",
+        "Ski Jumping",
+        "Snowboarding",
+        "Softball",
+        "Speed Skating",
+        "Swimming",
+        "Synchronized Swimming",
+        "Table Tennis",
+        "Taekwondo",
+        "Tennis",
+        "Trampolining",
+        "Triathlon",
+        "Tug-Of-War",
+        "Volleyball",
+        "Water Polo",
+        "Weightlifting",
+        "Wrestling"
+      ]
+    },
+    "event": {
+      "type": "str"
+    },
+    "medal": {
+      "type": "categorical",
+      "values": [
+        "Bronze",
+        "Gold",
+        "None",
+        "Silver"
+      ]
+    }
+  }
+}

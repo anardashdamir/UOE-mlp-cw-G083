@@ -1,0 +1,53 @@
+{
+  "name": "beekeeping_supplies",
+  "row_count": 98881,
+  "columns": {
+    "price": {
+      "type": "float",
+      "min": 35.48,
+      "max": 376.34,
+      "median": 274.66
+    },
+    "category": {
+      "type": "categorical",
+      "values": [
+        "Extractor",
+        "Feeder",
+        "Frame",
+        "Hive",
+        "Medication",
+        "Smoker",
+        "Suit",
+        "Tools"
+      ]
+    },
+    "weight_kg": {
+      "type": "float",
+      "min": 1.55,
+      "max": 25.86,
+      "median": 19.34
+    },
+    "is_beginner_friendly": {
+      "type": "bool"
+    },
+    "is_assembled": {
+      "type": "bool"
+    },
+    "rating": {
+      "type": "float",
+      "min": 1.69,
+      "max": 4.95,
+      "median": 1.99
+    },
+    "hive_compatibility": {
+      "type": "categorical",
+      "values": [
+        "Flow Hive",
+        "Langstroth",
+        "Top Bar",
+        "Universal",
+        "Warre"
+      ]
+    }
+  }
+}

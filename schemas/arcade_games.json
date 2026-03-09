@@ -1,0 +1,53 @@
+{
+  "name": "arcade_games",
+  "row_count": 43383,
+  "columns": {
+    "price_per_play": {
+      "type": "float",
+      "min": 1.16,
+      "max": 3.99,
+      "median": 2.06
+    },
+    "game_type": {
+      "type": "categorical",
+      "values": [
+        "Basketball",
+        "Claw Machine",
+        "Fighting",
+        "Pinball",
+        "Racing",
+        "Rhythm",
+        "Shooting"
+      ]
+    },
+    "player_count_max": {
+      "type": "int",
+      "min": 1,
+      "max": 4,
+      "median": 2
+    },
+    "difficulty": {
+      "type": "categorical",
+      "values": [
+        "Easy",
+        "Hard",
+        "Medium"
+      ]
+    },
+    "gives_tickets": {
+      "type": "bool"
+    },
+    "year_released": {
+      "type": "int",
+      "min": 1990,
+      "max": 2023,
+      "median": 2015
+    },
+    "rating": {
+      "type": "float",
+      "min": 1.54,
+      "max": 4.83,
+      "median": 2.7
+    }
+  }
+}

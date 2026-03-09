@@ -1,0 +1,51 @@
+{
+  "name": "trampoline_park",
+  "row_count": 184500,
+  "columns": {
+    "entry_price": {
+      "type": "float",
+      "min": 14.37,
+      "max": 30.92,
+      "median": 24.71
+    },
+    "session_minutes": {
+      "type": "int",
+      "min": 50,
+      "max": 100,
+      "median": 52
+    },
+    "min_age": {
+      "type": "int",
+      "min": 2,
+      "max": 7,
+      "median": 7
+    },
+    "attraction_count": {
+      "type": "int",
+      "min": 6,
+      "max": 27,
+      "median": 18
+    },
+    "has_foam_pit": {
+      "type": "bool"
+    },
+    "has_dodgeball": {
+      "type": "bool"
+    },
+    "has_ninja_course": {
+      "type": "bool"
+    },
+    "max_capacity": {
+      "type": "int",
+      "min": 88,
+      "max": 438,
+      "median": 378
+    },
+    "rating": {
+      "type": "float",
+      "min": 1.6,
+      "max": 4.19,
+      "median": 1.74
+    }
+  }
+}

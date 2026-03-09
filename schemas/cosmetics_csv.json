@@ -1,0 +1,67 @@
+{
+  "name": "cosmetics.csv",
+  "row_count": 1472,
+  "columns": {
+    "Label": {
+      "type": "categorical",
+      "values": [
+        "Cleanser",
+        "Eye cream",
+        "Face Mask",
+        "Moisturizer",
+        "Sun protect",
+        "Treatment"
+      ]
+    },
+    "Brand": {
+      "type": "str"
+    },
+    "Price": {
+      "type": "int",
+      "min": 3,
+      "max": 370,
+      "median": 42
+    },
+    "Rank": {
+      "type": "float",
+      "min": 0.0,
+      "max": 5.0,
+      "median": 4.3
+    },
+    "dry_and_oily": {
+      "type": "bool",
+      "values": [
+        true,
+        false
+      ]
+    },
+    "dry": {
+      "type": "bool",
+      "values": [
+        true,
+        false
+      ]
+    },
+    "normal": {
+      "type": "bool",
+      "values": [
+        true,
+        false
+      ]
+    },
+    "sensitive": {
+      "type": "bool",
+      "values": [
+        true,
+        false
+      ]
+    },
+    "oily": {
+      "type": "bool",
+      "values": [
+        true,
+        false
+      ]
+    }
+  }
+}

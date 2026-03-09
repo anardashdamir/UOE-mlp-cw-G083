@@ -1,0 +1,44 @@
+{
+  "name": "electronics_sales",
+  "row_count": 9000,
+  "columns": {
+    "Product Category": {
+      "type": "categorical",
+      "values": [
+        "Headphones",
+        "Laptops",
+        "Smart Watches",
+        "Smartphones",
+        "Tablets"
+      ]
+    },
+    "Product Brand": {
+      "type": "categorical",
+      "values": [
+        "Apple",
+        "HP",
+        "Other Brands",
+        "Samsung",
+        "Sony"
+      ]
+    },
+    "Product Price": {
+      "type": "float",
+      "min": 100.38,
+      "max": 2999.85,
+      "median": 1513.02
+    },
+    "Purchase Frequency": {
+      "type": "int",
+      "min": 1,
+      "max": 19,
+      "median": 10
+    },
+    "Customer Satisfaction": {
+      "type": "int",
+      "min": 1,
+      "max": 5,
+      "median": 3
+    }
+  }
+}

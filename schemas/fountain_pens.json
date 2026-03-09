@@ -1,0 +1,80 @@
+{
+  "name": "fountain_pens",
+  "row_count": 226074,
+  "columns": {
+    "price": {
+      "type": "float",
+      "min": 53.03,
+      "max": 2785.19,
+      "median": 910.52
+    },
+    "nib_size": {
+      "type": "categorical",
+      "values": [
+        "Broad",
+        "Extra Fine",
+        "Fine",
+        "Flex",
+        "Medium",
+        "Stub"
+      ]
+    },
+    "nib_material": {
+      "type": "categorical",
+      "values": [
+        "14K Gold",
+        "18K Gold",
+        "21K Gold",
+        "Titanium"
+      ]
+    },
+    "filling_system": {
+      "type": "categorical",
+      "values": [
+        "Cartridge",
+        "Converter",
+        "Eyedropper",
+        "Piston",
+        "Vacuum"
+      ]
+    },
+    "brand": {
+      "type": "categorical",
+      "values": [
+        "Lamy",
+        "Montblanc",
+        "Pelikan",
+        "Pilot",
+        "Platinum",
+        "Sailor",
+        "TWSBI",
+        "Waterman"
+      ]
+    },
+    "body_material": {
+      "type": "categorical",
+      "values": [
+        "Celluloid",
+        "Ebonite",
+        "Metal",
+        "Resin",
+        "Wood"
+      ]
+    },
+    "weight_g": {
+      "type": "int",
+      "min": 16,
+      "max": 54,
+      "median": 33
+    },
+    "is_limited_edition": {
+      "type": "bool"
+    },
+    "ink_capacity_ml": {
+      "type": "float",
+      "min": 0.66,
+      "max": 2.49,
+      "median": 0.95
+    }
+  }
+}

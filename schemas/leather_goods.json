@@ -1,0 +1,66 @@
+{
+  "name": "leather_goods",
+  "row_count": 32238,
+  "columns": {
+    "price": {
+      "type": "float",
+      "min": 467.69,
+      "max": 1972.89,
+      "median": 1301.73
+    },
+    "leather_type": {
+      "type": "categorical",
+      "values": [
+        "Bonded",
+        "Full Grain",
+        "Genuine",
+        "Top Grain",
+        "Vegan"
+      ]
+    },
+    "product_type": {
+      "type": "categorical",
+      "values": [
+        "Briefcase",
+        "Jacket",
+        "Shoes",
+        "Wallet"
+      ]
+    },
+    "color": {
+      "type": "categorical",
+      "values": [
+        "Brown",
+        "Burgundy",
+        "Cognac"
+      ]
+    },
+    "origin": {
+      "type": "categorical",
+      "values": [
+        "Argentina",
+        "India",
+        "Italy",
+        "UK"
+      ]
+    },
+    "is_handmade": {
+      "type": "bool"
+    },
+    "has_warranty": {
+      "type": "bool"
+    },
+    "weight_g": {
+      "type": "int",
+      "min": 334,
+      "max": 2792,
+      "median": 344
+    },
+    "rating": {
+      "type": "float",
+      "min": 1.03,
+      "max": 4.29,
+      "median": 3.29
+    }
+  }
+}

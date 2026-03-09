@@ -1,0 +1,66 @@
+{
+  "name": "thrift_store",
+  "row_count": 36173,
+  "columns": {
+    "price": {
+      "type": "float",
+      "min": 4.37,
+      "max": 80.26,
+      "median": 68.74
+    },
+    "category": {
+      "type": "categorical",
+      "values": [
+        "Books",
+        "Clothing",
+        "Electronics",
+        "Furniture",
+        "Jewelry",
+        "Shoes",
+        "Toys"
+      ]
+    },
+    "condition": {
+      "type": "categorical",
+      "values": [
+        "Fair",
+        "Good",
+        "Like New",
+        "Worn"
+      ]
+    },
+    "brand_tier": {
+      "type": "categorical",
+      "values": [
+        "Budget",
+        "Luxury",
+        "Premium",
+        "Standard"
+      ]
+    },
+    "original_price": {
+      "type": "float",
+      "min": 126.44,
+      "max": 460.48,
+      "median": 440.22
+    },
+    "days_on_shelf": {
+      "type": "int",
+      "min": 13,
+      "max": 74,
+      "median": 73
+    },
+    "is_vintage": {
+      "type": "bool"
+    },
+    "discount_percent": {
+      "type": "float",
+      "min": 1.32,
+      "max": 68.24,
+      "median": 61.35
+    },
+    "is_active": {
+      "type": "bool"
+    }
+  }
+}

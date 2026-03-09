@@ -1,0 +1,151 @@
+"""Typer CLI for AutoFilter."""
+
+import json
+from pathlib import Path
+from typing import Optional
+
+import typer
+
+from .config import Config
+
+app = typer.Typer(
+    name="autofilter",
+    help="Convert natural-language queries into structured filter expressions.",
+    add_completion=False,
+)
+
+_config_option = typer.Option(None, "--config", "-c", help="Path to config.yaml.")
+
+
+@app.command()
+def train(
+    config: Optional[Path] = _config_option,
+    epochs: Optional[int] = typer.Option(None, "--epochs", "-e"),
+    batch_size: Optional[int] = typer.Option(None, "--batch-size", "-b"),
+    lr: Optional[float] = typer.Option(None, "--lr"),
+    lora_r: Optional[int] = typer.Option(None, "--lora-r"),
+    output_dir: Optional[Path] = typer.Option(None, "--output-dir", "-o"),
+    max_steps: Optional[int] = typer.Option(None, "--max-steps"),
+):
+    """Fine-tune the base model with LoRA on your filter dataset."""
+    cfg = Config.from_yaml(
+        config,
+        num_epochs=epochs,
+        batch_size=batch_size,
+        learning_rate=lr,
+        lora_r=lora_r,
+        output_dir=output_dir,
+        max_steps=max_steps,
+    )
+    t = cfg.training
+    print(f"Training | epochs={t.num_epochs} lr={t.learning_rate} lora_r={cfg.lora.r}")
+
+    from .train import main as train_main
+
+    train_main(cfg)
+
+
+@app.command()
+def predict(
+    query: str = typer.Argument(..., help="Natural-language filter query."),
+    schema: Path = typer.Argument(..., help="Path to a JSON schema file."),
+    config: Optional[Path] = _config_option,
+    temperature: Optional[float] = typer.Option(None, "--temperature", "-t"),
+    quantization: str = typer.Option("fp16", "--quantization", "-q", help="Quantization: fp16, int8, int4."),
+):
+    """Generate a filter expression from a natural-language query."""
+    from .inference import QUANTIZATION_MODES
+
+    if quantization not in QUANTIZATION_MODES:
+        print(f"Error: invalid quantization '{quantization}'. Choose from: {', '.join(QUANTIZATION_MODES)}")
+        raise typer.Exit(1)
+
+    if not schema.exists():
+        print(f"Error: schema file not found: {schema}")
+        raise typer.Exit(1)
+
+    cfg = Config.from_yaml(config, temperature=temperature)
+
+    from .inference import load_model, predict as run_predict
+
+    model, tokenizer = load_model(cfg, quantization=quantization)
+    result = run_predict(query, str(schema), model=model, tokenizer=tokenizer, cfg=cfg)
+    print(f"Query:   {query}")
+    print(f"Filters: {result}")
+
+
+@app.command()
+def evaluate(
+    config: Optional[Path] = _config_option,
+    max_samples: Optional[int] = typer.Option(None, "--max-samples", "-n"),
+    zero_shot: bool = typer.Option(False, "--zero-shot", help="Evaluate base model without adapter."),
+    quantization: list[str] = typer.Option(
+        ["fp16"], "--quantization", "-q",
+        help="Quantization mode(s): fp16, int8, int4. Pass multiple times to compare.",
+    ),
+):
+    """Evaluate the fine-tuned model on held-out schemas.
+
+    Examples:
+      python main.py evaluate                         # default fp16
+      python main.py evaluate -q fp16 -q int8 -q int4 # compare all three
+      python main.py evaluate -q int4 --zero-shot     # zero-shot at int4
+    """
+    from .inference import QUANTIZATION_MODES
+
+    for q in quantization:
+        if q not in QUANTIZATION_MODES:
+            print(f"Error: invalid quantization '{q}'. Choose from: {', '.join(QUANTIZATION_MODES)}")
+            raise typer.Exit(1)
+
+    cfg = Config.from_yaml(config)
+
+    from .evaluate import main as eval_main
+
+    if zero_shot:
+        print("Zero-shot evaluation (base model, no adapter)")
+    eval_main(cfg, max_samples=max_samples, zero_shot=zero_shot, quantizations=quantization)
+
+
+@app.command()
+def schemas(
+    config: Optional[Path] = _config_option,
+    verbose: bool = typer.Option(False, "--verbose", "-v"),
+):
+    """List available dataset schemas."""
+    cfg = Config.from_yaml(config)
+
+    if not cfg.paths.schema_dir.exists():
+        print(f"Error: schema directory not found: {cfg.paths.schema_dir}")
+        raise typer.Exit(1)
+
+    schema_files = sorted(cfg.paths.schema_dir.glob("*.json"))
+    if not schema_files:
+        print("No schemas found.")
+        raise typer.Exit(0)
+
+    for sf in schema_files:
+        with open(sf) as f:
+            s = json.load(f)
+        cols = s.get("columns", {})
+        line = f"{s.get('name', sf.stem):<35s} {len(cols):>3d} cols  {s.get('row_count', '?'):>8} rows"
+        if verbose:
+            names = ", ".join(list(cols.keys())[:8])
+            if len(cols) > 8:
+                names += ", ..."
+            line += f"  [{names}]"
+        print(line)
+
+
+@app.command(name="data-stats")
+def data_stats(config: Optional[Path] = _config_option):
+    """Show training/eval dataset statistics."""
+    from .data_loader import load_datasets
+
+    cfg = Config.from_yaml(config)
+    train_ds, eval_ds = load_datasets(cfg)
+
+    print(f"Train:  {len(train_ds)}")
+    print(f"Eval:   {len(eval_ds)}")
+    print(f"Total:  {len(train_ds) + len(eval_ds)}")
+    print(f"\nEval schemas: {', '.join(cfg.eval.schemas)}")

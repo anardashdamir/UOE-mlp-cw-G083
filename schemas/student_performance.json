@@ -1,0 +1,79 @@
+{
+  "name": "student_performance",
+  "row_count": 2054,
+  "columns": {
+    "math_score": {
+      "type": "int",
+      "min": 23,
+      "max": 77,
+      "median": 62
+    },
+    "reading_score": {
+      "type": "int",
+      "min": 8,
+      "max": 80,
+      "median": 31
+    },
+    "science_score": {
+      "type": "int",
+      "min": 18,
+      "max": 83,
+      "median": 83
+    },
+    "study_hours_weekly": {
+      "type": "float",
+      "min": 9.93,
+      "max": 37.88,
+      "median": 20.39
+    },
+    "parent_education": {
+      "type": "categorical",
+      "values": [
+        "Associate",
+        "Bachelor",
+        "Doctorate",
+        "High School",
+        "Master",
+        "Some College"
+      ]
+    },
+    "lunch_type": {
+      "type": "categorical",
+      "values": [
+        "Free/Reduced",
+        "Standard"
+      ]
+    },
+    "test_prep_course": {
+      "type": "bool"
+    },
+    "gender": {
+      "type": "categorical",
+      "values": [
+        "Female",
+        "Male"
+      ]
+    },
+    "absences": {
+      "type": "int",
+      "min": 5,
+      "max": 41,
+      "median": 19
+    },
+    "school_type": {
+      "type": "categorical",
+      "values": [
+        "Homeschool",
+        "Magnet",
+        "Private",
+        "Public"
+      ]
+    },
+    "year_established": {
+      "type": "int",
+      "min": 1966,
+      "max": 2012,
+      "median": 1979
+    }
+  }
+}

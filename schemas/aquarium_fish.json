@@ -1,0 +1,60 @@
+{
+  "name": "aquarium_fish",
+  "row_count": 382714,
+  "columns": {
+    "price": {
+      "type": "float",
+      "min": 99.07,
+      "max": 419.95,
+      "median": 324.54
+    },
+    "species_type": {
+      "type": "categorical",
+      "values": [
+        "Brackish",
+        "Freshwater",
+        "Saltwater"
+      ]
+    },
+    "size_cm": {
+      "type": "float",
+      "min": 9.81,
+      "max": 48.26,
+      "median": 32.34
+    },
+    "lifespan_years": {
+      "type": "int",
+      "min": 4,
+      "max": 18,
+      "median": 4
+    },
+    "tank_size_liters_min": {
+      "type": "int",
+      "min": 113,
+      "max": 465,
+      "median": 271
+    },
+    "temperament": {
+      "type": "categorical",
+      "values": [
+        "Aggressive",
+        "Peaceful",
+        "Semi-Aggressive"
+      ]
+    },
+    "care_level": {
+      "type": "categorical",
+      "values": [
+        "Difficult",
+        "Easy",
+        "Moderate"
+      ]
+    },
+    "is_schooling": {
+      "type": "bool"
+    },
+    "is_reef_safe": {
+      "type": "bool"
+    }
+  }
+}

@@ -1,0 +1,66 @@
+{
+  "name": "candle_shop",
+  "row_count": 326948,
+  "columns": {
+    "price": {
+      "type": "float",
+      "min": 8.26,
+      "max": 40.58,
+      "median": 30.65
+    },
+    "scent": {
+      "type": "categorical",
+      "values": [
+        "Cinnamon",
+        "Citrus",
+        "Jasmine",
+        "Lavender",
+        "Ocean Breeze",
+        "Pine",
+        "Rose",
+        "Sandalwood",
+        "Vanilla"
+      ]
+    },
+    "burn_time_hours": {
+      "type": "int",
+      "min": 22,
+      "max": 70,
+      "median": 24
+    },
+    "weight_g": {
+      "type": "int",
+      "min": 140,
+      "max": 682,
+      "median": 468
+    },
+    "wax_type": {
+      "type": "categorical",
+      "values": [
+        "Beeswax",
+        "Coconut",
+        "Paraffin",
+        "Soy"
+      ]
+    },
+    "is_natural": {
+      "type": "bool"
+    },
+    "container_type": {
+      "type": "categorical",
+      "values": [
+        "Ceramic",
+        "Glass Jar",
+        "Pillar",
+        "Tealight",
+        "Tin"
+      ]
+    },
+    "rating": {
+      "type": "float",
+      "min": 1.83,
+      "max": 4.03,
+      "median": 2.68
+    }
+  }
+}

@@ -1,0 +1,107 @@
+{
+  "name": "social_media_posts",
+  "row_count": 10343,
+  "columns": {
+    "likes": {
+      "type": "int",
+      "min": 1254589,
+      "max": 9031501,
+      "median": 4272553
+    },
+    "comments": {
+      "type": "int",
+      "min": 34504,
+      "max": 412526,
+      "median": 95405
+    },
+    "shares": {
+      "type": "int",
+      "min": 189553,
+      "max": 865069,
+      "median": 763074
+    },
+    "views": {
+      "type": "int",
+      "min": 18064892,
+      "max": 91185717,
+      "median": 68603519
+    },
+    "engagement_rate": {
+      "type": "float",
+      "min": 4.22,
+      "max": 15.32,
+      "median": 6.61
+    },
+    "platform": {
+      "type": "categorical",
+      "values": [
+        "Instagram",
+        "Reddit",
+        "TikTok"
+      ]
+    },
+    "content_type": {
+      "type": "categorical",
+      "values": [
+        "Carousel",
+        "Live",
+        "Photo",
+        "Reel",
+        "Story",
+        "Text",
+        "Video"
+      ]
+    },
+    "post_hour": {
+      "type": "int",
+      "min": 4,
+      "max": 23,
+      "median": 6
+    },
+    "hashtag_count": {
+      "type": "int",
+      "min": 0,
+      "max": 25,
+      "median": 19
+    },
+    "has_link": {
+      "type": "bool"
+    },
+    "is_sponsored": {
+      "type": "bool"
+    },
+    "is_verified_account": {
+      "type": "bool"
+    },
+    "follower_count": {
+      "type": "int",
+      "min": 7506555,
+      "max": 39748963,
+      "median": 9976725
+    },
+    "sentiment_score": {
+      "type": "float",
+      "min": -0.78,
+      "max": 0.68,
+      "median": -0.29
+    },
+    "reach": {
+      "type": "int",
+      "min": 1642997,
+      "max": 48920013,
+      "median": 18374505
+    },
+    "click_through_rate": {
+      "type": "float",
+      "min": 1.65,
+      "max": 9.01,
+      "median": 7.84
+    },
+    "save_count": {
+      "type": "int",
+      "min": 20,
+      "max": 96676,
+      "median": 83574
+    }
+  }
+}

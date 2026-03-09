@@ -1,0 +1,58 @@
+{
+  "name": "power_tools",
+  "row_count": 141101,
+  "columns": {
+    "price": {
+      "type": "float",
+      "min": 147.7,
+      "max": 781.01,
+      "median": 345.19
+    },
+    "tool_type": {
+      "type": "categorical",
+      "values": [
+        "Grinder",
+        "Router",
+        "Saw"
+      ]
+    },
+    "power_watts": {
+      "type": "int",
+      "min": 652,
+      "max": 2655,
+      "median": 2341
+    },
+    "weight_kg": {
+      "type": "float",
+      "min": 2.57,
+      "max": 11.62,
+      "median": 6.25
+    },
+    "is_cordless": {
+      "type": "bool"
+    },
+    "brand": {
+      "type": "categorical",
+      "values": [
+        "Bosch",
+        "DeWalt",
+        "Festool",
+        "Makita",
+        "Milwaukee",
+        "Ryobi"
+      ]
+    },
+    "warranty_years": {
+      "type": "int",
+      "min": 2,
+      "max": 6,
+      "median": 2
+    },
+    "rating": {
+      "type": "float",
+      "min": 1.86,
+      "max": 4.63,
+      "median": 3.3
+    }
+  }
+}

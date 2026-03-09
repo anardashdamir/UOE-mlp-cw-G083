@@ -1,0 +1,48 @@
+model:
+  name: Qwen/Qwen3-4B-Instruct-2507
+
+lora:
+  r: 8
+  alpha: 32
+  dropout: 0.05
+  target_modules:
+    - q_proj
+    - v_proj
+
+training:
+  num_epochs: 3
+  batch_size: 8
+  gradient_accumulation_steps: 4
+  learning_rate: 2e-5
+  lr_scheduler_type: cosine
+  warmup_ratio: 0.05
+  max_seq_length: 1024
+  max_steps: -1  # -1 = use num_epochs
+
+generation:
+  max_new_tokens: 256
+  temperature: 0.0
+
+wandb:
+  enabled: true
+  project: autofilter
+  api_key: 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
+  # run_name: my-experiment  # auto-generated if omitted
+
+paths:
+  data_path: data/data.json
+  schema_dir: schemas
+  output_dir: output
+
+eval:
+  schemas:
+    - hotel_bookings
+    - job_listings
+    - restaurant_business_rankings_2020
+    - wine_reviews
+    - zoo_animals
+    - diabetes
+    - diamonds
+    - electric_vehicles
+    - nba_players
+    - youtube_statistics

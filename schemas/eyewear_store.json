@@ -1,0 +1,60 @@
+{
+  "name": "eyewear_store",
+  "row_count": 3490,
+  "columns": {
+    "price": {
+      "type": "float",
+      "min": 136.03,
+      "max": 501.09,
+      "median": 283.01
+    },
+    "frame_type": {
+      "type": "categorical",
+      "values": [
+        "Full Rim",
+        "Rectangle",
+        "Round",
+        "Semi-Rimless"
+      ]
+    },
+    "material": {
+      "type": "categorical",
+      "values": [
+        "Acetate",
+        "Metal",
+        "TR-90",
+        "Titanium"
+      ]
+    },
+    "lens_type": {
+      "type": "categorical",
+      "values": [
+        "Bifocal",
+        "Blue Light",
+        "Polarized",
+        "Progressive",
+        "Single Vision"
+      ]
+    },
+    "gender": {
+      "type": "categorical",
+      "values": [
+        "Men",
+        "Unisex",
+        "Women"
+      ]
+    },
+    "is_prescription": {
+      "type": "bool"
+    },
+    "has_uv_protection": {
+      "type": "bool"
+    },
+    "rating": {
+      "type": "float",
+      "min": 1.51,
+      "max": 4.73,
+      "median": 3.15
+    }
+  }
+}

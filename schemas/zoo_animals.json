@@ -1,0 +1,69 @@
+{
+  "name": "zoo_animals",
+  "row_count": 101,
+  "columns": {
+    "hair": {
+      "type": "bool"
+    },
+    "feathers": {
+      "type": "bool"
+    },
+    "eggs": {
+      "type": "bool"
+    },
+    "milk": {
+      "type": "bool"
+    },
+    "airborne": {
+      "type": "bool"
+    },
+    "aquatic": {
+      "type": "bool"
+    },
+    "predator": {
+      "type": "bool"
+    },
+    "toothed": {
+      "type": "bool"
+    },
+    "backbone": {
+      "type": "bool"
+    },
+    "breathes": {
+      "type": "bool"
+    },
+    "venomous": {
+      "type": "bool"
+    },
+    "fins": {
+      "type": "bool"
+    },
+    "legs": {
+      "type": "int",
+      "min": 0,
+      "max": 8,
+      "median": 4.0
+    },
+    "tail": {
+      "type": "bool"
+    },
+    "domestic": {
+      "type": "bool"
+    },
+    "catsize": {
+      "type": "bool"
+    },
+    "Class_Type": {
+      "type": "categorical",
+      "values": [
+        "Amphibian",
+        "Bird",
+        "Bug",
+        "Fish",
+        "Invertebrate",
+        "Mammal",
+        "Reptile"
+      ]
+    }
+  }
+}

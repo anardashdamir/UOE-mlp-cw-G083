@@ -1,0 +1,72 @@
+{
+  "name": "fire_extinguishers",
+  "row_count": 67969,
+  "columns": {
+    "price": {
+      "type": "float",
+      "min": 49.21,
+      "max": 277.49,
+      "median": 63.87
+    },
+    "capacity_kg": {
+      "type": "float",
+      "min": 1.35,
+      "max": 9.85,
+      "median": 2.69
+    },
+    "type": {
+      "type": "categorical",
+      "values": [
+        "CO2",
+        "Dry Powder",
+        "Foam",
+        "Water",
+        "Wet Chemical"
+      ]
+    },
+    "fire_class": {
+      "type": "categorical",
+      "values": [
+        "A",
+        "ABC",
+        "B",
+        "C",
+        "D",
+        "K"
+      ]
+    },
+    "discharge_time_sec": {
+      "type": "int",
+      "min": 11,
+      "max": 30,
+      "median": 27
+    },
+    "throw_range_m": {
+      "type": "float",
+      "min": 2.85,
+      "max": 7.28,
+      "median": 5.76
+    },
+    "is_rechargeable": {
+      "type": "bool"
+    },
+    "is_wall_mounted": {
+      "type": "bool"
+    },
+    "warranty_years": {
+      "type": "int",
+      "min": 1,
+      "max": 10,
+      "median": 7
+    },
+    "weight_kg": {
+      "type": "float",
+      "min": 2.81,
+      "max": 12.98,
+      "median": 5.03
+    },
+    "verified": {
+      "type": "bool"
+    }
+  }
+}

@@ -1,0 +1,95 @@
+{
+  "name": "amazon_products",
+  "row_count": 1426337,
+  "columns": {
+    "stars": {
+      "type": "float",
+      "min": 0.0,
+      "max": 5.0,
+      "median": 4.4
+    },
+    "reviews": {
+      "type": "int",
+      "min": 0,
+      "max": 346563,
+      "median": 0.0
+    },
+    "price": {
+      "type": "float",
+      "min": 0.0,
+      "max": 19731.81,
+      "median": 19.95
+    },
+    "listPrice": {
+      "type": "float",
+      "min": 0.0,
+      "max": 999.99,
+      "median": 0.0
+    },
+    "isBestSeller": {
+      "type": "bool"
+    },
+    "boughtInLastMonth": {
+      "type": "int",
+      "min": 0,
+      "max": 100000,
+      "median": 0.0
+    },
+    "category_name": {
+      "type": "categorical",
+      "values": [
+        "Abrasive & Finishing Products",
+        "Automotive Exterior Accessories",
+        "Automotive Interior Accessories",
+        "Automotive Performance Parts & Accessories",
+        "Automotive Tires & Wheels",
+        "Baby & Toddler Toys",
+        "Baby Boys' Clothing & Shoes",
+        "Backpacks",
+        "Bath Products",
+        "Boys' Clothing",
+        "Boys' Jewelry",
+        "Car Care",
+        "Cat Supplies",
+        "Foot, Hand & Nail Care Products",
+        "Gift Wrapping Supplies",
+        "Girls' Clothing",
+        "Girls' Jewelry",
+        "Girls' Shoes",
+        "Hair Care Products",
+        "Headphones & Earbuds",
+        "Home Storage & Organization",
+        "Household Cleaning Supplies",
+        "Hydraulics, Pneumatics & Plumbing",
+        "Industrial Adhesives, Sealants & Lubricants",
+        "Industrial Hardware",
+        "Light Bulbs",
+        "Lighting & Ceiling Fans",
+        "Lights, Bulbs & Indicators",
+        "Men's Accessories",
+        "Men's Clothing",
+        "Men's Shoes",
+        "Men's Watches",
+        "Motorcycle & Powersports",
+        "Office Electronics",
+        "Other",
+        "Painting, Drawing & Art Supplies",
+        "Party Decorations",
+        "Portable Audio & Video",
+        "Power Transmission Products",
+        "Seasonal Décor",
+        "Sports & Outdoor Play Toys",
+        "Tablet Accessories",
+        "Televisions & Video Products",
+        "Toys & Games",
+        "Travel Accessories",
+        "Wall Art",
+        "Women's Accessories",
+        "Women's Clothing",
+        "Women's Handbags",
+        "Women's Jewelry",
+        "Women's Shoes"
+      ]
+    }
+  }
+}

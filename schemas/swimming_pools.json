@@ -1,0 +1,54 @@
+{
+  "name": "swimming_pools",
+  "row_count": 274448,
+  "columns": {
+    "length_meters": {
+      "type": "int",
+      "min": 14,
+      "max": 46,
+      "median": 24
+    },
+    "depth_meters": {
+      "type": "float",
+      "min": 1.51,
+      "max": 4.54,
+      "median": 3.23
+    },
+    "entry_fee": {
+      "type": "float",
+      "min": 2.61,
+      "max": 29.96,
+      "median": 4.57
+    },
+    "pool_type": {
+      "type": "categorical",
+      "values": [
+        "Indoor",
+        "Olympic",
+        "Outdoor",
+        "Therapy"
+      ]
+    },
+    "heated": {
+      "type": "bool"
+    },
+    "has_diving_board": {
+      "type": "bool"
+    },
+    "water_temperature_c": {
+      "type": "float",
+      "min": 21.11,
+      "max": 33.73,
+      "median": 26.57
+    },
+    "capacity": {
+      "type": "int",
+      "min": 107,
+      "max": 474,
+      "median": 299
+    },
+    "is_active": {
+      "type": "bool"
+    }
+  }
+}

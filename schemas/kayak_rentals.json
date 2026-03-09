@@ -1,0 +1,65 @@
+{
+  "name": "kayak_rentals",
+  "row_count": 4812,
+  "columns": {
+    "hourly_rate": {
+      "type": "float",
+      "min": 20.73,
+      "max": 57.79,
+      "median": 23.12
+    },
+    "kayak_type": {
+      "type": "categorical",
+      "values": [
+        "Fishing",
+        "Inflatable",
+        "Sea",
+        "Single",
+        "Tandem",
+        "Whitewater"
+      ]
+    },
+    "max_weight_kg": {
+      "type": "int",
+      "min": 114,
+      "max": 241,
+      "median": 199
+    },
+    "length_m": {
+      "type": "float",
+      "min": 3.08,
+      "max": 5.65,
+      "median": 4.86
+    },
+    "includes_paddle": {
+      "type": "bool"
+    },
+    "includes_life_jacket": {
+      "type": "bool"
+    },
+    "guided_tour_available": {
+      "type": "bool"
+    },
+    "min_age": {
+      "type": "int",
+      "min": 7,
+      "max": 15,
+      "median": 14
+    },
+    "difficulty": {
+      "type": "categorical",
+      "values": [
+        "Calm",
+        "Challenging",
+        "Expert",
+        "Moderate"
+      ]
+    },
+    "distance_km": {
+      "type": "float",
+      "min": 1.85,
+      "max": 26.1,
+      "median": 7.89
+    }
+  }
+}

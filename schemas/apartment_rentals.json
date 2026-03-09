@@ -1,0 +1,59 @@
+{
+  "name": "apartment_rentals",
+  "row_count": 475,
+  "columns": {
+    "monthly_rent": {
+      "type": "float",
+      "min": 440.73,
+      "max": 6743.06,
+      "median": 4139.47
+    },
+    "bedrooms": {
+      "type": "int",
+      "min": 0,
+      "max": 5,
+      "median": 1
+    },
+    "bathrooms": {
+      "type": "int",
+      "min": 1,
+      "max": 4,
+      "median": 4
+    },
+    "area_sqm": {
+      "type": "int",
+      "min": 59,
+      "max": 232,
+      "median": 144
+    },
+    "floor_number": {
+      "type": "int",
+      "min": 4,
+      "max": 40,
+      "median": 37
+    },
+    "has_parking": {
+      "type": "bool"
+    },
+    "has_elevator": {
+      "type": "bool"
+    },
+    "pet_friendly": {
+      "type": "bool"
+    },
+    "furnished": {
+      "type": "categorical",
+      "values": [
+        "Fully Furnished",
+        "Semi-Furnished",
+        "Unfurnished"
+      ]
+    },
+    "distance_to_metro_km": {
+      "type": "float",
+      "min": 1.04,
+      "max": 9.26,
+      "median": 3.43
+    }
+  }
+}

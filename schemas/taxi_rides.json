@@ -1,0 +1,62 @@
+{
+  "name": "taxi_rides",
+  "row_count": 455,
+  "columns": {
+    "fare": {
+      "type": "float",
+      "min": 52.18,
+      "max": 181.58,
+      "median": 96.03
+    },
+    "distance_km": {
+      "type": "float",
+      "min": 16.12,
+      "max": 60.46,
+      "median": 40.74
+    },
+    "duration_minutes": {
+      "type": "int",
+      "min": 36,
+      "max": 159,
+      "median": 70
+    },
+    "passenger_count": {
+      "type": "int",
+      "min": 1,
+      "max": 5,
+      "median": 3
+    },
+    "payment_method": {
+      "type": "categorical",
+      "values": [
+        "Cash",
+        "Credit Card",
+        "Debit Card",
+        "Mobile Pay"
+      ]
+    },
+    "ride_type": {
+      "type": "categorical",
+      "values": [
+        "Premium",
+        "Shared",
+        "Standard"
+      ]
+    },
+    "surge_pricing": {
+      "type": "bool"
+    },
+    "driver_rating": {
+      "type": "float",
+      "min": 1.09,
+      "max": 4.81,
+      "median": 3.91
+    },
+    "tip_amount": {
+      "type": "float",
+      "min": 9.48,
+      "max": 38.48,
+      "median": 28.51
+    }
+  }
+}

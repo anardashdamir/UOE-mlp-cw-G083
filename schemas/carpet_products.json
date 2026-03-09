@@ -1,0 +1,71 @@
+{
+  "name": "carpet_products",
+  "row_count": 3857,
+  "columns": {
+    "price_per_sqm": {
+      "type": "float",
+      "min": 26.84,
+      "max": 455.18,
+      "median": 287.13
+    },
+    "pile_height_mm": {
+      "type": "float",
+      "min": 2.64,
+      "max": 24.47,
+      "median": 21.59
+    },
+    "material": {
+      "type": "categorical",
+      "values": [
+        "Cotton",
+        "Jute",
+        "Nylon",
+        "Polyester",
+        "Polypropylene",
+        "Silk",
+        "Wool"
+      ]
+    },
+    "style": {
+      "type": "categorical",
+      "values": [
+        "Berber",
+        "Cut Pile",
+        "Cut-Loop",
+        "Frieze",
+        "Loop Pile",
+        "Saxony"
+      ]
+    },
+    "width_m": {
+      "type": "float",
+      "min": 1.04,
+      "max": 4.2,
+      "median": 2.65
+    },
+    "weight_gsm": {
+      "type": "int",
+      "min": 1006,
+      "max": 2616,
+      "median": 1386
+    },
+    "is_stain_resistant": {
+      "type": "bool"
+    },
+    "is_fire_retardant": {
+      "type": "bool"
+    },
+    "warranty_years": {
+      "type": "int",
+      "min": 9,
+      "max": 20,
+      "median": 17
+    },
+    "rating": {
+      "type": "float",
+      "min": 1.73,
+      "max": 4.48,
+      "median": 2.06
+    }
+  }
+}

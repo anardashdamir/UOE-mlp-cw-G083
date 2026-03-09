@@ -1,0 +1,62 @@
+{
+  "name": "veterinary_clinic",
+  "row_count": 27952,
+  "columns": {
+    "treatment_cost": {
+      "type": "float",
+      "min": 559.74,
+      "max": 3860.65,
+      "median": 1872.21
+    },
+    "animal_type": {
+      "type": "categorical",
+      "values": [
+        "Cat",
+        "Fish",
+        "Hamster",
+        "Rabbit"
+      ]
+    },
+    "visit_type": {
+      "type": "categorical",
+      "values": [
+        "Checkup",
+        "Dental",
+        "Emergency",
+        "Grooming",
+        "Surgery",
+        "Vaccination"
+      ]
+    },
+    "animal_age_years": {
+      "type": "int",
+      "min": 2,
+      "max": 24,
+      "median": 20
+    },
+    "animal_weight_kg": {
+      "type": "float",
+      "min": 117.43,
+      "max": 485.03,
+      "median": 453.93
+    },
+    "follow_up_needed": {
+      "type": "bool"
+    },
+    "medication_prescribed": {
+      "type": "bool"
+    },
+    "duration_minutes": {
+      "type": "int",
+      "min": 23,
+      "max": 111,
+      "median": 31
+    },
+    "satisfaction_score": {
+      "type": "float",
+      "min": 1.09,
+      "max": 4.2,
+      "median": 4.0
+    }
+  }
+}

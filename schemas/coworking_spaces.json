@@ -1,0 +1,51 @@
+{
+  "name": "coworking_spaces",
+  "row_count": 80941,
+  "columns": {
+    "monthly_price": {
+      "type": "float",
+      "min": 217.56,
+      "max": 705.55,
+      "median": 670.97
+    },
+    "desk_type": {
+      "type": "categorical",
+      "values": [
+        "Dedicated Desk",
+        "Hot Desk",
+        "Meeting Room",
+        "Private Office"
+      ]
+    },
+    "capacity": {
+      "type": "int",
+      "min": 2,
+      "max": 44,
+      "median": 23
+    },
+    "has_wifi": {
+      "type": "bool"
+    },
+    "has_kitchen": {
+      "type": "bool"
+    },
+    "is_24_hours": {
+      "type": "bool"
+    },
+    "distance_to_station_km": {
+      "type": "float",
+      "min": 0.63,
+      "max": 3.8,
+      "median": 0.8
+    },
+    "rating": {
+      "type": "float",
+      "min": 1.04,
+      "max": 4.14,
+      "median": 3.5
+    },
+    "has_parking": {
+      "type": "bool"
+    }
+  }
+}

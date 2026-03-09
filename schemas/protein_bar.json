@@ -1,0 +1,60 @@
+{
+  "name": "protein_bar",
+  "row_count": 113408,
+  "columns": {
+    "price": {
+      "type": "float",
+      "min": 1.09,
+      "max": 4.97,
+      "median": 4.9
+    },
+    "protein_g": {
+      "type": "float",
+      "min": 6.78,
+      "max": 34.73,
+      "median": 14.92
+    },
+    "calories": {
+      "type": "int",
+      "min": 159,
+      "max": 328,
+      "median": 231
+    },
+    "sugar_g": {
+      "type": "float",
+      "min": 3.81,
+      "max": 20.82,
+      "median": 13.33
+    },
+    "fiber_g": {
+      "type": "float",
+      "min": 1.88,
+      "max": 13.75,
+      "median": 10.28
+    },
+    "flavor": {
+      "type": "categorical",
+      "values": [
+        "Berry",
+        "Caramel",
+        "Chocolate",
+        "Coconut",
+        "Cookie Dough",
+        "Peanut Butter",
+        "Vanilla"
+      ]
+    },
+    "is_vegan": {
+      "type": "bool"
+    },
+    "is_gluten_free": {
+      "type": "bool"
+    },
+    "rating": {
+      "type": "float",
+      "min": 1.75,
+      "max": 4.22,
+      "median": 2.03
+    }
+  }
+}

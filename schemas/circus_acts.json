@@ -1,0 +1,53 @@
+{
+  "name": "circus_acts",
+  "row_count": 387795,
+  "columns": {
+    "performer_count": {
+      "type": "int",
+      "min": 3,
+      "max": 17,
+      "median": 17
+    },
+    "act_duration_minutes": {
+      "type": "int",
+      "min": 4,
+      "max": 30,
+      "median": 18
+    },
+    "danger_level": {
+      "type": "int",
+      "min": 2,
+      "max": 8,
+      "median": 7
+    },
+    "act_type": {
+      "type": "categorical",
+      "values": [
+        "Acrobatics",
+        "Aerial",
+        "Clown",
+        "Contortion",
+        "Fire",
+        "Juggling",
+        "Magic",
+        "Tightrope",
+        "Trapeze"
+      ]
+    },
+    "audience_rating": {
+      "type": "float",
+      "min": 1.71,
+      "max": 4.54,
+      "median": 2.09
+    },
+    "uses_fire": {
+      "type": "bool"
+    },
+    "min_audience_age": {
+      "type": "int",
+      "min": 2,
+      "max": 11,
+      "median": 11
+    }
+  }
+}

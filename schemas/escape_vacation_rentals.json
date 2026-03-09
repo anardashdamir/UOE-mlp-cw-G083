@@ -1,0 +1,85 @@
+{
+  "name": "escape_vacation_rentals",
+  "row_count": 477,
+  "columns": {
+    "nightly_rate": {
+      "type": "float",
+      "min": 168.33,
+      "max": 950.42,
+      "median": 568.34
+    },
+    "bedrooms": {
+      "type": "int",
+      "min": 3,
+      "max": 9,
+      "median": 9
+    },
+    "bathrooms": {
+      "type": "int",
+      "min": 2,
+      "max": 5,
+      "median": 3
+    },
+    "max_guests": {
+      "type": "int",
+      "min": 2,
+      "max": 20,
+      "median": 12
+    },
+    "property_type": {
+      "type": "categorical",
+      "values": [
+        "Apartment",
+        "Boat",
+        "Cabin",
+        "Condo",
+        "House",
+        "Treehouse",
+        "Villa",
+        "Yurt"
+      ]
+    },
+    "rating": {
+      "type": "float",
+      "min": 1.86,
+      "max": 4.73,
+      "median": 3.92
+    },
+    "review_count": {
+      "type": "int",
+      "min": 25,
+      "max": 412,
+      "median": 279
+    },
+    "has_pool": {
+      "type": "bool"
+    },
+    "has_wifi": {
+      "type": "bool"
+    },
+    "is_pet_friendly": {
+      "type": "bool"
+    },
+    "cleaning_fee": {
+      "type": "float",
+      "min": 46.65,
+      "max": 259.84,
+      "median": 155.14
+    },
+    "superhost": {
+      "type": "bool"
+    },
+    "distance_to_center_km": {
+      "type": "float",
+      "min": 7.51,
+      "max": 42.95,
+      "median": 22.25
+    },
+    "min_nights": {
+      "type": "int",
+      "min": 1,
+      "max": 6,
+      "median": 5
+    }
+  }
+}

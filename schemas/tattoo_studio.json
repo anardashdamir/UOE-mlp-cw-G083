@@ -1,0 +1,52 @@
+{
+  "name": "tattoo_studio",
+  "row_count": 332,
+  "columns": {
+    "price_per_hour": {
+      "type": "float",
+      "min": 66.92,
+      "max": 253.38,
+      "median": 73.1
+    },
+    "style": {
+      "type": "categorical",
+      "values": [
+        "Blackwork",
+        "Geometric",
+        "Japanese",
+        "Minimalist",
+        "Realism",
+        "Traditional",
+        "Tribal",
+        "Watercolor"
+      ]
+    },
+    "artist_experience_years": {
+      "type": "int",
+      "min": 7,
+      "max": 26,
+      "median": 15
+    },
+    "rating": {
+      "type": "float",
+      "min": 1.08,
+      "max": 4.73,
+      "median": 3.36
+    },
+    "walk_ins_accepted": {
+      "type": "bool"
+    },
+    "is_licensed": {
+      "type": "bool"
+    },
+    "wait_time_weeks": {
+      "type": "int",
+      "min": 5,
+      "max": 20,
+      "median": 18
+    },
+    "aftercare_included": {
+      "type": "bool"
+    }
+  }
+}

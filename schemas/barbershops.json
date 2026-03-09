@@ -1,0 +1,61 @@
+{
+  "name": "barbershops",
+  "row_count": 260,
+  "columns": {
+    "haircut_price": {
+      "type": "float",
+      "min": 13.66,
+      "max": 50.3,
+      "median": 37.53
+    },
+    "beard_trim_price": {
+      "type": "float",
+      "min": 7.98,
+      "max": 24.64,
+      "median": 11.03
+    },
+    "rating": {
+      "type": "float",
+      "min": 1.41,
+      "max": 4.43,
+      "median": 3.4
+    },
+    "experience_years": {
+      "type": "int",
+      "min": 7,
+      "max": 33,
+      "median": 20
+    },
+    "wait_time_minutes": {
+      "type": "int",
+      "min": 19,
+      "max": 79,
+      "median": 61
+    },
+    "style": {
+      "type": "categorical",
+      "values": [
+        "Afro-Centric",
+        "Classic",
+        "Hip",
+        "Modern",
+        "Traditional"
+      ]
+    },
+    "accepts_walkins": {
+      "type": "bool"
+    },
+    "has_appointment": {
+      "type": "bool"
+    },
+    "open_sunday": {
+      "type": "bool"
+    },
+    "num_barbers": {
+      "type": "int",
+      "min": 1,
+      "max": 10,
+      "median": 6
+    }
+  }
+}

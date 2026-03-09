@@ -1,0 +1,70 @@
+{
+  "name": "candle_products",
+  "row_count": 18678,
+  "columns": {
+    "price": {
+      "type": "float",
+      "min": 5.93,
+      "max": 64.92,
+      "median": 29.02
+    },
+    "burn_time_hours": {
+      "type": "int",
+      "min": 36,
+      "max": 107,
+      "median": 41
+    },
+    "weight_g": {
+      "type": "int",
+      "min": 132,
+      "max": 870,
+      "median": 234
+    },
+    "scent": {
+      "type": "categorical",
+      "values": [
+        "Citrus",
+        "Ocean",
+        "Pine",
+        "Rose",
+        "Sandalwood",
+        "Unscented",
+        "Vanilla"
+      ]
+    },
+    "wax_type": {
+      "type": "categorical",
+      "values": [
+        "Beeswax",
+        "Coconut",
+        "Palm",
+        "Paraffin",
+        "Soy"
+      ]
+    },
+    "wick_type": {
+      "type": "categorical",
+      "values": [
+        "Cotton",
+        "Hemp",
+        "Wood"
+      ]
+    },
+    "is_handpoured": {
+      "type": "bool"
+    },
+    "is_vegan": {
+      "type": "bool"
+    },
+    "container_type": {
+      "type": "categorical",
+      "values": [
+        "Jar",
+        "Pillar",
+        "Taper",
+        "Tin",
+        "Votive"
+      ]
+    }
+  }
+}

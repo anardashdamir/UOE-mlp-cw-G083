@@ -1,0 +1,76 @@
+{
+  "name": "covid_daily_cases",
+  "row_count": 381183,
+  "columns": {
+    "new_cases": {
+      "type": "int",
+      "min": 37636,
+      "max": 477317,
+      "median": 321134
+    },
+    "new_deaths": {
+      "type": "int",
+      "min": 136,
+      "max": 9610,
+      "median": 885
+    },
+    "total_cases": {
+      "type": "int",
+      "min": 16676484,
+      "max": 77763221,
+      "median": 45355485
+    },
+    "icu_patients": {
+      "type": "int",
+      "min": 1256,
+      "max": 46045,
+      "median": 31096
+    },
+    "tests_performed": {
+      "type": "int",
+      "min": 635234,
+      "max": 4717772,
+      "median": 816585
+    },
+    "positivity_rate": {
+      "type": "float",
+      "min": 2.59,
+      "max": 53.44,
+      "median": 8.21
+    },
+    "vaccination_rate_percent": {
+      "type": "float",
+      "min": 9.54,
+      "max": 91.24,
+      "median": 51.2
+    },
+    "country": {
+      "type": "categorical",
+      "values": [
+        "Australia",
+        "Brazil",
+        "France",
+        "Germany",
+        "India",
+        "Italy",
+        "Japan",
+        "South Korea",
+        "UK",
+        "USA"
+      ]
+    },
+    "variant_type": {
+      "type": "categorical",
+      "values": [
+        "Alpha",
+        "Beta",
+        "Delta",
+        "JN.1",
+        "Omicron"
+      ]
+    },
+    "is_lockdown": {
+      "type": "bool"
+    }
+  }
+}

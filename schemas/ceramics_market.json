@@ -1,0 +1,76 @@
+{
+  "name": "ceramics_market",
+  "row_count": 423056,
+  "columns": {
+    "price": {
+      "type": "float",
+      "min": 60.39,
+      "max": 473.09,
+      "median": 428.9
+    },
+    "weight_kg": {
+      "type": "float",
+      "min": 2.04,
+      "max": 12.6,
+      "median": 6.07
+    },
+    "type": {
+      "type": "categorical",
+      "values": [
+        "Bowl",
+        "Mug",
+        "Planter",
+        "Sculpture",
+        "Tile",
+        "Vase"
+      ]
+    },
+    "technique": {
+      "type": "categorical",
+      "values": [
+        "Hand Built",
+        "Press Mold",
+        "Slip Cast",
+        "Wheel Thrown"
+      ]
+    },
+    "glaze": {
+      "type": "categorical",
+      "values": [
+        "Crystalline",
+        "Matte",
+        "Satin",
+        "Unglazed"
+      ]
+    },
+    "is_food_safe": {
+      "type": "bool"
+    },
+    "is_handmade": {
+      "type": "bool"
+    },
+    "is_microwave_safe": {
+      "type": "bool"
+    },
+    "firing_type": {
+      "type": "categorical",
+      "values": [
+        "Earthenware",
+        "Porcelain",
+        "Raku",
+        "Stoneware"
+      ]
+    },
+    "region": {
+      "type": "categorical",
+      "values": [
+        "Africa",
+        "Asia",
+        "Europe",
+        "North America",
+        "Oceania",
+        "South America"
+      ]
+    }
+  }
+}

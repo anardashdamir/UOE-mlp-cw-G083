@@ -1,0 +1,67 @@
+{
+  "name": "dubai_rentals",
+  "row_count": 61818,
+  "columns": {
+    "Rent": {
+      "type": "int",
+      "min": 1,
+      "max": 5000000,
+      "median": 100000
+    },
+    "Beds": {
+      "type": "int",
+      "min": 0,
+      "max": 12,
+      "median": 2
+    },
+    "Baths": {
+      "type": "int",
+      "min": 1,
+      "max": 11,
+      "median": 2
+    },
+    "Type": {
+      "type": "categorical",
+      "values": [
+        "Apartment",
+        "Hotel Apartment",
+        "Penthouse",
+        "Residential Building",
+        "Residential Floor",
+        "Residential Plot",
+        "Townhouse",
+        "Villa",
+        "Villa Compound"
+      ]
+    },
+    "Area_in_sqft": {
+      "type": "int",
+      "min": 74,
+      "max": 210254,
+      "median": 1384
+    },
+    "Furnishing": {
+      "type": "categorical",
+      "values": [
+        "Furnished",
+        "Unfurnished"
+      ]
+    },
+    "Location": {
+      "type": "str"
+    },
+    "City": {
+      "type": "categorical",
+      "values": [
+        "Abu Dhabi",
+        "Ajman",
+        "Al Ain",
+        "Dubai",
+        "Fujairah",
+        "Ras Al Khaimah",
+        "Sharjah",
+        "Umm Al Quwain"
+      ]
+    }
+  }
+}

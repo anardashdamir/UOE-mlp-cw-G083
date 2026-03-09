@@ -1,0 +1,60 @@
+{
+  "name": "warehouse_robots",
+  "row_count": 428474,
+  "columns": {
+    "price": {
+      "type": "float",
+      "min": 39128.84,
+      "max": 162719.98,
+      "median": 45036.36
+    },
+    "payload_kg": {
+      "type": "int",
+      "min": 317,
+      "max": 1494,
+      "median": 1138
+    },
+    "max_speed_mps": {
+      "type": "float",
+      "min": 0.93,
+      "max": 4.67,
+      "median": 3.27
+    },
+    "battery_hours": {
+      "type": "float",
+      "min": 3.63,
+      "max": 15.26,
+      "median": 12.79
+    },
+    "robot_type": {
+      "type": "categorical",
+      "values": [
+        "AGV",
+        "AMR",
+        "Palletizer",
+        "Robotic Arm"
+      ]
+    },
+    "navigation": {
+      "type": "categorical",
+      "values": [
+        "Camera",
+        "Lidar",
+        "Magnetic Tape",
+        "QR Code"
+      ]
+    },
+    "is_collaborative": {
+      "type": "bool"
+    },
+    "has_ai": {
+      "type": "bool"
+    },
+    "warranty_years": {
+      "type": "int",
+      "min": 2,
+      "max": 5,
+      "median": 5
+    }
+  }
+}

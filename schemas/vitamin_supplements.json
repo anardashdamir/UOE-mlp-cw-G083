@@ -1,0 +1,61 @@
+{
+  "name": "vitamin_supplements",
+  "row_count": 355,
+  "columns": {
+    "price": {
+      "type": "float",
+      "min": 4.71,
+      "max": 46.34,
+      "median": 22.1
+    },
+    "vitamin_type": {
+      "type": "categorical",
+      "values": [
+        "Calcium",
+        "Iron",
+        "Magnesium",
+        "Multivitamin",
+        "Vitamin A",
+        "Vitamin B12",
+        "Vitamin C",
+        "Vitamin D",
+        "Vitamin E",
+        "Zinc"
+      ]
+    },
+    "tablets_per_bottle": {
+      "type": "int",
+      "min": 75,
+      "max": 305,
+      "median": 223
+    },
+    "form": {
+      "type": "categorical",
+      "values": [
+        "Capsule",
+        "Chewable",
+        "Gummy",
+        "Liquid",
+        "Tablet"
+      ]
+    },
+    "is_vegetarian": {
+      "type": "bool"
+    },
+    "age_group": {
+      "type": "categorical",
+      "values": [
+        "Adult",
+        "Children",
+        "Prenatal",
+        "Senior"
+      ]
+    },
+    "rating": {
+      "type": "float",
+      "min": 1.7,
+      "max": 4.65,
+      "median": 2.93
+    }
+  }
+}

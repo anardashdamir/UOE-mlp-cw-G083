@@ -1,0 +1,50 @@
+{
+  "name": "cheese_making_kits",
+  "row_count": 246644,
+  "columns": {
+    "price": {
+      "type": "float",
+      "min": 36.19,
+      "max": 105.06,
+      "median": 52.6
+    },
+    "cheese_types_included": {
+      "type": "int",
+      "min": 2,
+      "max": 7,
+      "median": 5
+    },
+    "difficulty": {
+      "type": "categorical",
+      "values": [
+        "Advanced",
+        "Beginner",
+        "Intermediate"
+      ]
+    },
+    "yields_per_batch_g": {
+      "type": "int",
+      "min": 218,
+      "max": 1713,
+      "median": 365
+    },
+    "aging_required": {
+      "type": "bool"
+    },
+    "includes_cultures": {
+      "type": "bool"
+    },
+    "includes_rennet": {
+      "type": "bool"
+    },
+    "includes_mold": {
+      "type": "bool"
+    },
+    "rating": {
+      "type": "float",
+      "min": 1.64,
+      "max": 4.28,
+      "median": 3.01
+    }
+  }
+}

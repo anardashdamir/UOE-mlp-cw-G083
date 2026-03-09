@@ -1,0 +1,68 @@
+{
+  "name": "meditation_apps",
+  "row_count": 9544,
+  "columns": {
+    "monthly_price": {
+      "type": "float",
+      "min": 5.0,
+      "max": 17.15,
+      "median": 9.99
+    },
+    "total_sessions": {
+      "type": "int",
+      "min": 1079,
+      "max": 3833,
+      "median": 2344
+    },
+    "avg_session_minutes": {
+      "type": "int",
+      "min": 14,
+      "max": 49,
+      "median": 22
+    },
+    "category": {
+      "type": "categorical",
+      "values": [
+        "Anxiety",
+        "Breathing",
+        "Focus",
+        "Mindfulness",
+        "Sleep",
+        "Stress"
+      ]
+    },
+    "has_timer": {
+      "type": "bool"
+    },
+    "has_offline_mode": {
+      "type": "bool"
+    },
+    "rating": {
+      "type": "float",
+      "min": 1.65,
+      "max": 4.18,
+      "median": 1.74
+    },
+    "language_count": {
+      "type": "int",
+      "min": 8,
+      "max": 25,
+      "median": 24
+    },
+    "city": {
+      "type": "categorical",
+      "values": [
+        "Berlin",
+        "Dubai",
+        "London",
+        "Mumbai",
+        "New York",
+        "Paris",
+        "Singapore",
+        "Sydney",
+        "Tokyo",
+        "Toronto"
+      ]
+    }
+  }
+}

@@ -1,0 +1,74 @@
+{
+  "name": "planetarium_shows",
+  "row_count": 21574,
+  "columns": {
+    "ticket_price": {
+      "type": "float",
+      "min": 9.58,
+      "max": 20.23,
+      "median": 11.19
+    },
+    "duration_minutes": {
+      "type": "int",
+      "min": 22,
+      "max": 75,
+      "median": 42
+    },
+    "topic": {
+      "type": "categorical",
+      "values": [
+        "Aurora",
+        "Black Holes",
+        "Constellations",
+        "Deep Space",
+        "Mars Mission",
+        "Moon Landing",
+        "Solar System"
+      ]
+    },
+    "audience": {
+      "type": "categorical",
+      "values": [
+        "Adult",
+        "Children",
+        "Educational",
+        "Family"
+      ]
+    },
+    "rating": {
+      "type": "float",
+      "min": 1.68,
+      "max": 4.9,
+      "median": 4.33
+    },
+    "projector_type": {
+      "type": "categorical",
+      "values": [
+        "Digital",
+        "Hybrid",
+        "Optical"
+      ]
+    },
+    "dome_diameter_m": {
+      "type": "int",
+      "min": 10,
+      "max": 26,
+      "median": 21
+    },
+    "seat_count": {
+      "type": "int",
+      "min": 83,
+      "max": 287,
+      "median": 185
+    },
+    "is_live_narrated": {
+      "type": "bool"
+    },
+    "has_3d": {
+      "type": "bool"
+    },
+    "verified": {
+      "type": "bool"
+    }
+  }
+}

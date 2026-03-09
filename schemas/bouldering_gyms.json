@@ -1,0 +1,73 @@
+{
+  "name": "bouldering_gyms",
+  "row_count": 262767,
+  "columns": {
+    "monthly_membership": {
+      "type": "float",
+      "min": 40.14,
+      "max": 106.02,
+      "median": 103.15
+    },
+    "day_pass": {
+      "type": "float",
+      "min": 13.64,
+      "max": 23.23,
+      "median": 19.19
+    },
+    "wall_height_m": {
+      "type": "float",
+      "min": 3.55,
+      "max": 5.77,
+      "median": 5.49
+    },
+    "route_count": {
+      "type": "int",
+      "min": 96,
+      "max": 432,
+      "median": 391
+    },
+    "area_sqm": {
+      "type": "int",
+      "min": 480,
+      "max": 2807,
+      "median": 1320
+    },
+    "grade_range_min": {
+      "type": "categorical",
+      "values": [
+        "V0",
+        "VB"
+      ]
+    },
+    "grade_range_max": {
+      "type": "categorical",
+      "values": [
+        "V10",
+        "V12",
+        "V14",
+        "V8"
+      ]
+    },
+    "has_training_area": {
+      "type": "bool"
+    },
+    "has_yoga": {
+      "type": "bool"
+    },
+    "has_sauna": {
+      "type": "bool"
+    },
+    "rating": {
+      "type": "float",
+      "min": 1.47,
+      "max": 4.92,
+      "median": 2.94
+    },
+    "shoe_rental_price": {
+      "type": "float",
+      "min": 3.11,
+      "max": 7.18,
+      "median": 4.1
+    }
+  }
+}

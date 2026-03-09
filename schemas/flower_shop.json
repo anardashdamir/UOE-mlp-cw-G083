@@ -1,0 +1,66 @@
+{
+  "name": "flower_shop",
+  "row_count": 31132,
+  "columns": {
+    "price": {
+      "type": "float",
+      "min": 33.13,
+      "max": 135.87,
+      "median": 33.37
+    },
+    "flower_type": {
+      "type": "categorical",
+      "values": [
+        "Carnation",
+        "Daisy",
+        "Hydrangea",
+        "Lily",
+        "Orchid",
+        "Peony",
+        "Rose",
+        "Sunflower",
+        "Tulip"
+      ]
+    },
+    "color": {
+      "type": "categorical",
+      "values": [
+        "Mixed",
+        "Orange",
+        "Pink",
+        "Purple",
+        "Red",
+        "White",
+        "Yellow"
+      ]
+    },
+    "stem_count": {
+      "type": "int",
+      "min": 12,
+      "max": 49,
+      "median": 21
+    },
+    "vase_included": {
+      "type": "bool"
+    },
+    "is_seasonal": {
+      "type": "bool"
+    },
+    "freshness_days": {
+      "type": "int",
+      "min": 3,
+      "max": 12,
+      "median": 10
+    },
+    "arrangement_type": {
+      "type": "categorical",
+      "values": [
+        "Basket",
+        "Bouquet",
+        "Box",
+        "Vase",
+        "Wreath"
+      ]
+    }
+  }
+}

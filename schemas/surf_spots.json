@@ -1,0 +1,79 @@
+{
+  "name": "surf_spots",
+  "row_count": 218483,
+  "columns": {
+    "wave_height_m": {
+      "type": "float",
+      "min": 2.14,
+      "max": 9.57,
+      "median": 3.4
+    },
+    "wave_consistency_percent": {
+      "type": "float",
+      "min": 37.02,
+      "max": 82.27,
+      "median": 52.31
+    },
+    "difficulty": {
+      "type": "categorical",
+      "values": [
+        "Advanced",
+        "Beginner",
+        "Expert",
+        "Intermediate"
+      ]
+    },
+    "wave_type": {
+      "type": "categorical",
+      "values": [
+        "Beach Break",
+        "Point Break",
+        "Reef Break",
+        "River Mouth"
+      ]
+    },
+    "bottom_type": {
+      "type": "categorical",
+      "values": [
+        "Cobblestone",
+        "Reef",
+        "Rock",
+        "Sand"
+      ]
+    },
+    "best_swell_direction": {
+      "type": "categorical",
+      "values": [
+        "E",
+        "N",
+        "NE",
+        "NW",
+        "S",
+        "SE",
+        "SW",
+        "W"
+      ]
+    },
+    "crowd_level": {
+      "type": "categorical",
+      "values": [
+        "Crowded",
+        "Empty",
+        "Light",
+        "Moderate"
+      ]
+    },
+    "water_temp_c": {
+      "type": "float",
+      "min": 11.96,
+      "max": 29.29,
+      "median": 21.91
+    },
+    "is_shark_netted": {
+      "type": "bool"
+    },
+    "has_lifeguard": {
+      "type": "bool"
+    }
+  }
+}

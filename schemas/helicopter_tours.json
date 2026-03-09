@@ -1,0 +1,71 @@
+{
+  "name": "helicopter_tours",
+  "row_count": 1272,
+  "columns": {
+    "price_per_person": {
+      "type": "float",
+      "min": 280.85,
+      "max": 894.93,
+      "median": 516.46
+    },
+    "duration_minutes": {
+      "type": "int",
+      "min": 14,
+      "max": 98,
+      "median": 42
+    },
+    "max_passengers": {
+      "type": "int",
+      "min": 3,
+      "max": 6,
+      "median": 4
+    },
+    "route_type": {
+      "type": "categorical",
+      "values": [
+        "Canyon",
+        "City",
+        "Coastal",
+        "Island",
+        "Mountain"
+      ]
+    },
+    "helicopter_model": {
+      "type": "categorical",
+      "values": [
+        "Airbus H125",
+        "Bell 206",
+        "Bell 407",
+        "MD 500",
+        "Robinson R44"
+      ]
+    },
+    "min_age": {
+      "type": "int",
+      "min": 4,
+      "max": 10,
+      "median": 6
+    },
+    "max_weight_per_person_kg": {
+      "type": "int",
+      "min": 101,
+      "max": 130,
+      "median": 110
+    },
+    "includes_photos": {
+      "type": "bool"
+    },
+    "includes_landing": {
+      "type": "bool"
+    },
+    "rating": {
+      "type": "float",
+      "min": 1.0,
+      "max": 4.27,
+      "median": 3.01
+    },
+    "is_featured": {
+      "type": "bool"
+    }
+  }
+}

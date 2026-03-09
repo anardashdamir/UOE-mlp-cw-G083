@@ -1,0 +1,123 @@
+{
+  "name": "clinical_trials",
+  "row_count": 1176,
+  "columns": {
+    "enrollment_count": {
+      "type": "int",
+      "min": 9210,
+      "max": 81891,
+      "median": 51746
+    },
+    "duration_months": {
+      "type": "int",
+      "min": 5,
+      "max": 105,
+      "median": 17
+    },
+    "phase": {
+      "type": "categorical",
+      "values": [
+        "Observational",
+        "Phase 1",
+        "Phase 2",
+        "Phase 3",
+        "Phase 4"
+      ]
+    },
+    "status": {
+      "type": "categorical",
+      "values": [
+        "Active",
+        "Completed",
+        "Recruiting",
+        "Terminated",
+        "Withdrawn"
+      ]
+    },
+    "condition_area": {
+      "type": "categorical",
+      "values": [
+        "Cardiology",
+        "Immunology",
+        "Infectious Disease",
+        "Metabolic",
+        "Neurology",
+        "Oncology",
+        "Respiratory"
+      ]
+    },
+    "intervention_type": {
+      "type": "categorical",
+      "values": [
+        "Behavioral",
+        "Biological",
+        "Device",
+        "Drug",
+        "Procedure"
+      ]
+    },
+    "sites_count": {
+      "type": "int",
+      "min": 62,
+      "max": 387,
+      "median": 283
+    },
+    "countries_count": {
+      "type": "int",
+      "min": 11,
+      "max": 42,
+      "median": 15
+    },
+    "is_randomized": {
+      "type": "bool"
+    },
+    "is_double_blind": {
+      "type": "bool"
+    },
+    "has_placebo": {
+      "type": "bool"
+    },
+    "adverse_events_rate": {
+      "type": "float",
+      "min": 8.52,
+      "max": 39.62,
+      "median": 20.65
+    },
+    "completion_rate_percent": {
+      "type": "float",
+      "min": 30.48,
+      "max": 94.22,
+      "median": 62.46
+    },
+    "funding_million_usd": {
+      "type": "float",
+      "min": 71.54,
+      "max": 421.41,
+      "median": 86.0
+    },
+    "participant_age_min": {
+      "type": "int",
+      "min": 3,
+      "max": 65,
+      "median": 34
+    },
+    "female_percent": {
+      "type": "float",
+      "min": 14.88,
+      "max": 94.91,
+      "median": 76.53
+    },
+    "publication_count": {
+      "type": "int",
+      "min": 4,
+      "max": 49,
+      "median": 49
+    },
+    "start_year": {
+      "type": "int",
+      "min": 2002,
+      "max": 2025,
+      "median": 2017
+    }
+  }
+}

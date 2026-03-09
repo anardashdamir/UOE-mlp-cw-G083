@@ -1,0 +1,83 @@
+{
+  "name": "running_shoes",
+  "row_count": 243569,
+  "columns": {
+    "price": {
+      "type": "float",
+      "min": 95.54,
+      "max": 292.65,
+      "median": 119.55
+    },
+    "weight_g": {
+      "type": "int",
+      "min": 201,
+      "max": 390,
+      "median": 292
+    },
+    "drop_mm": {
+      "type": "int",
+      "min": 0,
+      "max": 13,
+      "median": 6
+    },
+    "cushioning": {
+      "type": "categorical",
+      "values": [
+        "High",
+        "Low",
+        "Max",
+        "Medium",
+        "Minimal"
+      ]
+    },
+    "terrain": {
+      "type": "categorical",
+      "values": [
+        "All-Terrain",
+        "Road",
+        "Track",
+        "Trail"
+      ]
+    },
+    "brand": {
+      "type": "categorical",
+      "values": [
+        "ASICS",
+        "Adidas",
+        "Altra",
+        "Brooks",
+        "Hoka",
+        "New Balance",
+        "Nike",
+        "On",
+        "Saucony"
+      ]
+    },
+    "stability": {
+      "type": "categorical",
+      "values": [
+        "Motion Control",
+        "Neutral",
+        "Stability"
+      ]
+    },
+    "rating": {
+      "type": "float",
+      "min": 1.62,
+      "max": 4.8,
+      "median": 3.64
+    },
+    "is_waterproof": {
+      "type": "bool"
+    },
+    "has_carbon_plate": {
+      "type": "bool"
+    },
+    "num_reviews": {
+      "type": "int",
+      "min": 263,
+      "max": 9088,
+      "median": 2589
+    }
+  }
+}

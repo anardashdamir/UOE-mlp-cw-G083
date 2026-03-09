@@ -1,0 +1,68 @@
+{
+  "name": "daycare_centers",
+  "row_count": 230868,
+  "columns": {
+    "monthly_tuition": {
+      "type": "float",
+      "min": 446.5,
+      "max": 2758.19,
+      "median": 1945.21
+    },
+    "capacity": {
+      "type": "int",
+      "min": 51,
+      "max": 158,
+      "median": 136
+    },
+    "min_age_months": {
+      "type": "int",
+      "min": 12,
+      "max": 30,
+      "median": 14
+    },
+    "max_age_years": {
+      "type": "int",
+      "min": 5,
+      "max": 12,
+      "median": 10
+    },
+    "staff_child_ratio": {
+      "type": "float",
+      "min": 0.16,
+      "max": 0.5,
+      "median": 0.3
+    },
+    "rating": {
+      "type": "float",
+      "min": 1.05,
+      "max": 4.23,
+      "median": 3.59
+    },
+    "type": {
+      "type": "categorical",
+      "values": [
+        "Center-Based",
+        "Corporate",
+        "Home-Based",
+        "Montessori",
+        "Religious",
+        "Waldorf"
+      ]
+    },
+    "has_outdoor_space": {
+      "type": "bool"
+    },
+    "provides_meals": {
+      "type": "bool"
+    },
+    "is_accredited": {
+      "type": "bool"
+    },
+    "open_hours_daily": {
+      "type": "int",
+      "min": 6,
+      "max": 12,
+      "median": 7
+    }
+  }
+}

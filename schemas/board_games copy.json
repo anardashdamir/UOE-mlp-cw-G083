@@ -1,0 +1,77 @@
+{
+  "name": "board_games",
+  "row_count": 195,
+  "columns": {
+    "min_players": {
+      "type": "int",
+      "min": 1,
+      "max": 4,
+      "median": 1
+    },
+    "max_players": {
+      "type": "int",
+      "min": 4,
+      "max": 11,
+      "median": 5
+    },
+    "play_time_minutes": {
+      "type": "int",
+      "min": 58,
+      "max": 264,
+      "median": 183
+    },
+    "age_min": {
+      "type": "int",
+      "min": 6,
+      "max": 16,
+      "median": 12
+    },
+    "complexity_rating": {
+      "type": "float",
+      "min": 1.57,
+      "max": 4.92,
+      "median": 3.22
+    },
+    "bgg_rating": {
+      "type": "float",
+      "min": 2.01,
+      "max": 7.84,
+      "median": 2.31
+    },
+    "price": {
+      "type": "float",
+      "min": 16.29,
+      "max": 110.18,
+      "median": 18.01
+    },
+    "year_published": {
+      "type": "int",
+      "min": 1968,
+      "max": 2024,
+      "median": 1978
+    },
+    "category": {
+      "type": "categorical",
+      "values": [
+        "Cooperative",
+        "Deck Building",
+        "Family",
+        "Party",
+        "Strategy",
+        "Worker Placement"
+      ]
+    },
+    "is_expansion": {
+      "type": "bool"
+    },
+    "language_dependent": {
+      "type": "categorical",
+      "values": [
+        "High",
+        "Low",
+        "Medium",
+        "None"
+      ]
+    }
+  }
+}

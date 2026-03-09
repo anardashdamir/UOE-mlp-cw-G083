@@ -1,0 +1,115 @@
+{
+  "name": "smart_home_devices",
+  "row_count": 27876,
+  "columns": {
+    "price": {
+      "type": "float",
+      "min": 29.52,
+      "max": 942.08,
+      "median": 870.81
+    },
+    "device_type": {
+      "type": "categorical",
+      "values": [
+        "Camera",
+        "Door Lock",
+        "Doorbell",
+        "Light Bulb",
+        "Plug",
+        "Sensor",
+        "Speaker",
+        "Thermostat"
+      ]
+    },
+    "brand": {
+      "type": "categorical",
+      "values": [
+        "Amazon",
+        "Apple",
+        "Ecobee",
+        "Google",
+        "Nest",
+        "Philips",
+        "Ring",
+        "Samsung",
+        "Wyze"
+      ]
+    },
+    "connectivity": {
+      "type": "categorical",
+      "values": [
+        "Bluetooth",
+        "Thread",
+        "WiFi",
+        "Z-Wave",
+        "Zigbee"
+      ]
+    },
+    "rating": {
+      "type": "float",
+      "min": 1.8,
+      "max": 4.36,
+      "median": 4.16
+    },
+    "review_count": {
+      "type": "int",
+      "min": 368,
+      "max": 41267,
+      "median": 39827
+    },
+    "battery_life_months": {
+      "type": "int",
+      "min": 7,
+      "max": 36,
+      "median": 34
+    },
+    "setup_difficulty": {
+      "type": "categorical",
+      "values": [
+        "Easy",
+        "Hard",
+        "Medium"
+      ]
+    },
+    "voice_assistant": {
+      "type": "categorical",
+      "values": [
+        "Alexa",
+        "Google Assistant",
+        "Multiple",
+        "None",
+        "Siri"
+      ]
+    },
+    "has_app": {
+      "type": "bool"
+    },
+    "has_automation": {
+      "type": "bool"
+    },
+    "is_weatherproof": {
+      "type": "bool"
+    },
+    "energy_star_certified": {
+      "type": "bool"
+    },
+    "warranty_years": {
+      "type": "int",
+      "min": 2,
+      "max": 4,
+      "median": 3
+    },
+    "subscription_required": {
+      "type": "bool"
+    },
+    "works_offline": {
+      "type": "bool"
+    },
+    "num_reviews": {
+      "type": "int",
+      "min": 1923,
+      "max": 9386,
+      "median": 6709
+    }
+  }
+}

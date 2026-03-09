@@ -1,0 +1,65 @@
+{
+  "name": "yoga_studios",
+  "row_count": 9289,
+  "columns": {
+    "monthly_membership": {
+      "type": "float",
+      "min": 53.18,
+      "max": 195.52,
+      "median": 162.1
+    },
+    "drop_in_price": {
+      "type": "float",
+      "min": 14.28,
+      "max": 28.65,
+      "median": 14.56
+    },
+    "class_duration_min": {
+      "type": "int",
+      "min": 42,
+      "max": 78,
+      "median": 65
+    },
+    "yoga_type": {
+      "type": "categorical",
+      "values": [
+        "Bikram",
+        "Power",
+        "Vinyasa"
+      ]
+    },
+    "class_size": {
+      "type": "int",
+      "min": 10,
+      "max": 38,
+      "median": 28
+    },
+    "rating": {
+      "type": "float",
+      "min": 1.24,
+      "max": 4.72,
+      "median": 4.24
+    },
+    "has_heated_room": {
+      "type": "bool"
+    },
+    "has_shower": {
+      "type": "bool"
+    },
+    "has_mat_rental": {
+      "type": "bool"
+    },
+    "instructor_count": {
+      "type": "int",
+      "min": 3,
+      "max": 13,
+      "median": 8
+    },
+    "open_days_per_week": {
+      "type": "int",
+      "min": 5,
+      "max": 7,
+      "median": 5
+    }
+  }
+}

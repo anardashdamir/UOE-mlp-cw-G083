@@ -1,0 +1,88 @@
+{
+  "name": "rock_climbing_routes",
+  "row_count": 24537,
+  "columns": {
+    "grade": {
+      "type": "categorical",
+      "values": [
+        "5.10a",
+        "5.10b",
+        "5.10c",
+        "5.10d",
+        "5.11a",
+        "5.11b",
+        "5.12a",
+        "5.5",
+        "5.6",
+        "5.7",
+        "5.8",
+        "5.9"
+      ]
+    },
+    "height_m": {
+      "type": "float",
+      "min": 66.03,
+      "max": 248.67,
+      "median": 69.0
+    },
+    "style": {
+      "type": "categorical",
+      "values": [
+        "Boulder",
+        "Multi-Pitch",
+        "Sport",
+        "Top Rope",
+        "Trad"
+      ]
+    },
+    "rock_type": {
+      "type": "categorical",
+      "values": [
+        "Basalt",
+        "Gneiss",
+        "Granite",
+        "Limestone",
+        "Sandstone"
+      ]
+    },
+    "stars": {
+      "type": "float",
+      "min": 0.59,
+      "max": 3.64,
+      "median": 1.96
+    },
+    "is_overhanging": {
+      "type": "bool"
+    },
+    "has_anchor": {
+      "type": "bool"
+    },
+    "pitches": {
+      "type": "int",
+      "min": 3,
+      "max": 15,
+      "median": 5
+    },
+    "first_ascent_year": {
+      "type": "int",
+      "min": 1963,
+      "max": 2009,
+      "median": 1984
+    },
+    "protection_quality": {
+      "type": "categorical",
+      "values": [
+        "Excellent",
+        "Fair",
+        "Good",
+        "Poor"
+      ]
+    },
+    "popularity_score": {
+      "type": "float",
+      "min": 8.57,
+      "max": 77.32,
+      "median": 19.64
+    }
+  }
+}

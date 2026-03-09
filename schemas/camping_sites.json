@@ -1,0 +1,54 @@
+{
+  "name": "camping_sites",
+  "row_count": 20266,
+  "columns": {
+    "nightly_rate": {
+      "type": "float",
+      "min": 15.81,
+      "max": 83.04,
+      "median": 17.77
+    },
+    "site_type": {
+      "type": "categorical",
+      "values": [
+        "Backcountry",
+        "Cabin",
+        "Glamping",
+        "Group",
+        "RV",
+        "Tent",
+        "Yurt"
+      ]
+    },
+    "max_occupancy": {
+      "type": "int",
+      "min": 1,
+      "max": 19,
+      "median": 8
+    },
+    "has_electricity": {
+      "type": "bool"
+    },
+    "has_water": {
+      "type": "bool"
+    },
+    "has_fire_pit": {
+      "type": "bool"
+    },
+    "pet_allowed": {
+      "type": "bool"
+    },
+    "rating": {
+      "type": "float",
+      "min": 1.24,
+      "max": 4.25,
+      "median": 2.33
+    },
+    "elevation_m": {
+      "type": "int",
+      "min": 521,
+      "max": 2602,
+      "median": 2309
+    }
+  }
+}

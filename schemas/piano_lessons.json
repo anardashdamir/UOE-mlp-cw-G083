@@ -1,0 +1,60 @@
+{
+  "name": "piano_lessons",
+  "row_count": 976,
+  "columns": {
+    "price_per_hour": {
+      "type": "float",
+      "min": 16.64,
+      "max": 97.28,
+      "median": 82.94
+    },
+    "instrument": {
+      "type": "categorical",
+      "values": [
+        "Cello",
+        "Drums",
+        "Flute",
+        "Guitar",
+        "Piano",
+        "Saxophone",
+        "Violin",
+        "Voice"
+      ]
+    },
+    "teacher_experience_years": {
+      "type": "int",
+      "min": 7,
+      "max": 32,
+      "median": 18
+    },
+    "lesson_format": {
+      "type": "categorical",
+      "values": [
+        "Both",
+        "In-Person",
+        "Online"
+      ]
+    },
+    "level": {
+      "type": "categorical",
+      "values": [
+        "Advanced",
+        "All Levels",
+        "Beginner",
+        "Intermediate"
+      ]
+    },
+    "rating": {
+      "type": "float",
+      "min": 1.05,
+      "max": 4.48,
+      "median": 3.77
+    },
+    "accepts_children": {
+      "type": "bool"
+    },
+    "has_free_trial": {
+      "type": "bool"
+    }
+  }
+}

@@ -1,0 +1,83 @@
+{
+  "name": "anime",
+  "row_count": 12294,
+  "columns": {
+    "genre": {
+      "type": "array",
+      "values": [
+        "Action",
+        "Adventure",
+        "Cars",
+        "Comedy",
+        "Dementia",
+        "Demons",
+        "Drama",
+        "Ecchi",
+        "Fantasy",
+        "Game",
+        "Harem",
+        "Hentai",
+        "Historical",
+        "Horror",
+        "Josei",
+        "Kids",
+        "Magic",
+        "Martial Arts",
+        "Mecha",
+        "Military",
+        "Music",
+        "Mystery",
+        "Parody",
+        "Police",
+        "Psychological",
+        "Romance",
+        "Samurai",
+        "School",
+        "Sci-Fi",
+        "Seinen",
+        "Shoujo",
+        "Shoujo Ai",
+        "Shounen",
+        "Shounen Ai",
+        "Slice of Life",
+        "Space",
+        "Sports",
+        "Super Power",
+        "Supernatural",
+        "Thriller",
+        "Vampire",
+        "Yaoi",
+        "Yuri"
+      ]
+    },
+    "type": {
+      "type": "categorical",
+      "values": [
+        "Movie",
+        "Music",
+        "ONA",
+        "OVA",
+        "Special",
+        "TV"
+      ]
+    },
+    "episodes": {
+      "type": "int",
+      "min": 1,
+      "max": 1818,
+      "median": 2
+    },
+    "rating": {
+      "type": "float",
+      "min": 1.67,
+      "max": 10.0,
+      "median": 6.57
+    },
+    "members": {
+      "type": "int",
+      "min": 5,
+      "max": 1013917,
+      "median": 1550
+    }
+  }
+}

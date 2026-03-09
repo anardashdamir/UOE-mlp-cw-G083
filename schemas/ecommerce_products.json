@@ -1,0 +1,125 @@
+{
+  "name": "ecommerce_products",
+  "row_count": 26697,
+  "columns": {
+    "price": {
+      "type": "float",
+      "min": 1095.01,
+      "max": 3882.25,
+      "median": 1411.83
+    },
+    "original_price": {
+      "type": "float",
+      "min": 1146.72,
+      "max": 5681.01,
+      "median": 2990.05
+    },
+    "discount_percent": {
+      "type": "float",
+      "min": 1.41,
+      "max": 76.98,
+      "median": 15.59
+    },
+    "category": {
+      "type": "categorical",
+      "values": [
+        "Automotive",
+        "Beauty",
+        "Books",
+        "Clothing",
+        "Electronics",
+        "Food",
+        "Home & Garden",
+        "Sports",
+        "Toys"
+      ]
+    },
+    "brand_tier": {
+      "type": "categorical",
+      "values": [
+        "Budget",
+        "Generic",
+        "Luxury",
+        "Mid-Range",
+        "Premium"
+      ]
+    },
+    "rating": {
+      "type": "float",
+      "min": 1.28,
+      "max": 4.06,
+      "median": 4.01
+    },
+    "review_count": {
+      "type": "int",
+      "min": 5839,
+      "max": 41085,
+      "median": 14498
+    },
+    "units_sold": {
+      "type": "int",
+      "min": 245097,
+      "max": 942746,
+      "median": 636293
+    },
+    "weight_kg": {
+      "type": "float",
+      "min": 11.52,
+      "max": 49.02,
+      "median": 41.07
+    },
+    "shipping_cost": {
+      "type": "float",
+      "min": 6.48,
+      "max": 47.71,
+      "median": 19.56
+    },
+    "is_prime_eligible": {
+      "type": "bool"
+    },
+    "is_bestseller": {
+      "type": "bool"
+    },
+    "in_stock": {
+      "type": "bool"
+    },
+    "return_rate_percent": {
+      "type": "float",
+      "min": 0.41,
+      "max": 29.72,
+      "median": 6.42
+    },
+    "seller_rating": {
+      "type": "float",
+      "min": 1.21,
+      "max": 4.14,
+      "median": 1.62
+    },
+    "warranty_months": {
+      "type": "int",
+      "min": 5,
+      "max": 58,
+      "median": 45
+    },
+    "country_of_origin": {
+      "type": "categorical",
+      "values": [
+        "China",
+        "Germany",
+        "India",
+        "Japan",
+        "USA",
+        "Vietnam"
+      ]
+    },
+    "has_video": {
+      "type": "bool"
+    },
+    "image_count": {
+      "type": "int",
+      "min": 1,
+      "max": 19,
+      "median": 5
+    }
+  }
+}

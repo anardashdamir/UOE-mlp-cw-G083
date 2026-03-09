@@ -1,0 +1,65 @@
+{
+  "name": "chicken_coops",
+  "row_count": 148,
+  "columns": {
+    "price": {
+      "type": "float",
+      "min": 771.56,
+      "max": 2399.95,
+      "median": 2218.77
+    },
+    "chicken_capacity": {
+      "type": "int",
+      "min": 4,
+      "max": 18,
+      "median": 11
+    },
+    "floor_area_sqm": {
+      "type": "float",
+      "min": 1.35,
+      "max": 8.66,
+      "median": 4.06
+    },
+    "height_cm": {
+      "type": "int",
+      "min": 98,
+      "max": 186,
+      "median": 145
+    },
+    "material": {
+      "type": "categorical",
+      "values": [
+        "Metal",
+        "Plastic",
+        "Wire",
+        "Wood"
+      ]
+    },
+    "has_run": {
+      "type": "bool"
+    },
+    "has_nesting_box": {
+      "type": "bool"
+    },
+    "is_mobile": {
+      "type": "bool"
+    },
+    "predator_proof": {
+      "type": "categorical",
+      "values": [
+        "Basic",
+        "Excellent",
+        "Good"
+      ]
+    },
+    "assembly_required": {
+      "type": "bool"
+    },
+    "rating": {
+      "type": "float",
+      "min": 1.46,
+      "max": 4.65,
+      "median": 3.36
+    }
+  }
+}

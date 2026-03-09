@@ -1,0 +1,63 @@
+{
+  "name": "trampoline_parks",
+  "row_count": 453116,
+  "columns": {
+    "hourly_rate": {
+      "type": "float",
+      "min": 10.99,
+      "max": 32.9,
+      "median": 25.63
+    },
+    "area_sqm": {
+      "type": "int",
+      "min": 1237,
+      "max": 4892,
+      "median": 3060
+    },
+    "trampoline_count": {
+      "type": "int",
+      "min": 11,
+      "max": 90,
+      "median": 22
+    },
+    "min_age": {
+      "type": "int",
+      "min": 3,
+      "max": 6,
+      "median": 5
+    },
+    "max_capacity": {
+      "type": "int",
+      "min": 95,
+      "max": 411,
+      "median": 367
+    },
+    "has_foam_pit": {
+      "type": "bool"
+    },
+    "has_dodgeball": {
+      "type": "bool"
+    },
+    "has_basketball_hoops": {
+      "type": "bool"
+    },
+    "has_ninja_course": {
+      "type": "bool"
+    },
+    "rating": {
+      "type": "float",
+      "min": 1.14,
+      "max": 4.53,
+      "median": 2.33
+    },
+    "party_package_price": {
+      "type": "float",
+      "min": 157.43,
+      "max": 420.47,
+      "median": 163.84
+    },
+    "requires_waiver": {
+      "type": "bool"
+    }
+  }
+}

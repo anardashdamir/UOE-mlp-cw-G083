@@ -1,0 +1,71 @@
+{
+  "name": "stained_glass",
+  "row_count": 212,
+  "columns": {
+    "price": {
+      "type": "float",
+      "min": 1209.67,
+      "max": 4435.44,
+      "median": 1699.7
+    },
+    "width_cm": {
+      "type": "int",
+      "min": 32,
+      "max": 178,
+      "median": 163
+    },
+    "height_cm": {
+      "type": "int",
+      "min": 44,
+      "max": 300,
+      "median": 105
+    },
+    "style": {
+      "type": "categorical",
+      "values": [
+        "Abstract",
+        "Art Deco",
+        "Art Nouveau",
+        "Modern",
+        "Religious",
+        "Traditional"
+      ]
+    },
+    "color_count": {
+      "type": "int",
+      "min": 6,
+      "max": 29,
+      "median": 9
+    },
+    "technique": {
+      "type": "categorical",
+      "values": [
+        "Copper Foil",
+        "Fused",
+        "Lead Came",
+        "Painted"
+      ]
+    },
+    "is_custom": {
+      "type": "bool"
+    },
+    "includes_installation": {
+      "type": "bool"
+    },
+    "glass_type": {
+      "type": "categorical",
+      "values": [
+        "Beveled",
+        "Cathedral",
+        "Opalescent",
+        "Textured"
+      ]
+    },
+    "lead_time_weeks": {
+      "type": "int",
+      "min": 1,
+      "max": 12,
+      "median": 10
+    }
+  }
+}

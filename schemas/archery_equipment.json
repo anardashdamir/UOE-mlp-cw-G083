@@ -1,0 +1,68 @@
+{
+  "name": "archery_equipment",
+  "row_count": 869,
+  "columns": {
+    "price": {
+      "type": "float",
+      "min": 442.35,
+      "max": 1898.73,
+      "median": 616.33
+    },
+    "draw_weight_lbs": {
+      "type": "int",
+      "min": 12,
+      "max": 72,
+      "median": 49
+    },
+    "bow_type": {
+      "type": "categorical",
+      "values": [
+        "Compound",
+        "Crossbow",
+        "Longbow",
+        "Recurve"
+      ]
+    },
+    "arrow_speed_fps": {
+      "type": "int",
+      "min": 176,
+      "max": 383,
+      "median": 356
+    },
+    "axle_to_axle_inches": {
+      "type": "int",
+      "min": 28,
+      "max": 43,
+      "median": 32
+    },
+    "material": {
+      "type": "categorical",
+      "values": [
+        "Aluminum",
+        "Carbon",
+        "Fiberglass",
+        "Wood"
+      ]
+    },
+    "is_for_hunting": {
+      "type": "bool"
+    },
+    "is_for_competition": {
+      "type": "bool"
+    },
+    "hand": {
+      "type": "categorical",
+      "values": [
+        "Ambidextrous",
+        "Left",
+        "Right"
+      ]
+    },
+    "warranty_years": {
+      "type": "int",
+      "min": 1,
+      "max": 10,
+      "median": 7
+    }
+  }
+}

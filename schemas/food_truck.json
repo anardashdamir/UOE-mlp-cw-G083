@@ -1,0 +1,65 @@
+{
+  "name": "food_truck",
+  "row_count": 1359,
+  "columns": {
+    "price": {
+      "type": "float",
+      "min": 4.14,
+      "max": 24.58,
+      "median": 4.35
+    },
+    "cuisine": {
+      "type": "categorical",
+      "values": [
+        "American",
+        "Asian",
+        "BBQ",
+        "Indian",
+        "Italian",
+        "Korean",
+        "Mediterranean",
+        "Mexican",
+        "Thai",
+        "Vegan"
+      ]
+    },
+    "calories": {
+      "type": "int",
+      "min": 403,
+      "max": 1010,
+      "median": 638
+    },
+    "prep_time_minutes": {
+      "type": "int",
+      "min": 4,
+      "max": 20,
+      "median": 13
+    },
+    "is_spicy": {
+      "type": "bool"
+    },
+    "is_vegetarian": {
+      "type": "bool"
+    },
+    "portion_size": {
+      "type": "categorical",
+      "values": [
+        "Large",
+        "Regular",
+        "Small"
+      ]
+    },
+    "rating": {
+      "type": "float",
+      "min": 1.49,
+      "max": 4.66,
+      "median": 3.94
+    },
+    "protein_g": {
+      "type": "float",
+      "min": 10.49,
+      "max": 52.96,
+      "median": 22.23
+    }
+  }
+}

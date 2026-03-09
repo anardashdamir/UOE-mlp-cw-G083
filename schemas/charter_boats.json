@@ -1,0 +1,57 @@
+{
+  "name": "charter_boats",
+  "row_count": 39966,
+  "columns": {
+    "daily_rate": {
+      "type": "float",
+      "min": 1552.38,
+      "max": 9284.05,
+      "median": 3012.89
+    },
+    "boat_type": {
+      "type": "categorical",
+      "values": [
+        "Catamaran",
+        "Fishing Boat",
+        "Houseboat",
+        "Motorboat",
+        "Pontoon",
+        "Sailboat",
+        "Yacht"
+      ]
+    },
+    "length_feet": {
+      "type": "int",
+      "min": 29,
+      "max": 86,
+      "median": 65
+    },
+    "capacity": {
+      "type": "int",
+      "min": 14,
+      "max": 38,
+      "median": 35
+    },
+    "has_captain": {
+      "type": "bool"
+    },
+    "fuel_included": {
+      "type": "bool"
+    },
+    "year_built": {
+      "type": "int",
+      "min": 1988,
+      "max": 2018,
+      "median": 2016
+    },
+    "rating": {
+      "type": "float",
+      "min": 1.05,
+      "max": 4.9,
+      "median": 4.69
+    },
+    "overnight_allowed": {
+      "type": "bool"
+    }
+  }
+}

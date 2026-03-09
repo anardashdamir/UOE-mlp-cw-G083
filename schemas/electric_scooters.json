@@ -1,0 +1,56 @@
+{
+  "name": "electric_scooters",
+  "row_count": 45291,
+  "columns": {
+    "price": {
+      "type": "float",
+      "min": 817.16,
+      "max": 2665.0,
+      "median": 1637.11
+    },
+    "range_km": {
+      "type": "int",
+      "min": 15,
+      "max": 81,
+      "median": 38
+    },
+    "max_speed_kmh": {
+      "type": "int",
+      "min": 17,
+      "max": 64,
+      "median": 44
+    },
+    "weight_kg": {
+      "type": "float",
+      "min": 8.97,
+      "max": 37.68,
+      "median": 24.43
+    },
+    "battery_wh": {
+      "type": "int",
+      "min": 258,
+      "max": 1899,
+      "median": 359
+    },
+    "charge_time_hours": {
+      "type": "float",
+      "min": 3.03,
+      "max": 11.42,
+      "median": 10.46
+    },
+    "has_suspension": {
+      "type": "bool"
+    },
+    "foldable": {
+      "type": "bool"
+    },
+    "tire_type": {
+      "type": "categorical",
+      "values": [
+        "Honeycomb",
+        "Pneumatic",
+        "Solid"
+      ]
+    }
+  }
+}

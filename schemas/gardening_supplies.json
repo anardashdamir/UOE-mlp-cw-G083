@@ -1,0 +1,61 @@
+{
+  "name": "gardening_supplies",
+  "row_count": 330852,
+  "columns": {
+    "price": {
+      "type": "float",
+      "min": 51.76,
+      "max": 448.49,
+      "median": 166.33
+    },
+    "category": {
+      "type": "categorical",
+      "values": [
+        "Fertilizer",
+        "Gloves",
+        "Irrigation",
+        "Pesticide",
+        "Pots",
+        "Seeds",
+        "Soil",
+        "Tools"
+      ]
+    },
+    "weight_kg": {
+      "type": "float",
+      "min": 0.34,
+      "max": 25.11,
+      "median": 8.92
+    },
+    "is_organic": {
+      "type": "bool"
+    },
+    "season": {
+      "type": "categorical",
+      "values": [
+        "Fall",
+        "Spring",
+        "Summer",
+        "Winter",
+        "Year-Round"
+      ]
+    },
+    "indoor_outdoor": {
+      "type": "categorical",
+      "values": [
+        "Both",
+        "Indoor",
+        "Outdoor"
+      ]
+    },
+    "rating": {
+      "type": "float",
+      "min": 1.09,
+      "max": 4.76,
+      "median": 3.34
+    },
+    "is_eco_friendly": {
+      "type": "bool"
+    }
+  }
+}

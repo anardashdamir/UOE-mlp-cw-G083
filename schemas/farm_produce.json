@@ -1,0 +1,60 @@
+{
+  "name": "farm_produce",
+  "row_count": 47111,
+  "columns": {
+    "price_per_kg": {
+      "type": "float",
+      "min": 7.67,
+      "max": 24.27,
+      "median": 17.26
+    },
+    "produce_type": {
+      "type": "categorical",
+      "values": [
+        "Dairy",
+        "Egg",
+        "Fruit",
+        "Grain",
+        "Herb",
+        "Honey",
+        "Mushroom",
+        "Nut",
+        "Vegetable"
+      ]
+    },
+    "is_organic": {
+      "type": "bool"
+    },
+    "farm_distance_km": {
+      "type": "float",
+      "min": 5.98,
+      "max": 81.6,
+      "median": 26.36
+    },
+    "quantity_available_kg": {
+      "type": "float",
+      "min": 111.45,
+      "max": 902.9,
+      "median": 479.38
+    },
+    "pesticide_free": {
+      "type": "bool"
+    },
+    "season": {
+      "type": "categorical",
+      "values": [
+        "Fall",
+        "Spring",
+        "Summer",
+        "Winter",
+        "Year-Round"
+      ]
+    },
+    "shelf_life_days": {
+      "type": "int",
+      "min": 2,
+      "max": 46,
+      "median": 23
+    }
+  }
+}
