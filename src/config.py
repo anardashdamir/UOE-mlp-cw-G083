@@ -6,6 +6,7 @@ import yaml
 from typing import Literal
 
 from pydantic import BaseModel, Field
+from pydantic_settings import BaseSettings
 
 
 _PROJECT_ROOT = Path(__file__).resolve().parent.parent
@@ -27,11 +28,13 @@ class LoraConfig(BaseModel):
     target_modules: list[str] = ["q_proj", "v_proj"]
 
 
-class WandbConfig(BaseModel):
+class WandbConfig(BaseSettings):
     enabled: bool = True
     project: str = "autofilter"
     run_name: str | None = None
-    api_key: str | None = None
+    wandb_api_key: str | None = None
+
+    model_config = {"env_file": _PROJECT_ROOT / "wandb.env", "extra": "ignore"}
 
 
 class TrainingConfig(BaseModel):

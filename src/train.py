@@ -17,8 +17,8 @@ def main(cfg: Config = None):
     if cfg.wandb.enabled:
         import wandb
 
-        if cfg.wandb.api_key:
-            wandb.login(key=cfg.wandb.api_key)
+        if cfg.wandb.wandb_api_key:
+            wandb.login(key=cfg.wandb.wandb_api_key)
 
         wandb.init(
             project=cfg.wandb.project,

@@ -26,7 +26,7 @@ generation:
 wandb:
   enabled: true
   project: autofilter
-  api_key: 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
+  # api_key loaded from wandb.env — do not commit keys here
   # run_name: my-experiment  # auto-generated if omitted
 
 paths:

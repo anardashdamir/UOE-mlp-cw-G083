@@ -21,6 +21,7 @@ output/
 
 # Wandb
 wandb/
+wandb.env
 
 # Model cache
 *.safetensors
