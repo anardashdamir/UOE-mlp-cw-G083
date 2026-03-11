@@ -56,7 +56,7 @@ def main(cfg: Config = None):
 
     model = AutoModelForCausalLM.from_pretrained(
         cfg.model.name,
-        torch_dtype="auto",
+        dtype="auto",
         trust_remote_code=True,
     )
 

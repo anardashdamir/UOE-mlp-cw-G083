@@ -2,7 +2,6 @@
 
 import json
 from pathlib import Path
-from typing import Optional
 
 import typer
 
@@ -19,13 +18,13 @@ _config_option = typer.Option(None, "--config", "-c", help="Path to config.yaml.
 
 @app.command()
 def train(
-    config: Optional[Path] = _config_option,
-    epochs: Optional[int] = typer.Option(None, "--epochs", "-e"),
-    batch_size: Optional[int] = typer.Option(None, "--batch-size", "-b"),
-    lr: Optional[float] = typer.Option(None, "--lr"),
-    lora_r: Optional[int] = typer.Option(None, "--lora-r"),
-    output_dir: Optional[Path] = typer.Option(None, "--output-dir", "-o"),
-    max_steps: Optional[int] = typer.Option(None, "--max-steps"),
+    config: Path | None = _config_option,
+    epochs: int | None = typer.Option(None, "--epochs", "-e"),
+    batch_size: int | None = typer.Option(None, "--batch-size", "-b"),
+    lr: float | None = typer.Option(None, "--lr"),
+    lora_r: int | None = typer.Option(None, "--lora-r"),
+    output_dir: Path | None = typer.Option(None, "--output-dir", "-o"),
+    max_steps: int | None = typer.Option(None, "--max-steps"),
 ):
     """Fine-tune the base model with LoRA on your filter dataset."""
     cfg = Config.from_yaml(
@@ -49,8 +48,8 @@ def train(
 def predict(
     query: str = typer.Argument(..., help="Natural-language filter query."),
     schema: Path = typer.Argument(..., help="Path to a JSON schema file."),
-    config: Optional[Path] = _config_option,
-    temperature: Optional[float] = typer.Option(None, "--temperature", "-t"),
+    config: Path | None = _config_option,
+    temperature: float | None = typer.Option(None, "--temperature", "-t"),
     quantization: str = typer.Option("fp16", "--quantization", "-q", help="Quantization: fp16, int8, int4."),
 ):
     """Generate a filter expression from a natural-language query."""
@@ -76,8 +75,8 @@ def predict(
 
 @app.command()
 def evaluate(
-    config: Optional[Path] = _config_option,
-    max_samples: Optional[int] = typer.Option(None, "--max-samples", "-n"),
+    config: Path | None = _config_option,
+    max_samples: int | None = typer.Option(None, "--max-samples", "-n"),
     zero_shot: bool = typer.Option(False, "--zero-shot", help="Evaluate base model without adapter."),
     quantization: list[str] = typer.Option(
         ["fp16"], "--quantization", "-q",
@@ -109,7 +108,7 @@ def evaluate(
 
 @app.command()
 def schemas(
-    config: Optional[Path] = _config_option,
+    config: Path | None = _config_option,
     verbose: bool = typer.Option(False, "--verbose", "-v"),
 ):
     """List available dataset schemas."""
@@ -138,7 +137,7 @@ def schemas(
 
 
 @app.command(name="data-stats")
-def data_stats(config: Optional[Path] = _config_option):
+def data_stats(config: Path | None = _config_option):
     """Show training/eval dataset statistics."""
     from .data_loader import load_datasets
 
