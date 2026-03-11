@@ -25,6 +25,8 @@ def train(
     lora_r: int | None = typer.Option(None, "--lora-r"),
     output_dir: Path | None = typer.Option(None, "--output-dir", "-o"),
     max_steps: int | None = typer.Option(None, "--max-steps"),
+    wandb: bool = typer.Option(False, "--wandb", help="Enable W&B logging."),
+    run_name: str | None = typer.Option(None, "--run-name", "-r", help="Experiment name for logging."),
 ):
     """Fine-tune the base model with LoRA on your filter dataset."""
     cfg = Config.from_yaml(
@@ -36,6 +38,11 @@ def train(
         output_dir=output_dir,
         max_steps=max_steps,
     )
+
+    if wandb:
+        cfg.wandb.enabled = True
+    if run_name:
+        cfg.wandb.run_name = run_name
     t = cfg.training
     print(f"Training | epochs={t.num_epochs} lr={t.learning_rate} lora_r={cfg.lora.r}")
 

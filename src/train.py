@@ -34,7 +34,7 @@ def main(cfg: Config = None):
             wandb.login(key=cfg.wandb.wandb_api_key)
 
         wandb.init(
-            project=cfg.wandb.project,
+            project=cfg.wandb.wandb_project,
             name=run_name,
             config=cfg.model_dump(exclude={"paths", "wandb"}),
         )

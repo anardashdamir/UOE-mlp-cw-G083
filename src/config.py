@@ -30,7 +30,7 @@ class LoraConfig(BaseModel):
 
 class WandbConfig(BaseSettings):
     enabled: bool = False
-    project: str = "autofilter"
+    wandb_project: str = "autofilter"
     run_name: str | None = None
     wandb_api_key: str | None = None
 

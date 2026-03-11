@@ -1,5 +1,5 @@
 model:
-  name: Qwen/Qwen2.5-0.5B-Instruct
+  name: Qwen/Qwen3.5-0.8B
 
 lora:
   r: 8
@@ -25,9 +25,8 @@ generation:
 
 wandb:
   enabled: false # set true when internet is available
-  project: autofilter
-  # api_key loaded from wandb.env — do not commit keys here
-  # run_name: my-experiment  # auto-generated if omitted
+  # wandb_project and wandb_api_key loaded from wandb.env
+  # run_name: my-experiment  # pass via --run-name flag
 
 paths:
   data_path: data/data.json
