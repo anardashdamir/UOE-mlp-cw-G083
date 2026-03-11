@@ -24,7 +24,7 @@ generation:
   temperature: 0.0
 
 wandb:
-  enabled: true
+  enabled: false  # set true when internet is available
   project: autofilter
   # api_key loaded from wandb.env — do not commit keys here
   # run_name: my-experiment  # auto-generated if omitted
