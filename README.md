@@ -23,6 +23,8 @@ AutoFilter fine-tunes a language model with LoRA to convert free-form, often mis
     - [Install uv](#install-uv)
     - [Install Dependencies](#install-dependencies)
     - [Verify Installation](#verify-installation)
+  - [Running on a SLURM Cluster (UoE)](#running-on-a-slurm-cluster-uoe)
+  - [Running on RunPod](#running-on-runpod)
   - [Configuration](#configuration)
     - [Configuration Reference](#configuration-reference)
   - [CLI Usage](#cli-usage)
@@ -182,6 +184,141 @@ Eval schemas: hotel_bookings, job_listings, restaurant_business_rankings_2020, .
 
 ---
 
+## Running on a SLURM Cluster (UoE)
+
+The university cluster has **no internet on GPU nodes**, so all downloads must happen on the login node first. TensorBoard is used for logging (wandb is disabled by default).
+
+### 1. Setup on the Login Node (has internet)
+
+```bash
+# Install uv and add to PATH
+curl -LsSf https://astral.sh/uv/install.sh | sh
+source $HOME/.local/bin/env
+
+# Clone and install dependencies
+git clone -b main https://github.com/anardashdamir/UOE-mlp-cw-G083.git
+cd UOE-mlp-cw-G083
+uv sync
+source .venv/bin/activate
+
+# Download the model while you still have internet
+huggingface-cli download Qwen/Qwen2.5-0.5B-Instruct
+```
+
+### 2. Request a GPU Node
+
+```bash
+srun --partition=Teaching --gres=gpu:1 --time=12:00:00 --mem=36G --nodelist=landonia21 --pty bash
+```
+
+### 3. Train on the GPU Node (no internet)
+
+```bash
+# Re-source uv and activate the venv
+source $HOME/.local/bin/env
+cd UOE-mlp-cw-G083
+source .venv/bin/activate
+
+# Train (HuggingFace uses cached model, TensorBoard logs locally)
+python main.py train
+```
+
+Training logs are saved to `output/tb_logs/<run_name>/` with auto-generated experiment names like:
+
+```
+qwen2.5-0.5b-instruct_r8_a32_lr2e-05_ep3_20260311-143022
+```
+
+### 4. View TensorBoard Logs
+
+On the login node (or your local machine after copying `output/tb_logs/`):
+
+```bash
+tensorboard --logdir output/tb_logs/ --port 6006
+```
+
+From your local machine, SSH tunnel to view in the browser:
+
+```bash
+ssh -L 6006:localhost:6006 <username>@<cluster-host>
+# Then open http://localhost:6006
+```
+
+### Tips
+
+- **Override hyperparameters from the CLI:** `python main.py train --epochs 5 --lr 1e-4`
+- **If you need wandb**, set `wandb.enabled: true` in `config.yaml` and run on the login node (which has internet)
+- **Model is cached** in `~/.cache/huggingface/hub/` — no re-download needed after the first time
+
+---
+
+## Running on RunPod
+
+RunPod instances come with CUDA pre-installed and have full internet access.
+
+### 1. Install uv and Clone
+
+```bash
+curl -LsSf https://astral.sh/uv/install.sh | sh
+source $HOME/.local/bin/env
+
+git clone -b main https://github.com/anardashdamir/UOE-mlp-cw-G083.git
+cd UOE-mlp-cw-G083
+uv sync
+source .venv/bin/activate
+```
+
+### 2. (Optional) Enable W&B Logging
+
+Since RunPod has internet, you can use wandb:
+
+```bash
+# Create wandb.env with your API key
+echo "WANDB_API_KEY=your_key_here" > wandb.env
+```
+
+Then enable it in `config.yaml`:
+
+```yaml
+wandb:
+  enabled: true
+```
+
+Or just use TensorBoard (the default) — no extra setup needed.
+
+### 3. Train
+
+```bash
+# The model downloads automatically on first run
+python main.py train
+
+# Custom run
+python main.py train --epochs 5 --lr 1e-4 --batch-size 4
+```
+
+### 4. Evaluate
+
+```bash
+# Full evaluation
+python main.py evaluate
+
+# Zero-shot baseline
+python main.py evaluate --zero-shot
+
+# Compare quantization modes
+python main.py evaluate -q fp16 -q int8 -q int4
+```
+
+### 5. View TensorBoard (if using default logging)
+
+```bash
+tensorboard --logdir output/tb_logs/ --port 6006 --bind_all
+```
+
+Then open `http://<runpod-ip>:6006` in your browser. If using a RunPod HTTP port, map port 6006 in your pod settings.
+
+---
+
 ## Configuration
 
 All settings live in `config.yaml` at the project root. The config is loaded via Pydantic, so values are validated at startup.
@@ -314,7 +451,7 @@ python main.py train --output-dir output/experiment_1
 2. Applies LoRA adapters to the specified modules
 3. Trains on the filter dataset using SFTTrainer (from the `trl` library)
 4. Saves the adapter weights to `output/final_adapter/`
-5. Logs metrics to Weights & Biases (if enabled in config)
+5. Logs metrics to TensorBoard (default) or W&B (if enabled in config)
 
 ### Predict
 
