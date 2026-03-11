@@ -38,6 +38,7 @@ class SampleContext(BaseModel):
     schema_name: str = "unknown"
     difficulty: str = "unknown"
     latency_ms: float = 0.0
+    query: str = ""
 
     class Config:
         frozen = True
@@ -69,6 +70,7 @@ class BaseMetric(ABC):
     def name(self) -> str:
         """Short identifier for this metric (used in output tables)."""
         ...
+        
 
     @property
     def description(self) -> str:
@@ -87,7 +89,7 @@ class BaseMetric(ABC):
         Args:
             predicted: Model's predicted filter expression.
             expected: Ground truth filter expression.
-            ctx: SampleContext with schema_columns, schema_name, difficulty, latency_ms.
+            ctx: SampleContext with schema_columns, schema_name, difficulty, latency_ms, query.
 
         Returns:
             A single float score (0.0 to 1.0 for most metrics)

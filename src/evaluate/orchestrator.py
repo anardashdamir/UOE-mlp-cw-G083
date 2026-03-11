@@ -53,15 +53,11 @@ METRICS = [
 ]
 
 
-def _extract_schema_name(user_content: str) -> str:
-    """Extract a schema identifier from the user message."""
-    lines = user_content.split("\n")
-    for line in lines:
-        if line.startswith("<schema>"):
-            continue
-        if ":" in line:
-            return line.split(":")[0].strip()
-    return "unknown"
+def _extract_query(user_content: str) -> str:
+    """Extract the natural language query from the user message."""
+    import re
+    m = re.search(r"<query>(.*?)</query>", user_content, re.DOTALL)
+    return m.group(1).strip() if m else ""
 
 
 def _extract_difficulty(file_path: str) -> str:
@@ -93,13 +89,15 @@ def _run_single(
     schema_columns_list = []
     schema_names = []
     difficulties = []
+    queries = []
 
     for sample in eval_ds:
         messages = sample["messages"]
         expected_list.append(messages[2]["content"])
         schema_columns_list.append(extract_schema_columns(messages[1]["content"]))
-        schema_names.append(_extract_schema_name(messages[1]["content"]))
+        queries.append(_extract_query(messages[1]["content"]))
         fp = sample.get("file_path", "")
+        schema_names.append(fp.split("__")[0] if fp else "unknown")
         difficulties.append(_extract_difficulty(fp) if fp else "unknown")
         prompts.append(
             tokenizer.apply_chat_template(
@@ -159,6 +157,7 @@ def _run_single(
             schema_name=schema_names[i],
             difficulty=difficulties[i],
             latency_ms=latencies[i],
+            query=queries[i],
         )
         for metric in METRICS:
             value = metric.compute_sample(predictions[i], expected_list[i], ctx)

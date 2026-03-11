@@ -94,7 +94,7 @@ def load_datasets(cfg: Config = None) -> tuple[Dataset, Dataset]:
             continue
 
         messages = build_messages(sample["query"], schema_text, sample["filters"])
-        row = {"messages": messages}
+        row = {"messages": messages, "file_path": sample["file_path"]}
 
         if dataset_name in eval_set:
             eval_rows.append(row)
