@@ -14,10 +14,11 @@ class FieldAccuracyMetric(BaseMetric):
         return "Fraction of predicted field names that are valid schema columns"
 
     def compute_sample(self, predicted: str, expected: str, ctx: SampleContext = None):
-        pred_fields = extract_fields(predicted)
+        pred_fields = set(extract_fields(predicted))# Deduplicate: we care about which unique fields the model knows,not how many times it repeats them
+
 
         if not pred_fields:
-            return 1.0 if not predicted.strip() else 0.0
+            return 1.0 if not predicted.strip() else 0.0###################debatable: if no fields are predicted, is that 100% accurate or 0% accurate? Here we say it's 100% accurate if the prediction is empty/whitespace, otherwise it's 0% accurate.
         if not ctx or not ctx.schema_columns:
             return 0.0
 

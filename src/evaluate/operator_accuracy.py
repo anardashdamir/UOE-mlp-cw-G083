@@ -11,9 +11,8 @@ from .base import BaseMetric
 
 
 _OPERATOR_PATTERN = re.compile(
-    r"(==|!=|>=|<=|>|<|\bCONTAINS_ALL\b|\bCONTAINS\b)", re.IGNORECASE
+    r"(==|!=|>=|<=|>|<|\bIN\b|\bCONTAINS_ALL\b|\bCONTAINS\b)", re.IGNORECASE
 )
-
 
 def _extract_operators(filter_str: str) -> list[str]:
     """Extract all operators from a filter expression."""

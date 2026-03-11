@@ -11,9 +11,16 @@ class HallucinationMetric(BaseMetric):
 
     @property
     def description(self) -> str:
-        return "Average number of predicted clauses that do not appear in the ground truth"
+        return "Fraction of predicted clauses that do not appear in the ground truth"
 
     def compute_sample(self, predicted: str, expected: str, ctx: SampleContext = None):
         pred_set = parse_filters(predicted)
         gold_set = parse_filters(expected)
-        return float(len(pred_set - gold_set))
+        
+        extra = len(pred_set - gold_set)
+
+        if not pred_set:
+            return 0.0
+        # Normalized: what fraction of predictions are hallucinated
+        return extra / len(pred_set)
+

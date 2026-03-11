@@ -1,8 +1,7 @@
-"""Misalignment metric: fields in the prediction that do NOT exist in the schema.
+"""Misalignment metric: fraction of predicted fields that do NOT exist in the schema.
 
-Unlike field_accuracy (which is a ratio), this counts the raw number of
-invalid fields per sample — useful for understanding how many hallucinated
-columns the model invents.
+Measures how often the model invents column names that aren't in the schema.
+Returns a normalized rate (0.0 = all fields valid, 1.0 = all fields invalid).
 """
 
 from .base import BaseMetric, SampleContext
@@ -16,7 +15,7 @@ class MisalignmentMetric(BaseMetric):
 
     @property
     def description(self) -> str:
-        return "Average number of predicted fields that do not exist in the schema"
+        return "Fraction of predicted fields that do not exist in the schema"
 
     def compute_sample(self, predicted: str, expected: str, ctx: SampleContext = None):
         pred_fields = extract_fields(predicted)
@@ -25,4 +24,5 @@ class MisalignmentMetric(BaseMetric):
             return 0.0
 
         invalid = sum(1 for f in pred_fields if f not in ctx.schema_columns)
-        return float(invalid)
+        # Normalized: what fraction of predicted fields are made up
+        return invalid / len(pred_fields)
