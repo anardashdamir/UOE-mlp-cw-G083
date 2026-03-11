@@ -1,4 +1,4 @@
-"""Hallucination metric: number of predicted clauses not in the ground truth."""
+"""Hallucination metric: rate of predicted clauses not in the ground truth."""
 
 from .base import BaseMetric, SampleContext
 from .parsing import parse_filters

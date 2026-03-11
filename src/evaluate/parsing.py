@@ -29,12 +29,22 @@ def strip_outer_parens(s: str) -> str:
 
 
 def split_top_level_and(filter_str: str) -> list[str]:
-    """Split on AND only at parenthesis depth 0."""
+    """Split on AND only at parenthesis depth 0, respecting quoted strings."""
     filter_str = strip_outer_parens(filter_str)
+    
+    # Protect quoted strings by replacing them with placeholders
+    placeholders = {}
+    def replace_quote(m):
+        key = f"__QUOTE_{len(placeholders)}__"
+        placeholders[key] = m.group(0)
+        return key
+    protected = re.sub(r"'[^']*'|\"[^\"]*\"", replace_quote, filter_str)
+    
+    # Split on AND at depth 0
     parts = []
     depth = 0
     current = []
-    tokens = re.split(r"(\s+AND\s+)", filter_str, flags=re.IGNORECASE)
+    tokens = re.split(r"(\s+AND\s+)", protected, flags=re.IGNORECASE)
     for token in tokens:
         if re.fullmatch(r"\s+AND\s+", token, re.IGNORECASE) and depth == 0:
             parts.append("".join(current))
@@ -48,8 +58,17 @@ def split_top_level_and(filter_str: str) -> list[str]:
             current.append(token)
     if current:
         parts.append("".join(current))
-    return [p.strip() for p in parts if p.strip()]
-
+    
+    # Restore quoted strings
+    result = []
+    for p in parts:
+        p = p.strip()
+        if p:
+            for key, val in placeholders.items():
+                p = p.replace(key, val)
+            result.append(p)
+    return result
+    
 
 def normalize_clause(clause: str) -> str:
     """Normalize a single clause: whitespace, parens, numeric values, OR ordering."""
@@ -137,6 +156,6 @@ def is_valid_syntax(filter_str: str) -> bool:
     if depth != 0:
         return False
     # Check at least one operator exists
-    if not re.search(r"(==|!=|>=|<=|>|<|\bCONTAINS\b|\bCONTAINS_ALL\b)", filter_str, re.IGNORECASE):
+    if not re.search(r"(==|!=|>=|<=|>|<|\bIN\b|\bCONTAINS\b|\bCONTAINS_ALL\b)", filter_str, re.IGNORECASE):
         return False
     return True
