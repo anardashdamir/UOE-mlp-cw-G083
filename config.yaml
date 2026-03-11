@@ -16,18 +16,17 @@ training:
   learning_rate: 2e-5
   lr_scheduler_type: cosine
   warmup_ratio: 0.05
-  max_seq_length: 1024
-  max_steps: -1  # -1 = use num_epochs
+  max_seq_length: 2048
+  max_steps: -1 # -1 = use num_epochs
 
 generation:
   max_new_tokens: 256
   temperature: 0.0
 
 wandb:
-  enabled: true
-  project: autofilter
-  # api_key loaded from wandb.env — do not commit keys here
-  # run_name: my-experiment  # auto-generated if omitted
+  enabled: false # set true when internet is available
+  # wandb_project and wandb_api_key loaded from wandb.env
+  # run_name: my-experiment  # pass via --run-name flag
 
 paths:
   data_path: data/data.json

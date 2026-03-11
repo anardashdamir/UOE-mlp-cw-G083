@@ -1,4 +1,6 @@
-"""LoRA fine-tuning of Qwen2.5-0.5B-Instruct using SFTTrainer."""
+"""LoRA fine-tuning using SFTTrainer with TensorBoard / W&B logging."""
+
+from datetime import datetime
 
 from peft import LoraConfig, TaskType
 from transformers import AutoModelForCausalLM, AutoTokenizer
@@ -8,12 +10,23 @@ from .config import Config
 from .data_loader import load_datasets
 
 
+def _build_run_name(cfg: Config) -> str:
+    model_short = cfg.model.name.split("/")[-1].lower()
+    ts = datetime.now().strftime("%Y%m%d-%H%M%S")
+    return f"{model_short}_r{cfg.lora.r}_a{cfg.lora.alpha}_lr{cfg.training.learning_rate:.0e}_ep{cfg.training.num_epochs}_{ts}"
+
+
 def main(cfg: Config = None):
     cfg = cfg or Config()
     cfg.paths.output_dir.mkdir(parents=True, exist_ok=True)
 
-    # wandb setup
-    report_to = "none"
+    run_name = cfg.wandb.run_name or _build_run_name(cfg)
+    print(f"Run: {run_name}")
+
+    # Logging backend
+    report_to = "tensorboard"
+    logging_dir = str(cfg.paths.output_dir / "tb_logs" / run_name)
+
     if cfg.wandb.enabled:
         import wandb
 
@@ -21,11 +34,12 @@ def main(cfg: Config = None):
             wandb.login(key=cfg.wandb.wandb_api_key)
 
         wandb.init(
-            project=cfg.wandb.project,
-            name=cfg.wandb.run_name,
+            project=cfg.wandb.wandb_project,
+            name=run_name,
             config=cfg.model_dump(exclude={"paths", "wandb"}),
         )
         report_to = "wandb"
+        logging_dir = None
 
     train_ds, eval_ds = load_datasets(cfg)
     print(f"Train: {len(train_ds)} | Eval: {len(eval_ds)}")
@@ -42,7 +56,7 @@ def main(cfg: Config = None):
 
     model = AutoModelForCausalLM.from_pretrained(
         cfg.model.name,
-        torch_dtype="auto",
+        dtype="auto",
         trust_remote_code=True,
     )
 
@@ -56,6 +70,8 @@ def main(cfg: Config = None):
 
     training_args = SFTConfig(
         output_dir=str(cfg.paths.output_dir),
+        run_name=run_name,
+        logging_dir=logging_dir,
         num_train_epochs=cfg.training.num_epochs,
         per_device_train_batch_size=cfg.training.batch_size,
         gradient_accumulation_steps=cfg.training.gradient_accumulation_steps,
@@ -66,7 +82,11 @@ def main(cfg: Config = None):
         max_steps=cfg.training.max_steps,
         eval_strategy="steps",
         eval_steps=0.2,
-        save_strategy="epoch",
+        save_strategy="steps",
+        save_steps=0.2,
+        load_best_model_at_end=True,
+        metric_for_best_model="eval_loss",
+        greater_is_better=False,
         logging_steps=50,
         bf16=True,
         report_to=report_to,

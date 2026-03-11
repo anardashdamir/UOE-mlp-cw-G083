@@ -103,7 +103,6 @@ def load_datasets(cfg: Config = None) -> tuple[Dataset, Dataset]:
 
     random.seed(42)
     random.shuffle(train_rows)
-    train_rows = train_rows[:len(train_rows) // 4]
 
     train_ds = Dataset.from_list(train_rows)
     eval_ds = Dataset.from_list(eval_rows)
