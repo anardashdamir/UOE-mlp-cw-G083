@@ -29,23 +29,39 @@ def strip_outer_parens(s: str) -> str:
 
 
 def split_top_level_and(filter_str: str) -> list[str]:
-    """Split on AND only at parenthesis depth 0."""
+    """Split on AND only at parenthesis depth 0 and outside quoted strings."""
     filter_str = strip_outer_parens(filter_str)
     parts = []
     depth = 0
+    in_quotes = None
     current = []
-    tokens = re.split(r"(\s+AND\s+)", filter_str, flags=re.IGNORECASE)
-    for token in tokens:
-        if re.fullmatch(r"\s+AND\s+", token, re.IGNORECASE) and depth == 0:
-            parts.append("".join(current))
-            current = []
+    i = 0
+    while i < len(filter_str):
+        ch = filter_str[i]
+        if ch in ('"', "'") and in_quotes is None:
+            in_quotes = ch
+            current.append(ch)
+        elif ch == in_quotes:
+            in_quotes = None
+            current.append(ch)
+        elif in_quotes is None and ch == "(":
+            depth += 1
+            current.append(ch)
+        elif in_quotes is None and ch == ")":
+            depth -= 1
+            current.append(ch)
+        elif in_quotes is None and depth == 0:
+            m = re.match(r"\s+AND\s+", filter_str[i:], re.IGNORECASE)
+            if m:
+                parts.append("".join(current))
+                current = []
+                i += len(m.group(0))
+                continue
+            else:
+                current.append(ch)
         else:
-            for ch in token:
-                if ch == "(":
-                    depth += 1
-                elif ch == ")":
-                    depth -= 1
-            current.append(token)
+            current.append(ch)
+        i += 1
     if current:
         parts.append("".join(current))
     return [p.strip() for p in parts if p.strip()]
@@ -137,6 +153,6 @@ def is_valid_syntax(filter_str: str) -> bool:
     if depth != 0:
         return False
     # Check at least one operator exists
-    if not re.search(r"(==|!=|>=|<=|>|<|\bCONTAINS\b|\bCONTAINS_ALL\b)", filter_str, re.IGNORECASE):
+    if not re.search(r"(==|!=|>=|<=|>|<|\bCONTAINS\b|\bCONTAINS_ALL\b|\bIN\b)", filter_str, re.IGNORECASE):
         return False
     return True

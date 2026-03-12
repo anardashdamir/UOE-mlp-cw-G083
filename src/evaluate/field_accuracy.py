@@ -14,7 +14,7 @@ class FieldAccuracyMetric(BaseMetric):
         return "Fraction of predicted field names that are valid schema columns"
 
     def compute_sample(self, predicted: str, expected: str, ctx: SampleContext = None):
-        pred_fields = extract_fields(predicted)
+        pred_fields = list(set(extract_fields(predicted)))
 
         if not pred_fields:
             return 1.0 if not predicted.strip() else 0.0
