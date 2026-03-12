@@ -22,7 +22,7 @@ def _get_quant_config(quantization: str):
     elif quantization == "int4":
         return BitsAndBytesConfig(load_in_4bit=True, bnb_4bit_compute_dtype="bfloat16"), {}
     # fp16 / default
-    return None, {"torch_dtype": "auto"}
+    return None, {"dtype": "auto"}
 
 
 def load_model(cfg: Config = None, zero_shot: bool = False, quantization: str = "fp16"):
@@ -72,8 +72,10 @@ def predict(query: str, schema_path: str, model=None, tokenizer=None, cfg: Confi
     schema_text = format_schema(schema)
 
     messages = build_messages(query, schema_text)
-    text = tokenizer.apply_chat_template(messages, tokenize=False, add_generation_prompt=True, enable_thinking=False)
-    inputs = tokenizer(text, return_tensors="pt").to(model.device)
+    inputs = tokenizer.apply_chat_template(
+        messages, add_generation_prompt=True, enable_thinking=False,
+        tokenize=True, return_dict=True, return_tensors="pt",
+    ).to(model.device)
 
     gen = cfg.generation
     output_ids = model.generate(
