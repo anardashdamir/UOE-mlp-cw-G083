@@ -11,7 +11,7 @@ from .base import BaseMetric
 
 
 _OPERATOR_PATTERN = re.compile(
-    r"(==|!=|>=|<=|>|<|\bCONTAINS_ALL\b|\bCONTAINS\b)", re.IGNORECASE
+    r"(==|!=|>=|<=|>|<|\bCONTAINS_ALL\b|\bCONTAINS\b|\bIN\b)", re.IGNORECASE
 )
 
 

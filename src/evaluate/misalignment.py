@@ -19,7 +19,7 @@ class MisalignmentMetric(BaseMetric):
         return "Average number of predicted fields that do not exist in the schema"
 
     def compute_sample(self, predicted: str, expected: str, ctx: SampleContext = None):
-        pred_fields = extract_fields(predicted)
+        pred_fields = list(set(extract_fields(predicted)))
 
         if not pred_fields or not ctx or not ctx.schema_columns:
             return 0.0
