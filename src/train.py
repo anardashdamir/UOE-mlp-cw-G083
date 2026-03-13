@@ -1,6 +1,4 @@
-"""LoRA fine-tuning using SFTTrainer with TensorBoard / W&B logging."""
-
-from datetime import datetime
+"""SFT LoRA fine-tuning with TensorBoard / W&B logging."""
 
 from peft import LoraConfig, TaskType
 from transformers import AutoModelForCausalLM, AutoTokenizer
@@ -8,38 +6,17 @@ from trl import SFTConfig, SFTTrainer
 
 from .config import Config
 from .data_loader import load_datasets
-
-
-def _build_run_name(cfg: Config) -> str:
-    model_short = cfg.model.name.split("/")[-1].lower()
-    ts = datetime.now().strftime("%Y%m%d-%H%M%S")
-    return f"{model_short}_r{cfg.lora.r}_a{cfg.lora.alpha}_lr{cfg.training.learning_rate:.0e}_ep{cfg.training.num_epochs}_{ts}"
+from .training_utils import build_run_name, disable_thinking, setup_logging
 
 
 def main(cfg: Config = None):
     cfg = cfg or Config()
     cfg.paths.output_dir.mkdir(parents=True, exist_ok=True)
 
-    run_name = cfg.wandb.run_name or _build_run_name(cfg)
+    run_name = cfg.wandb.run_name or build_run_name(cfg)
     print(f"Run: {run_name}")
 
-    # Logging backend
-    report_to = "tensorboard"
-    logging_dir = str(cfg.paths.output_dir / "tb_logs" / run_name)
-
-    if cfg.wandb.enabled:
-        import wandb
-
-        if cfg.wandb.wandb_api_key:
-            wandb.login(key=cfg.wandb.wandb_api_key)
-
-        wandb.init(
-            project=cfg.wandb.wandb_project,
-            name=run_name,
-            config=cfg.model_dump(exclude={"paths", "wandb"}),
-        )
-        report_to = "wandb"
-        logging_dir = None
+    report_to, logging_dir = setup_logging(cfg, run_name)
 
     train_ds, eval_ds = load_datasets(cfg)
     print(f"Train: {len(train_ds)} | Eval: {len(eval_ds)}")
@@ -47,17 +24,11 @@ def main(cfg: Config = None):
     tokenizer = AutoTokenizer.from_pretrained(cfg.model.name, trust_remote_code=True)
     if tokenizer.pad_token is None:
         tokenizer.pad_token = tokenizer.eos_token
-
-    # Disable Qwen3 thinking mode — replace <think>\n with empty string in chat template
-    if hasattr(tokenizer, "chat_template") and tokenizer.chat_template and "<think>" in tokenizer.chat_template:
-        tokenizer.chat_template = tokenizer.chat_template.replace(
-            "{{- '<think>\\n' }}", "{{- '' }}"
-        )
+    if not cfg.model.enable_thinking:
+        disable_thinking(tokenizer)
 
     model = AutoModelForCausalLM.from_pretrained(
-        cfg.model.name,
-        dtype="auto",
-        trust_remote_code=True,
+        cfg.model.name, dtype="auto", trust_remote_code=True,
     )
 
     lora_config = LoraConfig(
@@ -108,9 +79,4 @@ def main(cfg: Config = None):
 
     if cfg.wandb.enabled:
         import wandb
-
         wandb.finish()
-
-
-if __name__ == "__main__":
-    main()

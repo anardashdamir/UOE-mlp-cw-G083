@@ -1,17 +1,14 @@
 """Nested configuration loaded from config.yaml."""
 
 from pathlib import Path
-
-import yaml
 from typing import Literal
 
+import yaml
 from pydantic import BaseModel, Field
 from pydantic_settings import BaseSettings
 
-
 _PROJECT_ROOT = Path(__file__).resolve().parent.parent
 _DEFAULT_CONFIG = _PROJECT_ROOT / "config.yaml"
-
 
 QuantizationMode = Literal["fp16", "int8", "int4"]
 
@@ -19,6 +16,7 @@ QuantizationMode = Literal["fp16", "int8", "int4"]
 class ModelConfig(BaseModel):
     name: str = "Qwen/Qwen2.5-0.5B-Instruct"
     quantization: QuantizationMode = "fp16"
+    enable_thinking: bool = False
 
 
 class LoraConfig(BaseModel):
@@ -44,8 +42,18 @@ class TrainingConfig(BaseModel):
     learning_rate: float = Field(2e-4, gt=0)
     lr_scheduler_type: str = "cosine"
     warmup_ratio: float = Field(0.05, ge=0.0, le=1.0)
-    max_seq_length: int = Field(512, gt=0)
+    max_seq_length: int = Field(768, gt=0)
     max_steps: int = -1
+
+
+class GRPOConfig(BaseModel):
+    num_epochs: int = Field(1, gt=0)
+    batch_size: int = Field(4, gt=0)
+    gradient_accumulation_steps: int = Field(4, gt=0)
+    learning_rate: float = Field(5e-6, gt=0)
+    max_completion_length: int = Field(256, gt=0)
+    num_generations: int = Field(4, gt=0)
+    beta: float = Field(0.1, ge=0.0)
 
 
 class GenerationConfig(BaseModel):
@@ -73,6 +81,7 @@ class Config(BaseModel):
     model: ModelConfig = ModelConfig()
     lora: LoraConfig = LoraConfig()
     training: TrainingConfig = TrainingConfig()
+    grpo: GRPOConfig = GRPOConfig()
     generation: GenerationConfig = GenerationConfig()
     paths: PathsConfig = PathsConfig()
     eval: EvalConfig = EvalConfig()
@@ -93,17 +102,14 @@ class Config(BaseModel):
 
     @classmethod
     def from_yaml(cls, path: Path | str | None = None, **overrides) -> "Config":
-        """Load from YAML, then apply flat CLI overrides."""
         path = Path(path) if path else _DEFAULT_CONFIG
         data: dict = {}
         if path.exists():
             with open(path) as f:
                 data = yaml.safe_load(f) or {}
 
-        # Drop None sections (happens when all keys are commented out)
         data = {k: v for k, v in data.items() if v is not None}
 
-        # Map flat CLI overrides into the nested structure
         mapping = {
             "num_epochs": ("training", "num_epochs"),
             "batch_size": ("training", "batch_size"),

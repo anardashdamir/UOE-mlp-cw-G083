@@ -28,14 +28,11 @@ RULES:
 
 
 def format_schema(schema: dict) -> str:
-    """Convert schema dict to a compact text representation."""
     lines = []
     for col_name, col_info in schema["columns"].items():
         col_type = col_info["type"]
         if col_type == "categorical":
-            values = ", ".join(col_info["values"][:15])
-            if len(col_info["values"]) > 15:
-                values += ", ..."
+            values = ", ".join(col_info["values"])
             lines.append(f"{col_name}: categorical [{values}]")
         elif col_type in ("int", "float"):
             stats = f"min={col_info['min']}, max={col_info['max']}"
@@ -45,9 +42,7 @@ def format_schema(schema: dict) -> str:
         elif col_type == "bool":
             lines.append(f"{col_name}: bool")
         elif col_type == "array":
-            values = ", ".join(col_info.get("values", [])[:15])
-            if len(col_info.get("values", [])) > 15:
-                values += ", ..."
+            values = ", ".join(col_info.get("values", []))
             lines.append(f"{col_name}: array [{values}]")
         elif col_type == "str":
             lines.append(f"{col_name}: str")
@@ -56,30 +51,32 @@ def format_schema(schema: dict) -> str:
     return "\n".join(lines)
 
 
-def build_messages(query: str, schema_text: str, filters: str = None) -> list[dict]:
-    """Build chat messages for a single sample."""
+def build_messages(query: str, schema_text: str, filters: str = None, reasoning: str = None) -> list[dict]:
     messages = [
         {"role": "system", "content": SYSTEM_PROMPT},
-        {"role": "user", "content": f"<query>{query}</query>\n<schema>\n{schema_text}\n</schema>"},
+        {"role": "user", "content": f"User query: {query}\n\nSchema:\n{schema_text}"},
     ]
     if filters is not None:
-        messages.append({"role": "assistant", "content": filters})
+        assistant_msg = {"role": "assistant", "content": filters}
+        if reasoning:
+            assistant_msg["reasoning_content"] = reasoning
+        messages.append(assistant_msg)
     return messages
 
 
-def load_datasets(cfg: Config = None) -> tuple[Dataset, Dataset]:
-    """Load and split data into train/eval HF Datasets.
-
-    Split is by schema name: eval_schemas go to eval, rest to train.
-    Returns (train_dataset, eval_dataset) with a 'messages' column.
-    """
-    cfg = cfg or Config()
-
+def _load_schemas(cfg: Config) -> dict[str, str]:
     schemas = {}
     for schema_path in cfg.paths.schema_dir.glob("*.json"):
         with open(schema_path) as f:
             schema = json.load(f)
         schemas[schema["name"]] = format_schema(schema)
+    return schemas
+
+
+def load_datasets(cfg: Config = None) -> tuple[Dataset, Dataset]:
+    """Split by schema name: eval schemas go to eval, rest to train."""
+    cfg = cfg or Config()
+    schemas = _load_schemas(cfg)
 
     with open(cfg.paths.data_path) as f:
         raw_data = json.load(f)
@@ -88,12 +85,17 @@ def load_datasets(cfg: Config = None) -> tuple[Dataset, Dataset]:
     train_rows, eval_rows = [], []
 
     for sample in raw_data:
-        dataset_name = sample["file_path"].split("__")[0]
+        file_path = sample.get("file_path", "")
+        if file_path.split("__")[-1] not in ("v0", "v1"):
+            continue
+
+        dataset_name = file_path.split("__")[0]
         schema_text = schemas.get(dataset_name)
         if schema_text is None:
             continue
 
-        messages = build_messages(sample["query"], schema_text, sample["filters"])
+        reasoning = sample.get("reasoning") if cfg.model.enable_thinking else None
+        messages = build_messages(sample["query"], schema_text, sample["filters"], reasoning)
         row = {"messages": messages}
 
         if dataset_name in eval_set:
@@ -104,9 +106,49 @@ def load_datasets(cfg: Config = None) -> tuple[Dataset, Dataset]:
     random.seed(42)
     random.shuffle(train_rows)
 
-    train_ds = Dataset.from_list(train_rows)
-    eval_ds = Dataset.from_list(eval_rows)
-    return train_ds, eval_ds
+    return Dataset.from_list(train_rows), Dataset.from_list(eval_rows)
+
+
+def load_grpo_dataset(cfg: Config = None) -> Dataset:
+    """Load prompts (without answers) for GRPO training."""
+    cfg = cfg or Config()
+    schemas = _load_schemas(cfg)
+
+    with open(cfg.paths.data_path) as f:
+        raw_data = json.load(f)
+
+    eval_set = set(cfg.eval.schemas)
+    rows = []
+    seen = set()
+
+    for sample in raw_data:
+        file_path = sample.get("file_path", "")
+        if file_path.split("__")[-1] not in ("v0", "v1"):
+            continue
+
+        dataset_name = file_path.split("__")[0]
+        if dataset_name in eval_set:
+            continue
+        schema_text = schemas.get(dataset_name)
+        if schema_text is None:
+            continue
+
+        # Deduplicate: same query+schema = same prompt
+        key = (sample["query"], dataset_name)
+        if key in seen:
+            continue
+        seen.add(key)
+
+        prompt = build_messages(sample["query"], schema_text)
+        rows.append({
+            "prompt": prompt,
+            "expected": sample["filters"],
+            "schema_text": schema_text,
+        })
+
+    random.seed(42)
+    random.shuffle(rows)
+    return Dataset.from_list(rows)
 
 
 if __name__ == "__main__":

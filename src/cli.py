@@ -17,7 +17,7 @@ _config_option = typer.Option(None, "--config", "-c", help="Path to config.yaml.
 
 
 @app.command()
-def train(
+def sft(
     config: Path | None = _config_option,
     epochs: int | None = typer.Option(None, "--epochs", "-e"),
     batch_size: int | None = typer.Option(None, "--batch-size", "-b"),
@@ -26,9 +26,10 @@ def train(
     output_dir: Path | None = typer.Option(None, "--output-dir", "-o"),
     max_steps: int | None = typer.Option(None, "--max-steps"),
     wandb: bool = typer.Option(False, "--wandb", help="Enable W&B logging."),
-    run_name: str | None = typer.Option(None, "--run-name", "-r", help="Experiment name for logging."),
+    run_name: str | None = typer.Option(None, "--run-name", "-r", help="Experiment name."),
+    thinking: bool = typer.Option(False, "--thinking", help="Train with thinking mode."),
 ):
-    """Fine-tune the base model with LoRA on your filter dataset."""
+    """Fine-tune the base model with LoRA (SFT)."""
     cfg = Config.from_yaml(
         config,
         num_epochs=epochs,
@@ -38,17 +39,42 @@ def train(
         output_dir=output_dir,
         max_steps=max_steps,
     )
-
     if wandb:
         cfg.wandb.enabled = True
     if run_name:
         cfg.wandb.run_name = run_name
+    if thinking:
+        cfg.model.enable_thinking = True
+
     t = cfg.training
     print(f"Training | epochs={t.num_epochs} lr={t.learning_rate} lora_r={cfg.lora.r}")
 
     from .train import main as train_main
-
     train_main(cfg)
+
+
+@app.command()
+def grpo(
+    config: Path | None = _config_option,
+    lora_r: int | None = typer.Option(None, "--lora-r"),
+    wandb: bool = typer.Option(False, "--wandb", help="Enable W&B logging."),
+    run_name: str | None = typer.Option(None, "--run-name", "-r", help="Experiment name."),
+    thinking: bool = typer.Option(False, "--thinking", help="Train with thinking mode."),
+):
+    """Fine-tune with GRPO (reward-based optimization)."""
+    cfg = Config.from_yaml(config, lora_r=lora_r)
+    if wandb:
+        cfg.wandb.enabled = True
+    if run_name:
+        cfg.wandb.run_name = run_name
+    if thinking:
+        cfg.model.enable_thinking = True
+
+    g = cfg.grpo
+    print(f"GRPO | epochs={g.num_epochs} lr={g.learning_rate} generations={g.num_generations}")
+
+    from .train_grpo import main as grpo_main
+    grpo_main(cfg)
 
 
 @app.command()
@@ -57,7 +83,8 @@ def predict(
     schema: Path = typer.Argument(..., help="Path to a JSON schema file."),
     config: Path | None = _config_option,
     temperature: float | None = typer.Option(None, "--temperature", "-t"),
-    quantization: str = typer.Option("fp16", "--quantization", "-q", help="Quantization: fp16, int8, int4."),
+    quantization: str = typer.Option("fp16", "--quantization", "-q"),
+    thinking: bool = typer.Option(False, "--thinking"),
 ):
     """Generate a filter expression from a natural-language query."""
     from .inference import QUANTIZATION_MODES
@@ -65,15 +92,15 @@ def predict(
     if quantization not in QUANTIZATION_MODES:
         print(f"Error: invalid quantization '{quantization}'. Choose from: {', '.join(QUANTIZATION_MODES)}")
         raise typer.Exit(1)
-
     if not schema.exists():
         print(f"Error: schema file not found: {schema}")
         raise typer.Exit(1)
 
     cfg = Config.from_yaml(config, temperature=temperature)
+    if thinking:
+        cfg.model.enable_thinking = True
 
     from .inference import load_model, predict as run_predict
-
     model, tokenizer = load_model(cfg, quantization=quantization)
     result = run_predict(query, str(schema), model=model, tokenizer=tokenizer, cfg=cfg)
     print(f"Query:   {query}")
@@ -84,19 +111,11 @@ def predict(
 def evaluate(
     config: Path | None = _config_option,
     max_samples: int | None = typer.Option(None, "--max-samples", "-n"),
-    zero_shot: bool = typer.Option(False, "--zero-shot", help="Evaluate base model without adapter."),
-    quantization: list[str] = typer.Option(
-        ["fp16"], "--quantization", "-q",
-        help="Quantization mode(s): fp16, int8, int4. Pass multiple times to compare.",
-    ),
+    zero_shot: bool = typer.Option(False, "--zero-shot"),
+    quantization: list[str] = typer.Option(["fp16"], "--quantization", "-q"),
+    thinking: bool = typer.Option(False, "--thinking"),
 ):
-    """Evaluate the fine-tuned model on held-out schemas.
-
-    Examples:
-      python main.py evaluate                         # default fp16
-      python main.py evaluate -q fp16 -q int8 -q int4 # compare all three
-      python main.py evaluate -q int4 --zero-shot     # zero-shot at int4
-    """
+    """Evaluate the model on held-out schemas."""
     from .inference import QUANTIZATION_MODES
 
     for q in quantization:
@@ -105,11 +124,12 @@ def evaluate(
             raise typer.Exit(1)
 
     cfg = Config.from_yaml(config)
-
-    from .evaluate import main as eval_main
-
+    if thinking:
+        cfg.model.enable_thinking = True
     if zero_shot:
         print("Zero-shot evaluation (base model, no adapter)")
+
+    from .evaluate import main as eval_main
     eval_main(cfg, max_samples=max_samples, zero_shot=zero_shot, quantizations=quantization)
 
 
@@ -120,7 +140,6 @@ def schemas(
 ):
     """List available dataset schemas."""
     cfg = Config.from_yaml(config)
-
     if not cfg.paths.schema_dir.exists():
         print(f"Error: schema directory not found: {cfg.paths.schema_dir}")
         raise typer.Exit(1)
