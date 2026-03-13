@@ -18,18 +18,22 @@ def main(cfg: Config = None):
 
     report_to, logging_dir = setup_logging(cfg, run_name)
 
+    print("Loading datasets...")
     train_ds, eval_ds = load_datasets(cfg)
     print(f"Train: {len(train_ds)} | Eval: {len(eval_ds)}")
 
+    print(f"Loading tokenizer: {cfg.model.name}")
     tokenizer = AutoTokenizer.from_pretrained(cfg.model.name, trust_remote_code=True)
     if tokenizer.pad_token is None:
         tokenizer.pad_token = tokenizer.eos_token
     if not cfg.model.enable_thinking:
         disable_thinking(tokenizer)
 
+    print(f"Loading model: {cfg.model.name}")
     model = AutoModelForCausalLM.from_pretrained(
         cfg.model.name, dtype="auto", trust_remote_code=True,
     )
+    print("Model loaded.")
 
     lora_config = LoraConfig(
         task_type=TaskType.CAUSAL_LM,
