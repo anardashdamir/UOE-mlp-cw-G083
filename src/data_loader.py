@@ -87,9 +87,6 @@ def load_datasets(cfg: Config = None) -> tuple[Dataset, Dataset]:
 
     for sample in raw_data:
         file_path = sample.get("file_path", "")
-        if file_path.split("__")[-1] not in ("v0", "v1"):
-            continue
-
         dataset_name = file_path.split("__")[0]
         if dataset_name in exclude_set:
             continue
@@ -127,9 +124,6 @@ def load_grpo_dataset(cfg: Config = None) -> Dataset:
 
     for sample in raw_data:
         file_path = sample.get("file_path", "")
-        if file_path.split("__")[-1] not in ("v0", "v1"):
-            continue
-
         dataset_name = file_path.split("__")[0]
         if dataset_name in eval_set or dataset_name in exclude_set:
             continue
