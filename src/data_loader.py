@@ -82,6 +82,7 @@ def load_datasets(cfg: Config = None) -> tuple[Dataset, Dataset]:
         raw_data = json.load(f)
 
     eval_set = set(cfg.eval.schemas)
+    exclude_set = set(cfg.eval.exclude_schemas)
     train_rows, eval_rows = [], []
 
     for sample in raw_data:
@@ -90,6 +91,8 @@ def load_datasets(cfg: Config = None) -> tuple[Dataset, Dataset]:
             continue
 
         dataset_name = file_path.split("__")[0]
+        if dataset_name in exclude_set:
+            continue
         schema_text = schemas.get(dataset_name)
         if schema_text is None:
             continue
@@ -118,6 +121,7 @@ def load_grpo_dataset(cfg: Config = None) -> Dataset:
         raw_data = json.load(f)
 
     eval_set = set(cfg.eval.schemas)
+    exclude_set = set(cfg.eval.exclude_schemas)
     rows = []
     seen = set()
 
@@ -127,7 +131,7 @@ def load_grpo_dataset(cfg: Config = None) -> Dataset:
             continue
 
         dataset_name = file_path.split("__")[0]
-        if dataset_name in eval_set:
+        if dataset_name in eval_set or dataset_name in exclude_set:
             continue
         schema_text = schemas.get(dataset_name)
         if schema_text is None:

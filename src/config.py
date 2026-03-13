@@ -77,6 +77,7 @@ class EvalConfig(BaseModel):
         "wine_reviews", "zoo_animals", "diabetes", "diamonds",
         "electric_vehicles", "nba_players", "youtube_statistics",
     ]
+    exclude_schemas: list[str] = []  # schemas whose prompts exceed token budget
 
 
 class Config(BaseModel):

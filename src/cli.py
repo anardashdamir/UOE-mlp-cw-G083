@@ -180,3 +180,62 @@ def data_stats(config: Path | None = _config_option):
     print(f"Eval:   {len(eval_ds)}")
     print(f"Total:  {len(train_ds) + len(eval_ds)}")
     print(f"\nEval schemas: {', '.join(cfg.eval.schemas)}")
+    if cfg.eval.exclude_schemas:
+        print(f"Excluded:     {', '.join(cfg.eval.exclude_schemas)}")
+
+
+@app.command(name="check-schemas")
+def check_schemas(
+    config: Path | None = _config_option,
+    threshold: int = typer.Option(1024, "--threshold", "-t", help="Token length threshold."),
+    verbose: bool = typer.Option(False, "--verbose", "-v", help="Show all schemas sorted by token count."),
+):
+    """Report schemas whose prompts exceed the token threshold."""
+    from transformers import AutoTokenizer
+    from .data_loader import format_schema, SYSTEM_PROMPT
+
+    cfg = Config.from_yaml(config)
+    tokenizer = AutoTokenizer.from_pretrained(cfg.model.name, trust_remote_code=True)
+
+    results = []
+    for schema_path in sorted(cfg.paths.schema_dir.glob("*.json")):
+        with open(schema_path) as f:
+            schema = json.load(f)
+        name = schema["name"]
+        schema_text = format_schema(schema)
+        messages = [
+            {"role": "system", "content": SYSTEM_PROMPT},
+            {"role": "user", "content": f"User query: show all\n\nSchema:\n{schema_text}"},
+        ]
+        try:
+            text = tokenizer.apply_chat_template(messages, tokenize=False, enable_thinking=False)
+        except TypeError:
+            text = tokenizer.apply_chat_template(messages, tokenize=False)
+        n = len(tokenizer.encode(text))
+        results.append((name, n))
+
+    results.sort(key=lambda x: -x[1])
+    over = [(n, t) for n, t in results if t > threshold]
+    under = [(n, t) for n, t in results if t <= threshold]
+
+    print(f"Threshold: {threshold} tokens\n")
+
+    if verbose:
+        print("All schemas (sorted by token count):")
+        for name, n in results:
+            flag = " <<<" if n > threshold else ""
+            print(f"  {name:<45s} {n:>5d} tokens{flag}")
+        print()
+
+    if over:
+        print(f"OVER threshold ({len(over)}):")
+        for name, n in over:
+            print(f"  {name:<45s} {n:>5d} tokens")
+        print(f"\nAdd to config.yaml under eval.exclude_schemas:")
+        print("  exclude_schemas:")
+        for name, _ in over:
+            print(f"    - {name}")
+    else:
+        print("All schemas are within the threshold.")
+
+    print(f"\nOver: {len(over)}  |  Under: {len(under)}  |  Total: {len(results)}")
