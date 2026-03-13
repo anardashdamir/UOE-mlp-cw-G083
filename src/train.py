@@ -1,7 +1,8 @@
 """SFT LoRA fine-tuning with TensorBoard / W&B logging."""
 
-from peft import LoraConfig, TaskType
-from transformers import AutoModelForCausalLM, AutoTokenizer
+import torch
+from peft import LoraConfig, TaskType, prepare_model_for_kbit_training
+from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
 from trl import SFTConfig, SFTTrainer
 
 from .config import Config
@@ -30,9 +31,21 @@ def main(cfg: Config = None):
         disable_thinking(tokenizer)
 
     print(f"Loading model: {cfg.model.name}")
-    model = AutoModelForCausalLM.from_pretrained(
-        cfg.model.name, dtype="auto", trust_remote_code=True,
-    )
+    if cfg.training.use_qlora:
+        bnb_config = BitsAndBytesConfig(
+            load_in_4bit=True,
+            bnb_4bit_quant_type="nf4",
+            bnb_4bit_compute_dtype=torch.bfloat16,
+            bnb_4bit_use_double_quant=True,
+        )
+        model = AutoModelForCausalLM.from_pretrained(
+            cfg.model.name, quantization_config=bnb_config, trust_remote_code=True,
+        )
+        model = prepare_model_for_kbit_training(model)
+    else:
+        model = AutoModelForCausalLM.from_pretrained(
+            cfg.model.name, dtype="auto", trust_remote_code=True,
+        )
     print("Model loaded.")
 
     lora_config = LoraConfig(
@@ -64,6 +77,7 @@ def main(cfg: Config = None):
         greater_is_better=False,
         logging_steps=50,
         bf16=True,
+        gradient_checkpointing=cfg.training.gradient_checkpointing,
         report_to=report_to,
     )
 

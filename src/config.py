@@ -44,6 +44,8 @@ class TrainingConfig(BaseModel):
     warmup_ratio: float = Field(0.05, ge=0.0, le=1.0)
     max_seq_length: int = Field(768, gt=0)
     max_steps: int = -1
+    gradient_checkpointing: bool = False
+    use_qlora: bool = False
 
 
 class GRPOConfig(BaseModel):

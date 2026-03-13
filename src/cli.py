@@ -28,6 +28,8 @@ def sft(
     wandb: bool = typer.Option(False, "--wandb", help="Enable W&B logging."),
     run_name: str | None = typer.Option(None, "--run-name", "-r", help="Experiment name."),
     thinking: bool = typer.Option(False, "--thinking", help="Train with thinking mode."),
+    grad_ckpt: bool = typer.Option(False, "--grad-ckpt", help="Enable gradient checkpointing."),
+    qlora: bool = typer.Option(False, "--qlora", help="Load model in 4-bit (QLoRA)."),
 ):
     """Fine-tune the base model with LoRA (SFT)."""
     cfg = Config.from_yaml(
@@ -45,6 +47,10 @@ def sft(
         cfg.wandb.run_name = run_name
     if thinking:
         cfg.model.enable_thinking = True
+    if grad_ckpt:
+        cfg.training.gradient_checkpointing = True
+    if qlora:
+        cfg.training.use_qlora = True
 
     t = cfg.training
     print(f"Training | epochs={t.num_epochs} lr={t.learning_rate} lora_r={cfg.lora.r}")
