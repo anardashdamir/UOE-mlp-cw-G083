@@ -18,13 +18,6 @@ def main(cfg: Config = None):
     cfg = cfg or Config()
     cfg.paths.output_dir.mkdir(parents=True, exist_ok=True)
 
-    if cfg.training.use_qlora:
-        logger.warning(
-            "QLoRA is NOT recommended for Qwen3.5 (abnormally high quantization error). "
-            "Falling back to bf16 LoRA."
-        )
-        cfg.training.use_qlora = False
-
     run_name = cfg.wandb.run_name or build_run_name(cfg)
     print(f"Run: {run_name}")
 
@@ -43,10 +36,19 @@ def main(cfg: Config = None):
     else:
         disable_thinking(tokenizer)
 
-    print(f"Loading model: {cfg.model.name}")
-    model = AutoModelForCausalLM.from_pretrained(
-        cfg.model.name, torch_dtype=torch.bfloat16, trust_remote_code=True,
-    )
+    print(f"Loading model: {cfg.model.name} (QLoRA={cfg.training.use_qlora})")
+    load_kwargs = {"trust_remote_code": True}
+    if cfg.training.use_qlora:
+        from transformers import BitsAndBytesConfig
+        load_kwargs["quantization_config"] = BitsAndBytesConfig(
+            load_in_4bit=True,
+            bnb_4bit_compute_dtype=torch.bfloat16,
+            bnb_4bit_quant_type="nf4",
+            bnb_4bit_use_double_quant=True,
+        )
+    else:
+        load_kwargs["torch_dtype"] = torch.bfloat16
+    model = AutoModelForCausalLM.from_pretrained(cfg.model.name, **load_kwargs)
     print("Model loaded.")
 
     lora_config = LoraConfig(

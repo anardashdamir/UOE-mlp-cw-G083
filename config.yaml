@@ -9,20 +9,20 @@ lora:
 
 training:
   num_epochs: 5
-  batch_size: 4
-  gradient_accumulation_steps: 8       # effective batch = 4 * 8 = 32
+  batch_size: 2
+  gradient_accumulation_steps: 16      # effective batch = 2 * 16 = 32
   learning_rate: 1e-4
   lr_scheduler_type: cosine
   warmup_steps: 50
-  max_seq_length: 1536
+  max_seq_length: 1024
   max_steps: -1
   logging_steps: 10
   gradient_checkpointing: true
 
 grpo:
   num_epochs: 1
-  batch_size: 4
-  gradient_accumulation_steps: 4
+  batch_size: 1
+  gradient_accumulation_steps: 32  
   learning_rate: 5e-6
   max_completion_length: 256
   num_generations: 4
