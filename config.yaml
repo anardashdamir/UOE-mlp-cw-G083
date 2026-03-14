@@ -5,43 +5,35 @@ lora:
   r: 16
   alpha: 32
   dropout: 0.05
-  target_modules:      # Qwen official: "all-linear" — these cover all linear layers
-    - q_proj
-    - k_proj
-    - v_proj
-    - o_proj
-    - gate_proj
-    - up_proj
-    - down_proj
+  target_modules: all-linear
 
 training:
   num_epochs: 5
-  batch_size: 2
-  gradient_accumulation_steps: 16
-  learning_rate: 1e-4        # LoRA needs stronger LR than full fine-tuning
+  batch_size: 4
+  gradient_accumulation_steps: 8       # effective batch = 4 * 8 = 32
+  learning_rate: 1e-4
   lr_scheduler_type: cosine
-  warmup_steps: 100
-  max_seq_length: 1536       # accommodate large schemas (hotel_bookings, starbucks, etc.)
-  max_steps: -1 # -1 = use num_epochs
-  gradient_checkpointing: true  # saves VRAM for expanded LoRA targets
+  warmup_steps: 50
+  max_seq_length: 1536
+  max_steps: -1
+  gradient_checkpointing: true
 
 grpo:
   num_epochs: 1
   batch_size: 4
   gradient_accumulation_steps: 4
   learning_rate: 5e-6
-  max_completion_length: 512
+  max_completion_length: 256
   num_generations: 4
   beta: 0.1
 
 generation:
-  max_new_tokens: 512  # some filters are 700+ chars
-  temperature: 0.6     # Qwen3.5 recommended: 0.6
+  max_new_tokens: 256                  # longest filter is ~170 tokens
+  temperature: 0.6
 
 wandb:
-  enabled: false # set true when internet is available
+  enabled: false
   # wandb_project and wandb_api_key loaded from wandb.env
-  # run_name: my-experiment  # pass via --run-name flag
 
 paths:
   data_path: data/data.json
@@ -51,7 +43,6 @@ paths:
 eval:
   exclude_schemas: []
   schemas:
-    - hotel_bookings
     - restaurant_business_rankings_2020
     - wine_reviews
     - zoo_animals
@@ -61,3 +52,4 @@ eval:
     - anime
     - olympic_athletes
     - used_cars
+    - airbnb_open_data

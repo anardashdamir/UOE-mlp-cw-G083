@@ -23,10 +23,7 @@ class LoraConfig(BaseModel):
     r: int = Field(16, gt=0)
     alpha: int = Field(32, gt=0)
     dropout: float = Field(0.05, ge=0.0, le=1.0)
-    target_modules: list[str] = [
-        "q_proj", "k_proj", "v_proj", "o_proj",
-        "gate_proj", "up_proj", "down_proj",
-    ]
+    target_modules: str | list[str] = "all-linear"
 
 
 class WandbConfig(BaseSettings):
