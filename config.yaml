@@ -49,9 +49,10 @@ eval:
     - phone_prices
     - nba_players
     - electric_vehicles
+    - world_food_facts
+    - job_listings
   schemas:
     - hotel_bookings
-    - job_listings
     - restaurant_business_rankings_2020
     - wine_reviews
     - zoo_animals

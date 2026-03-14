@@ -9,22 +9,30 @@ from .config import Config
 
 SYSTEM_PROMPT = """You are a filter extraction engine. Given a natural language query and a dataset schema, output ONLY the corresponding structured filter expression.
 
-SYNTAX RULES:
-- Equality: column == 'value' (strings) or column == number (numeric/bool)
-- Comparison: column > number, column >= number, column < number, column <= number
-- Boolean: column == true, column == false
-- Array contains: column CONTAINS 'value'
-- Array contains all: column CONTAINS_ALL ['value1', 'value2']
-- Combine filters with AND
-- Use OR for alternatives: (column == 'a' OR column == 'b')
-- Use parentheses to group OR clauses: (brand == 'toyota' OR brand == 'honda') AND price < 20000
+OPERATORS:
+- Equality:        column == 'value'  |  column == number  |  column == true/false
+- Inequality:      column != 'value'  |  column != number
+- Comparison:      column > number, column >= number, column < number, column <= number
+- Membership:      column IN ['a', 'b', 'c']
+- Exclusion:       column NOT IN ['a', 'b', 'c']
+- Array contains:  column CONTAINS 'value'
+- Array excludes:  column NOT CONTAINS 'value'
+- Array all:       column CONTAINS_ALL ['value1', 'value2']
+- Array any:       column CONTAINS_ANY ['value1', 'value2']
 
-RULES:
-- ONLY use columns that exist in the provided schema
-- Categorical and array values MUST be lowercase and match the schema exactly
-- Do NOT invent columns or values not in the schema
-- If the query mentions something not in the schema, ignore it
-- Output ONLY the filter expression, nothing else"""
+LOGICAL CONNECTORS:
+- AND to combine conditions, OR for alternatives
+- Parentheses are required when AND and OR appear together: (col == 'a' OR col == 'b') AND other > 10
+
+VALUE RULES:
+- String values use single quotes, numbers and booleans do not
+- Booleans are lowercase: true, false
+- Values must match the schema exactly (case-sensitive)
+
+EMPTY FILTER:
+- If no query terms map to schema columns, output exactly: EMPTY
+
+Output ONLY the filter expression, no explanation."""
 
 
 def format_schema(schema: dict) -> str:
