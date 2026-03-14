@@ -46,6 +46,7 @@ class TrainingConfig(BaseModel):
     max_steps: int = -1
     gradient_checkpointing: bool = True
     use_qlora: bool = False
+    logging_steps: int = Field(10, gt=0)
 
 
 class GRPOConfig(BaseModel):

@@ -16,6 +16,7 @@ training:
   warmup_steps: 50
   max_seq_length: 1536
   max_steps: -1
+  logging_steps: 10
   gradient_checkpointing: true
 
 grpo:
