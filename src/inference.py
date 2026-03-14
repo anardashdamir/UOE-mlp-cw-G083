@@ -8,6 +8,7 @@ from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
 
 from .config import Config, QuantizationMode
 from .data_loader import build_messages, format_schema
+from .training_utils import strip_thinking_output
 
 QUANTIZATION_MODES = get_args(QuantizationMode)
 
@@ -70,4 +71,7 @@ def predict(query: str, schema_path: str, model=None, tokenizer=None, cfg: Confi
         pad_token_id=tokenizer.pad_token_id or tokenizer.eos_token_id,
     )
     generated = output_ids[0][inputs["input_ids"].shape[1]:]
-    return tokenizer.decode(generated, skip_special_tokens=True).strip()
+    result = tokenizer.decode(generated, skip_special_tokens=True).strip()
+    if cfg.model.enable_thinking:
+        result = strip_thinking_output(result)
+    return result

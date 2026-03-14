@@ -41,7 +41,7 @@ class TrainingConfig(BaseModel):
     gradient_accumulation_steps: int = Field(2, gt=0)
     learning_rate: float = Field(2e-4, gt=0)
     lr_scheduler_type: str = "cosine"
-    warmup_ratio: float = Field(0.05, ge=0.0, le=1.0)
+    warmup_steps: int = Field(50, ge=0)
     max_seq_length: int = Field(768, gt=0)
     max_steps: int = -1
     gradient_checkpointing: bool = False
@@ -59,7 +59,7 @@ class GRPOConfig(BaseModel):
 
 
 class GenerationConfig(BaseModel):
-    max_new_tokens: int = Field(128, gt=0)
+    max_new_tokens: int = Field(512, gt=0)
     temperature: float = Field(0.1, ge=0.0, le=2.0)
     eval_batch_size: int = Field(16, gt=0)
 

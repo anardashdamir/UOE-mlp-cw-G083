@@ -7,7 +7,7 @@ from trl import SFTConfig, SFTTrainer
 
 from .config import Config
 from .data_loader import load_datasets
-from .training_utils import build_run_name, disable_thinking, setup_logging
+from .training_utils import build_run_name, disable_thinking, enable_thinking, setup_logging
 
 
 def main(cfg: Config = None):
@@ -27,7 +27,9 @@ def main(cfg: Config = None):
     tokenizer = AutoTokenizer.from_pretrained(cfg.model.name, trust_remote_code=True)
     if tokenizer.pad_token is None:
         tokenizer.pad_token = tokenizer.eos_token
-    if not cfg.model.enable_thinking:
+    if cfg.model.enable_thinking:
+        enable_thinking(tokenizer)
+    else:
         disable_thinking(tokenizer)
 
     print(f"Loading model: {cfg.model.name}")
@@ -65,7 +67,7 @@ def main(cfg: Config = None):
         gradient_accumulation_steps=cfg.training.gradient_accumulation_steps,
         learning_rate=cfg.training.learning_rate,
         lr_scheduler_type=cfg.training.lr_scheduler_type,
-        warmup_ratio=cfg.training.warmup_ratio,
+        warmup_steps=cfg.training.warmup_steps,
         max_length=cfg.training.max_seq_length,
         max_steps=cfg.training.max_steps,
         eval_strategy="steps",

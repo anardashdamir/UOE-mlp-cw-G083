@@ -1,5 +1,5 @@
 model:
-  name: Qwen/Qwen3.5-0.8B
+  name: Qwen/Qwen3.5-4B
 
 lora:
   r: 8
@@ -15,7 +15,7 @@ training:
   gradient_accumulation_steps: 16
   learning_rate: 2e-5
   lr_scheduler_type: cosine
-  warmup_ratio: 0.05
+  warmup_steps: 50
   max_seq_length: 1024
   max_steps: -1 # -1 = use num_epochs
 
@@ -29,7 +29,7 @@ grpo:
   beta: 0.1
 
 generation:
-  max_new_tokens: 256
+  max_new_tokens: 256  # increase to 512+ when enable_thinking: true
   temperature: 0.0
 
 wandb:

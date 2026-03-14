@@ -24,6 +24,26 @@ def disable_thinking(tokenizer):
     tokenizer.apply_chat_template = wrapper
 
 
+def enable_thinking(tokenizer):
+    """Wrap apply_chat_template to pass enable_thinking=True for models that support it."""
+    import inspect
+    if "enable_thinking" not in inspect.signature(tokenizer.apply_chat_template).parameters:
+        return
+    original = tokenizer.apply_chat_template
+    def wrapper(*args, **kwargs):
+        kwargs.setdefault("enable_thinking", True)
+        return original(*args, **kwargs)
+    tokenizer.apply_chat_template = wrapper
+
+
+def strip_thinking_output(text: str) -> str:
+    """Remove <think>...</think> block from model output, returning only the answer."""
+    if "<think>" in text and "</think>" in text:
+        end = text.find("</think>")
+        return text[end + len("</think>"):].strip()
+    return text
+
+
 def setup_logging(cfg: Config, run_name: str):
     if cfg.wandb.enabled:
         import wandb

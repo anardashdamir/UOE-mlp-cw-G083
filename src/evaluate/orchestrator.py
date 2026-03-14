@@ -19,6 +19,7 @@ from tqdm import tqdm
 from ..config import Config
 from ..data_loader import load_datasets
 from ..inference import load_model, QUANTIZATION_MODES
+from ..training_utils import strip_thinking_output
 from .base import SampleContext, EvaluationResult
 from .parsing import extract_schema_columns
 
@@ -104,7 +105,7 @@ def _run_single(
         prompts.append(
             tokenizer.apply_chat_template(
                 messages[:2], tokenize=False, add_generation_prompt=True,
-                enable_thinking=False,
+                enable_thinking=cfg.model.enable_thinking,
             )
         )
 
@@ -143,6 +144,8 @@ def _run_single(
             prompt_len = inputs["attention_mask"][j].sum().item()
             generated = output_ids[j][prompt_len:]
             predicted = tokenizer.decode(generated, skip_special_tokens=True).strip()
+            if cfg.model.enable_thinking:
+                predicted = strip_thinking_output(predicted)
             predictions.append(predicted)
             latencies.append(per_sample_ms)
 
