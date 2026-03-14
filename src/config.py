@@ -23,7 +23,10 @@ class LoraConfig(BaseModel):
     r: int = Field(16, gt=0)
     alpha: int = Field(32, gt=0)
     dropout: float = Field(0.05, ge=0.0, le=1.0)
-    target_modules: list[str] = ["q_proj", "v_proj"]
+    target_modules: list[str] = [
+        "q_proj", "k_proj", "v_proj", "o_proj",
+        "gate_proj", "up_proj", "down_proj",
+    ]
 
 
 class WandbConfig(BaseSettings):
@@ -36,15 +39,15 @@ class WandbConfig(BaseSettings):
 
 
 class TrainingConfig(BaseModel):
-    num_epochs: int = Field(3, gt=0)
-    batch_size: int = Field(8, gt=0)
-    gradient_accumulation_steps: int = Field(2, gt=0)
-    learning_rate: float = Field(2e-4, gt=0)
+    num_epochs: int = Field(5, gt=0)
+    batch_size: int = Field(2, gt=0)
+    gradient_accumulation_steps: int = Field(16, gt=0)
+    learning_rate: float = Field(1e-4, gt=0)
     lr_scheduler_type: str = "cosine"
-    warmup_steps: int = Field(50, ge=0)
-    max_seq_length: int = Field(768, gt=0)
+    warmup_steps: int = Field(100, ge=0)
+    max_seq_length: int = Field(1536, gt=0)
     max_steps: int = -1
-    gradient_checkpointing: bool = False
+    gradient_checkpointing: bool = True
     use_qlora: bool = False
 
 
@@ -60,7 +63,9 @@ class GRPOConfig(BaseModel):
 
 class GenerationConfig(BaseModel):
     max_new_tokens: int = Field(512, gt=0)
-    temperature: float = Field(0.1, ge=0.0, le=2.0)
+    temperature: float = Field(0.6, ge=0.0, le=2.0)
+    top_p: float = Field(0.95, ge=0.0, le=1.0)
+    top_k: int = Field(20, ge=0)
     eval_batch_size: int = Field(16, gt=0)
 
 
@@ -73,11 +78,11 @@ class PathsConfig(BaseModel):
 
 class EvalConfig(BaseModel):
     schemas: list[str] = [
-        "hotel_bookings", "job_listings", "restaurant_business_rankings_2020",
+        "hotel_bookings", "restaurant_business_rankings_2020",
         "wine_reviews", "zoo_animals", "diabetes", "diamonds",
-        "electric_vehicles", "nba_players", "youtube_statistics",
+        "youtube_statistics", "anime", "olympic_athletes", "used_cars",
     ]
-    exclude_schemas: list[str] = []  # schemas whose prompts exceed token budget
+    exclude_schemas: list[str] = []
 
 
 class Config(BaseModel):

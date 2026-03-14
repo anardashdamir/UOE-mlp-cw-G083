@@ -26,3 +26,13 @@ wandb.env
 # Model cache
 *.safetensors
 *.bin
+
+# Archived/backup schemas
+schemas_archived/
+schemas 2/
+
+# Raw/archive data
+data/archive/
+
+# Scripts (local utilities)
+scripts/

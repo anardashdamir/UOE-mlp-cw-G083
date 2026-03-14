@@ -1,18 +1,29 @@
 """SFT LoRA fine-tuning with TensorBoard / W&B logging."""
 
+import logging
+
 import torch
-from peft import LoraConfig, TaskType, prepare_model_for_kbit_training
-from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
+from peft import LoraConfig, TaskType
+from transformers import AutoModelForCausalLM, AutoTokenizer
 from trl import SFTConfig, SFTTrainer
 
 from .config import Config
 from .data_loader import load_datasets
 from .training_utils import build_run_name, disable_thinking, enable_thinking, setup_logging
 
+logger = logging.getLogger(__name__)
+
 
 def main(cfg: Config = None):
     cfg = cfg or Config()
     cfg.paths.output_dir.mkdir(parents=True, exist_ok=True)
+
+    if cfg.training.use_qlora:
+        logger.warning(
+            "QLoRA is NOT recommended for Qwen3.5 (abnormally high quantization error). "
+            "Falling back to bf16 LoRA."
+        )
+        cfg.training.use_qlora = False
 
     run_name = cfg.wandb.run_name or build_run_name(cfg)
     print(f"Run: {run_name}")
@@ -33,21 +44,9 @@ def main(cfg: Config = None):
         disable_thinking(tokenizer)
 
     print(f"Loading model: {cfg.model.name}")
-    if cfg.training.use_qlora:
-        bnb_config = BitsAndBytesConfig(
-            load_in_4bit=True,
-            bnb_4bit_quant_type="nf4",
-            bnb_4bit_compute_dtype=torch.bfloat16,
-            bnb_4bit_use_double_quant=True,
-        )
-        model = AutoModelForCausalLM.from_pretrained(
-            cfg.model.name, quantization_config=bnb_config, trust_remote_code=True,
-        )
-        model = prepare_model_for_kbit_training(model)
-    else:
-        model = AutoModelForCausalLM.from_pretrained(
-            cfg.model.name, dtype="auto", trust_remote_code=True,
-        )
+    model = AutoModelForCausalLM.from_pretrained(
+        cfg.model.name, torch_dtype=torch.bfloat16, trust_remote_code=True,
+    )
     print("Model loaded.")
 
     lora_config = LoraConfig(

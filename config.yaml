@@ -2,35 +2,41 @@ model:
   name: Qwen/Qwen3.5-4B
 
 lora:
-  r: 8
+  r: 16
   alpha: 32
   dropout: 0.05
-  target_modules:
+  target_modules:      # Qwen official: "all-linear" — these cover all linear layers
     - q_proj
+    - k_proj
     - v_proj
+    - o_proj
+    - gate_proj
+    - up_proj
+    - down_proj
 
 training:
-  num_epochs: 3
+  num_epochs: 5
   batch_size: 2
   gradient_accumulation_steps: 16
-  learning_rate: 2e-5
+  learning_rate: 1e-4        # LoRA needs stronger LR than full fine-tuning
   lr_scheduler_type: cosine
-  warmup_steps: 50
-  max_seq_length: 1024
+  warmup_steps: 100
+  max_seq_length: 1536       # accommodate large schemas (hotel_bookings, starbucks, etc.)
   max_steps: -1 # -1 = use num_epochs
+  gradient_checkpointing: true  # saves VRAM for expanded LoRA targets
 
 grpo:
   num_epochs: 1
   batch_size: 4
   gradient_accumulation_steps: 4
   learning_rate: 5e-6
-  max_completion_length: 256
+  max_completion_length: 512
   num_generations: 4
   beta: 0.1
 
 generation:
-  max_new_tokens: 256  # increase to 512+ when enable_thinking: true
-  temperature: 0.0
+  max_new_tokens: 512  # some filters are 700+ chars
+  temperature: 0.6     # Qwen3.5 recommended: 0.6
 
 wandb:
   enabled: false # set true when internet is available
@@ -43,14 +49,7 @@ paths:
   output_dir: output
 
 eval:
-  exclude_schemas:
-    - tmdb_movies
-    - laptop_price
-    - phone_prices
-    - nba_players
-    - electric_vehicles
-    - world_food_facts
-    - job_listings
+  exclude_schemas: []
   schemas:
     - hotel_bookings
     - restaurant_business_rankings_2020
@@ -59,3 +58,6 @@ eval:
     - diabetes
     - diamonds
     - youtube_statistics
+    - anime
+    - olympic_athletes
+    - used_cars

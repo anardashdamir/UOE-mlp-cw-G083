@@ -63,11 +63,14 @@ def predict(query: str, schema_path: str, model=None, tokenizer=None, cfg: Confi
     ).to(model.device)
 
     gen = cfg.generation
+    do_sample = gen.temperature > 0
     output_ids = model.generate(
         **inputs,
         max_new_tokens=gen.max_new_tokens,
-        temperature=gen.temperature,
-        do_sample=gen.temperature > 0,
+        temperature=gen.temperature if do_sample else None,
+        top_p=gen.top_p if do_sample else None,
+        top_k=gen.top_k if do_sample else None,
+        do_sample=do_sample,
         pad_token_id=tokenizer.pad_token_id or tokenizer.eos_token_id,
     )
     generated = output_ids[0][inputs["input_ids"].shape[1]:]

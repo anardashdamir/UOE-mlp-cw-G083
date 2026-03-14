@@ -1,5 +1,6 @@
 """GRPO LoRA training — reward-based optimization for filter generation."""
 
+import torch
 from peft import LoraConfig, TaskType
 from transformers import AutoModelForCausalLM, AutoTokenizer
 from trl import GRPOConfig, GRPOTrainer
@@ -44,7 +45,7 @@ def main(cfg: Config = None):
         disable_thinking(tokenizer)
 
     model = AutoModelForCausalLM.from_pretrained(
-        cfg.model.name, dtype="auto", trust_remote_code=True,
+        cfg.model.name, torch_dtype=torch.bfloat16, trust_remote_code=True,
     )
 
     lora_config = LoraConfig(

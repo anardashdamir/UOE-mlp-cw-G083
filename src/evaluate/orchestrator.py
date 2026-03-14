@@ -100,7 +100,7 @@ def _run_single(
         expected_list.append(messages[2]["content"])
         schema_columns_list.append(extract_schema_columns(messages[1]["content"]))
         schema_names.append(_extract_schema_name(messages[1]["content"]))
-        fp = sample.get("file_path", "")
+        fp = sample.get("file_path") or ""
         difficulties.append(_extract_difficulty(fp) if fp else "unknown")
         prompts.append(
             tokenizer.apply_chat_template(
@@ -128,13 +128,16 @@ def _run_single(
             max_length=cfg.training.max_seq_length,
         ).to(model.device)
 
+        do_sample = gen.temperature > 0
         t0 = time.perf_counter()
         with torch.no_grad():
             output_ids = model.generate(
                 **inputs,
                 max_new_tokens=gen.max_new_tokens,
-                temperature=gen.temperature,
-                do_sample=gen.temperature > 0,
+                temperature=gen.temperature if do_sample else None,
+                top_p=gen.top_p if do_sample else None,
+                top_k=gen.top_k if do_sample else None,
+                do_sample=do_sample,
                 pad_token_id=tokenizer.pad_token_id or tokenizer.eos_token_id,
             )
         batch_time_ms = (time.perf_counter() - t0) * 1000

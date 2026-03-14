@@ -1,11 +1,14 @@
 """Load data.json + schemas, format into chat messages, build HF Datasets."""
 
 import json
+import logging
 import random
 
 from datasets import Dataset
 
 from .config import Config
+
+logger = logging.getLogger(__name__)
 
 SYSTEM_PROMPT = """You are a filter extraction engine. Given a natural language query and a dataset schema, output ONLY the corresponding structured filter expression.
 
@@ -59,7 +62,7 @@ def format_schema(schema: dict) -> str:
     return "\n".join(lines)
 
 
-def build_messages(query: str, schema_text: str, filters: str = None, reasoning: str = None) -> list[dict]:
+def build_messages(query: str, schema_text: str, filters: str = None, reasoning: str | None = None) -> list[dict]:
     messages = [
         {"role": "system", "content": SYSTEM_PROMPT},
         {"role": "user", "content": f"User query: {query}\n\nSchema:\n{schema_text}"},
@@ -92,6 +95,7 @@ def load_datasets(cfg: Config = None) -> tuple[Dataset, Dataset]:
     eval_set = set(cfg.eval.schemas)
     exclude_set = set(cfg.eval.exclude_schemas)
     train_rows, eval_rows = [], []
+    missing_schemas = set()
 
     for sample in raw_data:
         file_path = sample.get("file_path", "")
@@ -100,16 +104,28 @@ def load_datasets(cfg: Config = None) -> tuple[Dataset, Dataset]:
             continue
         schema_text = schemas.get(dataset_name)
         if schema_text is None:
+            missing_schemas.add(dataset_name)
             continue
 
+        # Normalize empty filters to the EMPTY sentinel
+        filters = sample["filters"].strip()
+        if not filters:
+            filters = "EMPTY"
+
         reasoning = sample.get("reasoning") if cfg.model.enable_thinking else None
-        messages = build_messages(sample["query"], schema_text, sample["filters"], reasoning)
-        row = {"messages": messages}
+        messages = build_messages(sample["query"], schema_text, filters, reasoning)
+        row = {"messages": messages, "file_path": file_path}
 
         if dataset_name in eval_set:
             eval_rows.append(row)
         else:
             train_rows.append(row)
+
+    if missing_schemas:
+        logger.warning(
+            "Schemas referenced in data but missing from %s: %s (samples dropped)",
+            cfg.paths.schema_dir, sorted(missing_schemas),
+        )
 
     random.seed(42)
     random.shuffle(train_rows)
