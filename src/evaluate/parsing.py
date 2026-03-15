@@ -64,15 +64,21 @@ def normalize_clause(clause: str) -> str:
     """Normalize a single clause: whitespace, parens, numeric values, OR/IN ordering."""
     clause = clause.strip().lower()
     clause = strip_outer_parens(clause)
+    # Normalize underscores to spaces (field names may use either)
+    clause = clause.replace('_', ' ')
     # Collapse whitespace
     clause = re.sub(r"\s+", " ", clause)
     # Normalize spaces around operators
     clause = re.sub(r"\s*(==|!=|>=|<=|>|<)\s*", r" \1 ", clause)
-    clause = re.sub(r"\s*(contains_all|contains_any|contains)\s*", r" \1 ", clause, flags=re.IGNORECASE)
+    clause = re.sub(r"\s*(contains all|contains any|contains)\s*", r" \1 ", clause, flags=re.IGNORECASE)
+    # Add missing quotes around unquoted string values after == or !=
+    # e.g. type == TV → type == 'tv'
+    clause = re.sub(r"(==|!=)\s+([a-z][a-z\s]*?)(?=\s*$|\s+(?:and|or)\b)",
+                     lambda m: f"{m.group(1)} '{m.group(2).strip()}'", clause)
     # Normalize trailing .0 on numbers: 4.0 -> 4
     clause = re.sub(r"\b(\d+)\.0\b", r"\1", clause)
     # Sort values inside IN/NOT IN/CONTAINS_ALL/CONTAINS_ANY lists
-    clause = re.sub(r"((?:not )?in\s*|contains_(?:all|any)\s*)\[([^\]]*)\]", _sort_list_values, clause)
+    clause = re.sub(r"((?:not )?in\s*|contains (?:all|any)\s*)\[([^\]]*)\]", _sort_list_values, clause)
     # Sort OR operands for order-independent comparison
     if " or " in clause:
         operands = re.split(r"\s+or\s+", clause)
@@ -81,9 +87,25 @@ def normalize_clause(clause: str) -> str:
     return clause.strip()
 
 
+def _flatten_and_clauses(filter_str: str) -> list[str]:
+    """Recursively split AND clauses, flattening parenthesized groups."""
+    top = split_top_level_and(filter_str.strip())
+    result = []
+    for clause in top:
+        stripped = strip_outer_parens(clause.strip())
+        # If stripping parens reveals more ANDs (and no OR), recurse
+        if " or " not in stripped.lower():
+            sub = split_top_level_and(stripped)
+            if len(sub) > 1:
+                result.extend(_flatten_and_clauses(stripped))
+                continue
+        result.append(clause)
+    return result
+
+
 def parse_filters(filter_str: str) -> set[str]:
     """Split filter string into normalized clauses (paren-aware, whitespace-normalized)."""
-    clauses = split_top_level_and(filter_str.strip())
+    clauses = _flatten_and_clauses(filter_str.strip())
     return {normalize_clause(c) for c in clauses if c.strip()}
 
 
