@@ -126,7 +126,7 @@ def _run_single(
         batch_prompts = prompts[batch_start: batch_start + batch_size]
         inputs = tokenizer(
             batch_prompts, return_tensors="pt", padding=True, truncation=True,
-            max_length=cfg.training.max_seq_length,
+            max_length=2048,
         ).to(model.device)
 
         do_sample = gen.temperature > 0
@@ -148,8 +148,8 @@ def _run_single(
             prompt_len = inputs["attention_mask"][j].sum().item()
             generated = output_ids[j][prompt_len:]
             predicted = tokenizer.decode(generated, skip_special_tokens=True).strip()
-            if cfg.model.enable_thinking:
-                predicted = strip_thinking_output(predicted)
+            # Always strip thinking tags (model may emit them even when disabled)
+            predicted = strip_thinking_output(predicted)
             predictions.append(predicted)
             latencies.append(per_sample_ms)
 
