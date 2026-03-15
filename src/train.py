@@ -9,7 +9,12 @@ from trl import SFTConfig, SFTTrainer
 
 from .config import Config
 from .data_loader import load_datasets
-from .training_utils import build_run_name, disable_thinking, enable_thinking, setup_logging
+from .training_utils import (
+    build_run_name,
+    disable_thinking,
+    enable_thinking,
+    setup_logging,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -40,6 +45,7 @@ def main(cfg: Config = None):
     load_kwargs = {"trust_remote_code": True}
     if cfg.training.use_qlora:
         from transformers import BitsAndBytesConfig
+
         load_kwargs["quantization_config"] = BitsAndBytesConfig(
             load_in_4bit=True,
             bnb_4bit_compute_dtype=torch.bfloat16,
@@ -73,9 +79,9 @@ def main(cfg: Config = None):
         max_length=cfg.training.max_seq_length,
         max_steps=cfg.training.max_steps,
         eval_strategy="steps",
-        eval_steps=0.2,
+        eval_steps=0.1,
         save_strategy="steps",
-        save_steps=0.2,
+        save_steps=0.1,
         load_best_model_at_end=True,
         metric_for_best_model="eval_loss",
         greater_is_better=False,
@@ -94,6 +100,11 @@ def main(cfg: Config = None):
         processing_class=tokenizer,
     )
 
+    # Evaluate before training to get baseline metrics
+    print("Running baseline evaluation (before training)...")
+    baseline = trainer.evaluate()
+    print(f"Baseline eval_loss: {baseline['eval_loss']:.4f}")
+
     trainer.train()
     trainer.save_model(str(cfg.adapter_dir))
     tokenizer.save_pretrained(str(cfg.adapter_dir))
@@ -101,4 +112,5 @@ def main(cfg: Config = None):
 
     if cfg.wandb.enabled:
         import wandb
+
         wandb.finish()
