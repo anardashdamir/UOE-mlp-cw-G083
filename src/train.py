@@ -86,6 +86,7 @@ def main(cfg: Config = None):
         metric_for_best_model="eval_loss",
         greater_is_better=False,
         logging_steps=cfg.training.logging_steps,
+        logging_first_step=True,
         bf16=True,
         gradient_checkpointing=cfg.training.gradient_checkpointing,
         report_to=report_to,

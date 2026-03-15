@@ -32,6 +32,18 @@ VALUE RULES:
 - Booleans are lowercase: true, false
 - Values must match the schema exactly (case-sensitive)
 
+NUMERIC THRESHOLDS:
+- When the query uses vague terms for numeric fields, use the schema median as pivot:
+  "cheap/low/small/few" → column < median
+  "expensive/high/large/many" → column > median
+  "very cheap/budget" → column < (min + (median - min) * 0.25)
+  "very expensive/premium" → column > (median + (max - median) * 0.75)
+  "moderate/average/decent/mid-range" → column >= (median * 0.8) AND column <= (median * 1.2)
+  "best/top/top-rated/popular/recent/modern" → column > median
+  "worst/lowest/old/classic/vintage" → column < median
+  "not too expensive/not too cheap" → opposite direction from median
+- When the query states an explicit number, use that number exactly
+
 EMPTY FILTER:
 - If no query terms map to schema columns, output exactly: EMPTY
 

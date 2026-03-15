@@ -51,17 +51,28 @@ def split_top_level_and(filter_str: str) -> list[str]:
     return [p.strip() for p in parts if p.strip()]
 
 
+def _sort_list_values(match: re.Match) -> str:
+    """Sort values inside [...] for order-independent comparison."""
+    prefix = match.group(1)
+    inner = match.group(2)
+    values = re.findall(r"'([^']*)'", inner)
+    sorted_vals = sorted(values)
+    return prefix + "[" + ", ".join(f"'{v}'" for v in sorted_vals) + "]"
+
+
 def normalize_clause(clause: str) -> str:
-    """Normalize a single clause: whitespace, parens, numeric values, OR ordering."""
+    """Normalize a single clause: whitespace, parens, numeric values, OR/IN ordering."""
     clause = clause.strip().lower()
     clause = strip_outer_parens(clause)
     # Collapse whitespace
     clause = re.sub(r"\s+", " ", clause)
     # Normalize spaces around operators
     clause = re.sub(r"\s*(==|!=|>=|<=|>|<)\s*", r" \1 ", clause)
-    clause = re.sub(r"\s*(contains_all|contains)\s*", r" \1 ", clause, flags=re.IGNORECASE)
+    clause = re.sub(r"\s*(contains_all|contains_any|contains)\s*", r" \1 ", clause, flags=re.IGNORECASE)
     # Normalize trailing .0 on numbers: 4.0 -> 4
     clause = re.sub(r"\b(\d+)\.0\b", r"\1", clause)
+    # Sort values inside IN/NOT IN/CONTAINS_ALL/CONTAINS_ANY lists
+    clause = re.sub(r"((?:not )?in\s*|contains_(?:all|any)\s*)\[([^\]]*)\]", _sort_list_values, clause)
     # Sort OR operands for order-independent comparison
     if " or " in clause:
         operands = re.split(r"\s+or\s+", clause)
