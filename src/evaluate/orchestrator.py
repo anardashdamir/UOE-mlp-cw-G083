@@ -83,6 +83,7 @@ def _run_single(
     model,
     tokenizer,
     quantization: str = "fp16",
+    verbose: bool = False,
 ) -> dict:
     """Run evaluation for a single model/quantization configuration."""
     gen = cfg.generation
@@ -153,6 +154,17 @@ def _run_single(
             latencies.append(per_sample_ms)
 
         pbar.set_postfix(ms_per_sample=f"{per_sample_ms:.0f}")
+
+    # ── Debug: print predictions vs expected ─────────────────────────────
+    if verbose:
+        print(f"\n{'=' * 60}")
+        print(f"  PREDICTIONS vs EXPECTED")
+        print(f"{'=' * 60}")
+        for i in range(len(predictions)):
+            match = "✓" if predictions[i].strip() == expected_list[i].strip() else "✗"
+            print(f"\n  [{i}] {match} {difficulties[i]}")
+            print(f"    Expected:  {expected_list[i][:200]}")
+            print(f"    Predicted: {predictions[i][:200]}")
 
     # ── Compute all metrics ─────────────────────────────────────────────────
     per_metric_results = {m.name: [] for m in METRICS}
@@ -275,6 +287,7 @@ def main(
     max_samples: int = None,
     zero_shot: bool = False,
     quantizations: list[str] | None = None,
+    verbose: bool = False,
 ) -> EvaluationResult | list[EvaluationResult]:
     """Run evaluation, optionally across multiple quantization modes.
 
@@ -305,7 +318,7 @@ def main(
         print(f"\n>>> Loading model [{quant.upper()}] ...")
         model, tokenizer = load_model(cfg, zero_shot=zero_shot, quantization=quant)
 
-        result = _run_single(cfg, eval_ds, model, tokenizer, quantization=quant)
+        result = _run_single(cfg, eval_ds, model, tokenizer, quantization=quant, verbose=verbose)
         all_results.append(result)
 
         _print_results(result, len(eval_ds))

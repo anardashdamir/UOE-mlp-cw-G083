@@ -1,7 +1,7 @@
 """GRPO LoRA training — reward-based optimization for filter generation."""
 
 import torch
-from peft import LoraConfig, TaskType
+from peft import PeftModel
 from transformers import AutoModelForCausalLM, AutoTokenizer
 from trl import GRPOConfig, GRPOTrainer
 
@@ -44,17 +44,21 @@ def main(cfg: Config = None):
     if not cfg.model.enable_thinking:
         disable_thinking(tokenizer)
 
-    model = AutoModelForCausalLM.from_pretrained(
-        cfg.model.name, torch_dtype=torch.bfloat16, trust_remote_code=True,
-    )
-
-    lora_config = LoraConfig(
-        task_type=TaskType.CAUSAL_LM,
-        r=cfg.lora.r,
-        lora_alpha=cfg.lora.alpha,
-        lora_dropout=cfg.lora.dropout,
-        target_modules=cfg.lora.target_modules,
-    )
+    # Load SFT adapter as starting point
+    adapter_dir = cfg.adapter_dir
+    if adapter_dir.exists():
+        print(f"Loading SFT adapter from {adapter_dir}")
+        model = AutoModelForCausalLM.from_pretrained(
+            cfg.model.name, torch_dtype=torch.bfloat16, trust_remote_code=True,
+        )
+        model = PeftModel.from_pretrained(model, str(adapter_dir))
+        model = model.merge_and_unload()
+        print("SFT adapter merged into base model")
+    else:
+        print(f"WARNING: No SFT adapter found at {adapter_dir}, starting from base model")
+        model = AutoModelForCausalLM.from_pretrained(
+            cfg.model.name, torch_dtype=torch.bfloat16, trust_remote_code=True,
+        )
 
     training_args = GRPOConfig(
         output_dir=str(cfg.paths.output_dir / "grpo"),
@@ -76,7 +80,6 @@ def main(cfg: Config = None):
         model=model,
         args=training_args,
         train_dataset=dataset,
-        peft_config=lora_config,
         processing_class=tokenizer,
         reward_funcs=[exact_match_reward],
     )

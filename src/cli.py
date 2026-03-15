@@ -120,6 +120,7 @@ def evaluate(
     zero_shot: bool = typer.Option(False, "--zero-shot"),
     quantization: list[str] = typer.Option(["fp16"], "--quantization", "-q"),
     thinking: bool = typer.Option(False, "--thinking"),
+    verbose: bool = typer.Option(False, "--verbose", "-v", help="Print predictions vs expected."),
 ):
     """Evaluate the model on held-out schemas."""
     from .inference import QUANTIZATION_MODES
@@ -136,7 +137,7 @@ def evaluate(
         print("Zero-shot evaluation (base model, no adapter)")
 
     from .evaluate import main as eval_main
-    eval_main(cfg, max_samples=max_samples, zero_shot=zero_shot, quantizations=quantization)
+    eval_main(cfg, max_samples=max_samples, zero_shot=zero_shot, quantizations=quantization, verbose=verbose)
 
 
 @app.command()

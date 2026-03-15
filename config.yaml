@@ -30,7 +30,7 @@ grpo:
 
 generation:
   max_new_tokens: 256                  # longest filter is ~170 tokens
-  temperature: 0.6
+  temperature: 0.0
 
 wandb:
   enabled: false
