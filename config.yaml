@@ -9,8 +9,8 @@ lora:
 
 training:
   num_epochs: 5
-  batch_size: 2
-  gradient_accumulation_steps: 16      # effective batch = 2 * 16 = 32
+  batch_size: 8
+  gradient_accumulation_steps: 4      # effective batch = 8 * 4 = 32
   learning_rate: 1e-4
   lr_scheduler_type: cosine
   warmup_steps: 50
