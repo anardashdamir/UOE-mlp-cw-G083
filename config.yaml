@@ -5,7 +5,7 @@ lora:
   r: 16
   alpha: 32
   dropout: 0.05
-  target_modules: ["q_proj", "v_proj"]
+  target_modules: all-linear
 
 training:
   num_epochs: 3
