@@ -23,11 +23,11 @@ grpo:
   num_epochs: 1
   batch_size: 8
   gradient_accumulation_steps: 4      # effective batch = 8 * 4 = 32
-  learning_rate: 5e-6
-  max_completion_length: 128          # most filters are <100 tokens
-  num_generations: 8                  # more rolls = better signal for binary reward
-  beta: 0.05
-  max_steps: 32                       # ~1000 samples, enough for GRPO
+  learning_rate: 1e-6
+  max_completion_length: 128
+  num_generations: 4
+  beta: 0.2
+  max_steps: 50
 
 generation:
   max_new_tokens: 256                  # longest filter is ~170 tokens

@@ -13,13 +13,61 @@ from .training_utils import build_run_name, disable_thinking, setup_logging
 
 # ── Reward functions ────────────────────────────────────────────────────────
 
-def exact_match_reward(completions, expected, **kwargs):
+def _parse(text):
+    """Parse filter into normalized clause set."""
+    text = text.strip()
+    if text.upper() == "EMPTY":
+        return {"EMPTY"}
+    return {normalize_clause(c) for c in split_top_level_and(text)}
+
+
+def combined_reward(completions, expected, **kwargs):
+    """Multi-signal reward: exact match dominant, partial credit for structure.
+
+    Scoring (max 1.0):
+      - Exact match:        1.0 (overrides everything)
+      - Clause F1:          0.0 - 0.6 (proportion of correct clauses)
+      - Correct clause count: 0.1 (same number of conditions)
+      - Valid syntax:        0.1 (parseable, has operators)
+
+    Partial rewards are capped at 0.8 to maintain strong incentive for exact match.
+    """
+    import re
     rewards = []
     for pred, exp in zip(completions, expected):
         text = pred[0]["content"] if isinstance(pred, list) else pred
-        pred_clauses = {normalize_clause(c) for c in split_top_level_and(text.strip())}
-        exp_clauses = {normalize_clause(c) for c in split_top_level_and(exp.strip())}
-        rewards.append(1.0 if pred_clauses == exp_clauses else 0.0)
+        pred_clauses = _parse(text)
+        exp_clauses = _parse(exp.strip())
+
+        # Exact match → full reward
+        if pred_clauses == exp_clauses:
+            rewards.append(1.0)
+            continue
+
+        score = 0.0
+
+        # Clause-level F1 (0.0 - 0.6)
+        if pred_clauses and exp_clauses:
+            overlap = pred_clauses & exp_clauses
+            precision = len(overlap) / len(pred_clauses) if pred_clauses else 0
+            recall = len(overlap) / len(exp_clauses) if exp_clauses else 0
+            if precision + recall > 0:
+                f1 = 2 * precision * recall / (precision + recall)
+                score += f1 * 0.6
+
+        # Correct number of clauses (0.1)
+        if len(pred_clauses) == len(exp_clauses):
+            score += 0.1
+
+        # Valid syntax (0.1)
+        text_clean = text.strip()
+        has_operator = bool(re.search(r'(==|!=|>=|<=|>|<|CONTAINS|IN\s*\[)', text_clean, re.IGNORECASE))
+        balanced_parens = text_clean.count('(') == text_clean.count(')')
+        balanced_quotes = text_clean.count("'") % 2 == 0
+        if has_operator and balanced_parens and balanced_quotes:
+            score += 0.1
+
+        rewards.append(min(score, 0.8))  # Cap partial at 0.8
     return rewards
 
 
@@ -83,7 +131,7 @@ def main(cfg: Config = None):
         args=training_args,
         train_dataset=dataset,
         processing_class=tokenizer,
-        reward_funcs=[exact_match_reward],
+        reward_funcs=[combined_reward],
     )
 
     trainer.train()
