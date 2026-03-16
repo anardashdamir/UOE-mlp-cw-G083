@@ -61,7 +61,7 @@ def combined_reward(completions, expected, **kwargs):
 
         # Valid syntax (0.1)
         text_clean = text.strip()
-        has_operator = bool(re.search(r'(==|!=|>=|<=|>|<|CONTAINS|IN\s*\[)', text_clean, re.IGNORECASE))
+        has_operator = bool(re.search(r'(==|!=|>=|<=|>|<|\bNOT\s+IN\b|\bIN\b)', text_clean, re.IGNORECASE))
         balanced_parens = text_clean.count('(') == text_clean.count(')')
         balanced_quotes = text_clean.count("'") % 2 == 0
         if has_operator and balanced_parens and balanced_quotes:
@@ -140,6 +140,13 @@ def main(cfg: Config = None):
     trainer.save_model(str(grpo_adapter_dir))
     tokenizer.save_pretrained(str(grpo_adapter_dir))
     print(f"GRPO adapter saved to {grpo_adapter_dir}")
+
+    # Save fully merged model for easy inference loading
+    grpo_merged_dir = cfg.paths.output_dir / "grpo_merged"
+    print(f"Saving fully merged GRPO model to {grpo_merged_dir}...")
+    trainer.model.save_pretrained(str(grpo_merged_dir))
+    tokenizer.save_pretrained(str(grpo_merged_dir))
+    print(f"GRPO merged model saved to {grpo_merged_dir}")
 
     if cfg.wandb.enabled:
         import wandb
