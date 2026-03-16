@@ -39,6 +39,7 @@ def main(cfg: Config = None):
     print(f"GRPO samples: {len(dataset)}")
 
     tokenizer = AutoTokenizer.from_pretrained(cfg.model.name, trust_remote_code=True)
+    tokenizer.padding_side = "left"
     if tokenizer.pad_token is None:
         tokenizer.pad_token = tokenizer.eos_token
     if not cfg.model.enable_thinking:
@@ -72,7 +73,7 @@ def main(cfg: Config = None):
         num_generations=grpo.num_generations,
         beta=grpo.beta,
         max_steps=grpo.max_steps,
-        logging_steps=10,
+        logging_steps=1,
         bf16=True,
         report_to=report_to,
     )
