@@ -24,13 +24,20 @@ OPERATORS:
 - Array any:       column CONTAINS_ANY ['value1', 'value2']
 
 LOGICAL CONNECTORS:
-- AND to combine conditions, OR for alternatives
-- Parentheses are required when AND and OR appear together: (col == 'a' OR col == 'b') AND other > 10
+- AND to combine conditions
+- Use IN [...] for multiple values of the same field: col IN ['a', 'b'] (NOT col == 'a' OR col == 'b')
+- Use OR only for conditions on DIFFERENT fields or different operators
+- Parentheses are REQUIRED when mixing AND and OR: (A OR B) AND C
 
 VALUE RULES:
-- String values use single quotes, numbers and booleans do not
+- String/categorical values ALWAYS use single quotes: col == 'value' (NEVER col == value)
+- Numbers and booleans do NOT use quotes: col > 5, col == true
 - Booleans are lowercase: true, false
 - Values must match the schema exactly (case-sensitive)
+
+FILTER SCOPE:
+- ONLY filter on what the query EXPLICITLY asks for
+- NEVER add extra conditions the user did not mention
 
 NUMERIC THRESHOLDS:
 - When the query uses vague terms for numeric fields, use the schema median as pivot:

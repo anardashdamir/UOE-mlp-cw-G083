@@ -2,16 +2,16 @@
   "name": "imdb_movies",
   "row_count": 749,
   "columns": {
-    "Released_Year": {
+    "released_year": {
       "type": "int",
       "min": 1925,
       "max": 2019,
       "median": 2001
     },
-    "Runtime": {
+    "runtime": {
       "type": "str"
     },
-    "Genre": {
+    "genre": {
       "type": "array",
       "values": [
         "Action",
@@ -37,28 +37,28 @@
         "Western"
       ]
     },
-    "IMDB_Rating": {
+    "imdb_rating": {
       "type": "float",
       "min": 7.6,
       "max": 9.3,
       "median": 7.9
     },
-    "Meta_score": {
+    "meta_score": {
       "type": "float",
       "min": 28.0,
       "max": 100.0,
       "median": 78.0
     },
-    "Director": {
+    "director": {
       "type": "str"
     },
-    "No_of_Votes": {
+    "no_of_votes": {
       "type": "int",
       "min": 25198,
       "max": 2343110,
       "median": 219466
     },
-    "Gross": {
+    "gross": {
       "type": "int",
       "min": 1305,
       "max": 936662225,

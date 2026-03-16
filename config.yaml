@@ -44,13 +44,8 @@ paths:
 eval:
   exclude_schemas: []
   schemas:
-    - restaurant_business_rankings_2020
-    - wine_reviews
-    - zoo_animals
     - diabetes
     - diamonds
-    - youtube_statistics
     - anime
-    - olympic_athletes
-    - used_cars
+    - zoo_animals
     - airbnb_open_data

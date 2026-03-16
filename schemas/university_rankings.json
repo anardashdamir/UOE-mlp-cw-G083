@@ -2,16 +2,16 @@
   "name": "university_rankings",
   "row_count": 16703,
   "columns": {
-    "Rank": {
+    "rank": {
       "type": "int",
       "min": 1,
       "max": 2191,
       "median": 760
     },
-    "Name": {
+    "name": {
       "type": "str"
     },
-    "Country": {
+    "country": {
       "type": "str"
     },
     "student_population": {
@@ -32,7 +32,7 @@
       "max": 98.48,
       "median": 32.74
     },
-    "Teaching": {
+    "teaching": {
       "type": "float",
       "min": 8.2,
       "max": 99.2,
@@ -62,7 +62,7 @@
       "max": 100.0,
       "median": 43.8
     },
-    "Year": {
+    "year": {
       "type": "int",
       "min": 2016,
       "max": 2026,

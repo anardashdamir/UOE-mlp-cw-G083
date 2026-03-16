@@ -2,7 +2,7 @@
   "name": "clothes",
   "row_count": 1000,
   "columns": {
-    "Brand": {
+    "brand": {
       "type": "categorical",
       "values": [
         "Adidas",
@@ -13,7 +13,7 @@
         "Under Armour"
       ]
     },
-    "Category": {
+    "category": {
       "type": "categorical",
       "values": [
         "Dress",
@@ -24,7 +24,7 @@
         "T-shirt"
       ]
     },
-    "Color": {
+    "color": {
       "type": "categorical",
       "values": [
         "Black",
@@ -35,7 +35,7 @@
         "Yellow"
       ]
     },
-    "Size": {
+    "size": {
       "type": "categorical",
       "values": [
         "L",
@@ -46,7 +46,7 @@
         "XXL"
       ]
     },
-    "Material": {
+    "material": {
       "type": "categorical",
       "values": [
         "Cotton",
@@ -57,7 +57,7 @@
         "Wool"
       ]
     },
-    "Price": {
+    "price": {
       "type": "int",
       "min": 10,
       "max": 199,

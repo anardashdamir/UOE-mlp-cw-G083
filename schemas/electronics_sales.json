@@ -2,7 +2,7 @@
   "name": "electronics_sales",
   "row_count": 9000,
   "columns": {
-    "Product Category": {
+    "product_category": {
       "type": "categorical",
       "values": [
         "Headphones",
@@ -12,7 +12,7 @@
         "Tablets"
       ]
     },
-    "Product Brand": {
+    "product_brand": {
       "type": "categorical",
       "values": [
         "Apple",
@@ -22,19 +22,19 @@
         "Sony"
       ]
     },
-    "Product Price": {
+    "product_price": {
       "type": "float",
       "min": 100.38,
       "max": 2999.85,
       "median": 1513.02
     },
-    "Purchase Frequency": {
+    "purchase_frequency": {
       "type": "int",
       "min": 1,
       "max": 19,
       "median": 10
     },
-    "Customer Satisfaction": {
+    "customer_satisfaction": {
       "type": "int",
       "min": 1,
       "max": 5,

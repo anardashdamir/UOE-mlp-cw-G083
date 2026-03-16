@@ -2,7 +2,7 @@
   "name": "uk_gov_jobs",
   "row_count": 116526,
   "columns": {
-    "postingDate": {
+    "posting_date": {
       "type": "date",
       "min": "2023-07-05",
       "max": "2023-11-09"
@@ -14,7 +14,7 @@
         "Part time"
       ]
     },
-    "closingDate": {
+    "closing_date": {
       "type": "date",
       "min": "2023-11-07",
       "max": "2024-11-06"
@@ -44,7 +44,7 @@
     "company": {
       "type": "str"
     },
-    "jobType": {
+    "job_type": {
       "type": "categorical",
       "values": [
         "Apprenticeship",
@@ -88,7 +88,7 @@
         "Travel"
       ]
     },
-    "salaryType": {
+    "salary_type": {
       "type": "categorical",
       "values": [
         "Not specified",

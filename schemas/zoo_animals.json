@@ -53,7 +53,7 @@
     "catsize": {
       "type": "bool"
     },
-    "Class_Type": {
+    "class_type": {
       "type": "categorical",
       "values": [
         "Amphibian",

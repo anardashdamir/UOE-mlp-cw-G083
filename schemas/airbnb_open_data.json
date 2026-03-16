@@ -9,7 +9,7 @@
         "verified"
       ]
     },
-    "neighbourhood group": {
+    "neighbourhood_group": {
       "type": "categorical",
       "values": [
         "Bronx",
@@ -27,7 +27,7 @@
         "United States"
       ]
     },
-    "country code": {
+    "country_code": {
       "type": "categorical",
       "values": [
         "US"
@@ -44,7 +44,7 @@
         "strict"
       ]
     },
-    "room type": {
+    "room_type": {
       "type": "categorical",
       "values": [
         "Entire home/apt",
@@ -53,7 +53,7 @@
         "Shared room"
       ]
     },
-    "Construction year": {
+    "construction_year": {
       "type": "int",
       "min": 2003,
       "max": 2022,
@@ -65,48 +65,48 @@
       "max": 1200,
       "median": 624
     },
-    "service fee": {
+    "service_fee": {
       "type": "int",
       "min": 10,
       "max": 240,
       "median": 125
     },
-    "minimum nights": {
+    "minimum_nights": {
       "type": "int",
       "min": -1223,
       "max": 5645,
       "median": 3
     },
-    "number of reviews": {
+    "number_of_reviews": {
       "type": "int",
       "min": 0,
       "max": 1024,
       "median": 7
     },
-    "last review": {
+    "last_review": {
       "type": "date",
       "min": "2012-07-11",
       "max": "2058-06-16"
     },
-    "reviews per month": {
+    "reviews_per_month": {
       "type": "float",
       "min": 0.01,
       "max": 90.0,
       "median": 0.74
     },
-    "review rate number": {
+    "review_rate_number": {
       "type": "int",
       "min": 1,
       "max": 5,
       "median": 3
     },
-    "calculated host listings count": {
+    "calculated_host_listings_count": {
       "type": "int",
       "min": 1,
       "max": 332,
       "median": 1
     },
-    "availability 365": {
+    "availability_365": {
       "type": "int",
       "min": -10,
       "max": 3677,

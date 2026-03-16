@@ -29,7 +29,7 @@
       "max": 323000,
       "median": 17515
     },
-    "fuelType": {
+    "fuel_type": {
       "type": "categorical",
       "values": [
         "Diesel",
@@ -39,7 +39,7 @@
         "Petrol"
       ]
     },
-    "engineSize": {
+    "engine_size": {
       "type": "float",
       "min": 0.6,
       "max": 6.6,

@@ -2,62 +2,62 @@
   "name": "gym_members",
   "row_count": 973,
   "columns": {
-    "Age": {
+    "age": {
       "type": "int",
       "min": 18,
       "max": 59,
       "median": 40.0
     },
-    "Gender": {
+    "gender": {
       "type": "categorical",
       "values": [
         "Female",
         "Male"
       ]
     },
-    "Weight (kg)": {
+    "weight": {
       "type": "float",
       "min": 40.0,
       "max": 129.9,
       "median": 70.0
     },
-    "Height (m)": {
+    "height": {
       "type": "float",
       "min": 1.5,
       "max": 2.0,
       "median": 1.71
     },
-    "Max_BPM": {
+    "max_bpm": {
       "type": "int",
       "min": 160,
       "max": 199,
       "median": 180.0
     },
-    "Avg_BPM": {
+    "avg_bpm": {
       "type": "int",
       "min": 120,
       "max": 169,
       "median": 143.0
     },
-    "Resting_BPM": {
+    "resting_bpm": {
       "type": "int",
       "min": 50,
       "max": 74,
       "median": 62.0
     },
-    "Session_Duration (hours)": {
+    "session_duration": {
       "type": "float",
       "min": 0.5,
       "max": 2.0,
       "median": 1.26
     },
-    "Calories_Burned": {
+    "calories_burned": {
       "type": "int",
       "min": 303,
       "max": 1783,
       "median": 893
     },
-    "Workout_Type": {
+    "workout_type": {
       "type": "categorical",
       "values": [
         "Cardio",
@@ -66,25 +66,25 @@
         "Yoga"
       ]
     },
-    "Fat_Percentage": {
+    "fat_percentage": {
       "type": "float",
       "min": 10.0,
       "max": 35.0,
       "median": 26.2
     },
-    "Water_Intake (liters)": {
+    "water_intake": {
       "type": "float",
       "min": 1.5,
       "max": 3.7,
       "median": 2.6
     },
-    "Workout_Frequency (days/week)": {
+    "workout_frequency": {
       "type": "int",
       "min": 2,
       "max": 5,
       "median": 3.0
     },
-    "Experience_Level": {
+    "experience_level": {
       "type": "categorical",
       "values": [
         "Beginner",
@@ -92,7 +92,7 @@
         "Intermediate"
       ]
     },
-    "BMI": {
+    "bmi": {
       "type": "float",
       "min": 12.32,
       "max": 49.84,

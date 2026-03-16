@@ -2,25 +2,25 @@
   "name": "restaurant_business_rankings_2020",
   "row_count": 250,
   "columns": {
-    "Rank": {
+    "rank": {
       "type": "int",
       "min": 1,
       "max": 250,
       "median": 125.5
     },
-    "Sales": {
+    "sales": {
       "type": "int",
       "min": 126,
       "max": 40412,
       "median": 330.0
     },
-    "Units": {
+    "units": {
       "type": "int",
       "min": 13,
       "max": 23801,
       "median": 207.0
     },
-    "Segment_Category": {
+    "segment_category": {
       "type": "categorical",
       "values": [
         "Asian",

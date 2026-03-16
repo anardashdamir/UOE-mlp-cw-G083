@@ -2,47 +2,47 @@
   "name": "adidas_vs_nike",
   "row_count": 3267,
   "columns": {
-    "Product Name": {
+    "product_name": {
       "type": "str"
     },
-    "Listing Price": {
+    "listing_price": {
       "type": "int",
       "min": 0,
       "max": 29999,
       "median": 5999
     },
-    "Sale Price": {
+    "sale_price": {
       "type": "int",
       "min": 449,
       "max": 36500,
       "median": 4799
     },
-    "Discount": {
+    "discount": {
       "type": "int",
       "min": 0,
       "max": 60,
       "median": 40
     },
-    "Brand": {
+    "brand": {
       "type": "categorical",
       "values": [
         "Adidas",
         "Nike"
       ]
     },
-    "Rating": {
+    "rating": {
       "type": "float",
       "min": 0.0,
       "max": 5.0,
       "median": 3.5
     },
-    "Reviews": {
+    "reviews": {
       "type": "int",
       "min": 0,
       "max": 223,
       "median": 37
     },
-    "Gender": {
+    "gender": {
       "type": "categorical",
       "values": [
         "Men",
@@ -50,7 +50,7 @@
         "Women"
       ]
     },
-    "Sub_Brand": {
+    "sub_brand": {
       "type": "categorical",
       "values": [
         "Core/Neo",

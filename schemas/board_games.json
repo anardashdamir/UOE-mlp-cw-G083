@@ -2,67 +2,67 @@
   "name": "board_games",
   "row_count": 20320,
   "columns": {
-    "Year Published": {
+    "year_published": {
       "type": "int",
       "min": -3500,
       "max": 2022,
       "median": 2011
     },
-    "Min Players": {
+    "min_players": {
       "type": "int",
       "min": 0,
       "max": 10,
       "median": 2
     },
-    "Max Players": {
+    "max_players": {
       "type": "int",
       "min": 0,
       "max": 999,
       "median": 4
     },
-    "Play Time": {
+    "play_time": {
       "type": "int",
       "min": 0,
       "max": 60000,
       "median": 45
     },
-    "Min Age": {
+    "min_age": {
       "type": "int",
       "min": 0,
       "max": 25,
       "median": 10
     },
-    "Users Rated": {
+    "users_rated": {
       "type": "int",
       "min": 30,
       "max": 102214,
       "median": 120
     },
-    "Rating Average": {
+    "rating_average": {
       "type": "float",
       "min": 1.05,
       "max": 9.58,
       "median": 6.43
     },
-    "BGG Rank": {
+    "bgg_rank": {
       "type": "int",
       "min": 1,
       "max": 20344,
       "median": 10168
     },
-    "Complexity Average": {
+    "complexity_average": {
       "type": "float",
       "min": 0.0,
       "max": 5.0,
       "median": 1.97
     },
-    "Owned Users": {
+    "owned_users": {
       "type": "int",
       "min": 0,
       "max": 155312,
       "median": 309
     },
-    "Domains": {
+    "domains": {
       "type": "array",
       "values": [
         "Abstract Games",

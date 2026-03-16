@@ -20,16 +20,16 @@
       "max": 19731.81,
       "median": 19.95
     },
-    "listPrice": {
+    "list_price": {
       "type": "float",
       "min": 0.0,
       "max": 999.99,
       "median": 0.0
     },
-    "isBestSeller": {
+    "is_best_seller": {
       "type": "bool"
     },
-    "boughtInLastMonth": {
+    "bought_in_last_month": {
       "type": "int",
       "min": 0,
       "max": 100000,
@@ -77,7 +77,7 @@
         "Party Decorations",
         "Portable Audio & Video",
         "Power Transmission Products",
-        "Seasonal Décor",
+        "Seasonal D\u00e9cor",
         "Sports & Outdoor Play Toys",
         "Tablet Accessories",
         "Televisions & Video Products",

@@ -2,55 +2,55 @@
   "name": "diabetes",
   "row_count": 768,
   "columns": {
-    "Pregnancies": {
+    "pregnancies": {
       "type": "int",
       "min": 0,
       "max": 17,
       "median": 3.0
     },
-    "Glucose": {
+    "glucose": {
       "type": "int",
       "min": 0,
       "max": 199,
       "median": 117.0
     },
-    "BloodPressure": {
+    "blood_pressure": {
       "type": "int",
       "min": 0,
       "max": 122,
       "median": 72.0
     },
-    "SkinThickness": {
+    "skin_thickness": {
       "type": "int",
       "min": 0,
       "max": 99,
       "median": 23.0
     },
-    "Insulin": {
+    "insulin": {
       "type": "int",
       "min": 0,
       "max": 846,
       "median": 30.5
     },
-    "BMI": {
+    "bmi": {
       "type": "float",
       "min": 0.0,
       "max": 67.1,
       "median": 32.0
     },
-    "DiabetesPedigreeFunction": {
+    "diabetes_pedigree_function": {
       "type": "float",
       "min": 0.08,
       "max": 2.42,
       "median": 0.37
     },
-    "Age": {
+    "age": {
       "type": "int",
       "min": 21,
       "max": 81,
       "median": 29.0
     },
-    "Outcome": {
+    "outcome": {
       "type": "bool"
     }
   }

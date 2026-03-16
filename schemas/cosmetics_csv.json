@@ -2,7 +2,7 @@
   "name": "cosmetics_csv",
   "row_count": 1472,
   "columns": {
-    "Label": {
+    "label": {
       "type": "categorical",
       "values": [
         "Cleanser",
@@ -13,16 +13,16 @@
         "Treatment"
       ]
     },
-    "Brand": {
+    "brand": {
       "type": "str"
     },
-    "Price": {
+    "price": {
       "type": "int",
       "min": 3,
       "max": 370,
       "median": 42
     },
-    "Rank": {
+    "rank": {
       "type": "float",
       "min": 0.0,
       "max": 5.0,

@@ -2,20 +2,20 @@
   "name": "bank_transactions",
   "row_count": 2512,
   "columns": {
-    "TransactionAmount": {
+    "transaction_amount": {
       "type": "float",
       "min": 0.26,
       "max": 1919.11,
       "median": 211.14
     },
-    "TransactionType": {
+    "transaction_type": {
       "type": "categorical",
       "values": [
         "Credit",
         "Debit"
       ]
     },
-    "Location": {
+    "location": {
       "type": "categorical",
       "values": [
         "Albuquerque",
@@ -63,7 +63,7 @@
         "Washington"
       ]
     },
-    "Channel": {
+    "channel": {
       "type": "categorical",
       "values": [
         "ATM",
@@ -71,13 +71,13 @@
         "Online"
       ]
     },
-    "CustomerAge": {
+    "customer_age": {
       "type": "int",
       "min": 18,
       "max": 80,
       "median": 45
     },
-    "CustomerOccupation": {
+    "customer_occupation": {
       "type": "categorical",
       "values": [
         "Doctor",
@@ -86,19 +86,19 @@
         "Student"
       ]
     },
-    "TransactionDuration": {
+    "transaction_duration": {
       "type": "int",
       "min": 10,
       "max": 300,
       "median": 112
     },
-    "LoginAttempts": {
+    "login_attempts": {
       "type": "int",
       "min": 1,
       "max": 5,
       "median": 1
     },
-    "AccountBalance": {
+    "account_balance": {
       "type": "float",
       "min": 101.25,
       "max": 14977.99,
