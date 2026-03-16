@@ -14,7 +14,9 @@ def _extract_values(filter_str: str) -> set[str]:
     values = set()
     # Quoted strings: 'value' or "value"
     for m in re.finditer(r"'([^']*)'|\"([^\"]*)\"", filter_str):
-        values.add((m.group(1) or m.group(2)).lower())
+        val = m.group(1) if m.group(1) is not None else m.group(2)
+        if val is not None:
+            values.add(val.lower())
     # Numbers (int and float)
     for m in re.finditer(r"(?<!['\"\w])(-?\d+\.?\d*)(?!['\"\w])", filter_str):
         val = m.group(1)

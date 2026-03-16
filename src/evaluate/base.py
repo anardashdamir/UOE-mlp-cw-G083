@@ -38,6 +38,7 @@ class SampleContext(BaseModel):
     schema_name: str = "unknown"
     difficulty: str = "unknown"
     latency_ms: float = 0.0
+    query: str = ""
 
     class Config:
         frozen = True

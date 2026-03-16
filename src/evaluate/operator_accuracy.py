@@ -1,6 +1,6 @@
 """Operator Accuracy metric: whether the prediction uses the correct operators.
 
-Extracts the set of operators (==, >, >=, <, <=, CONTAINS, etc.) from both
+Extracts the set of operators (==, !=, >, >=, <, <=, IN, NOT IN) from both
 predicted and expected filters, then computes F1 over the operator multisets.
 """
 
@@ -11,7 +11,7 @@ from .base import BaseMetric
 
 
 _OPERATOR_PATTERN = re.compile(
-    r"(==|!=|>=|<=|>|<|\bCONTAINS_ALL\b|\bCONTAINS\b)", re.IGNORECASE
+    r"(==|!=|>=|<=|>|<|\bNOT\s+IN\b|\bIN\b)", re.IGNORECASE
 )
 
 

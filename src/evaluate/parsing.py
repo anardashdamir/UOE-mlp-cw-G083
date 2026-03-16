@@ -170,6 +170,6 @@ def is_valid_syntax(filter_str: str) -> bool:
     if depth != 0:
         return False
     # Check at least one operator exists
-    if not re.search(r"(==|!=|>=|<=|>|<|\bCONTAINS\b|\bCONTAINS_ALL\b)", filter_str, re.IGNORECASE):
+    if not re.search(r"(==|!=|>=|<=|>|<|\bNOT\s+IN\b|\bIN\b)", filter_str, re.IGNORECASE):
         return False
     return True

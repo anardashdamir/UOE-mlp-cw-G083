@@ -54,15 +54,12 @@ METRICS = [
 ]
 
 
-def _extract_schema_name(user_content: str) -> str:
-    """Extract a schema identifier from the user message."""
-    lines = user_content.split("\n")
-    for line in lines:
-        if line.startswith("<schema>"):
-            continue
-        if ":" in line:
-            return line.split(":")[0].strip()
-    return "unknown"
+def _extract_query(user_content: str) -> str:
+    """Extract the natural language query from the user message."""
+    for line in user_content.split("\n"):
+        if line.strip().startswith("User query:"):
+            return line.split("User query:", 1)[1].strip()
+    return ""
 
 
 def _extract_difficulty(file_path: str) -> str:
@@ -95,13 +92,15 @@ def _run_single(
     schema_columns_list = []
     schema_names = []
     difficulties = []
+    queries = []
 
     for sample in eval_ds:
         messages = sample["messages"]
         expected_list.append(messages[2]["content"])
         schema_columns_list.append(extract_schema_columns(messages[1]["content"]))
-        schema_names.append(_extract_schema_name(messages[1]["content"]))
+        queries.append(_extract_query(messages[1]["content"]))
         fp = sample.get("file_path") or ""
+        schema_names.append(fp.split("__")[0] if fp else "unknown")
         difficulties.append(_extract_difficulty(fp) if fp else "unknown")
         prompts.append(
             tokenizer.apply_chat_template(
@@ -177,6 +176,7 @@ def _run_single(
             schema_name=schema_names[i],
             difficulty=difficulties[i],
             latency_ms=latencies[i],
+            query=queries[i],
         )
         for metric in METRICS:
             value = metric.compute_sample(predictions[i], expected_list[i], ctx)
@@ -216,7 +216,7 @@ def _print_results(result: EvaluationResult, num_samples: int):
         if key == "model_size_mb":
             continue
         if isinstance(val, float):
-            if val > 1.0 or "ms" in key or "hallucination" in key or "misaligned" in key:
+            if val > 1.0 or "ms" in key:
                 print(f"  {key:<30s} {val:.2f}")
             else:
                 print(f"  {key:<30s} {val:.3f}")
@@ -272,7 +272,7 @@ def _print_comparison(all_results: list[EvaluationResult]):
         for result in all_results:
             val = result.overall.get(key, 0)
             if isinstance(val, float):
-                if val > 1.0 or "ms" in key or "hallucination" in key or "misaligned" in key:
+                if val > 1.0 or "ms" in key:
                     row += f" {val:>10.2f}"
                 else:
                     row += f" {val:>10.3f}"
