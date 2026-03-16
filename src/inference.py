@@ -32,15 +32,38 @@ def load_model(cfg: Config = None, zero_shot: bool = False, quantization: str = 
             quantization_config=quant_config, **extra_kwargs,
         )
     else:
-        adapter_path = str(cfg.adapter_dir)
-        tokenizer = AutoTokenizer.from_pretrained(adapter_path, trust_remote_code=True)
-        model = AutoModelForCausalLM.from_pretrained(
-            cfg.model.name, device_map="auto", trust_remote_code=True,
-            quantization_config=quant_config, **extra_kwargs,
-        )
-        model = PeftModel.from_pretrained(model, adapter_path)
-        if quantization == "fp16":
-            model = model.merge_and_unload()
+        # Check for fully merged GRPO model first, then fall back to SFT adapter
+        grpo_merged_dir = cfg.paths.output_dir / "grpo_merged"
+        grpo_adapter_dir = cfg.paths.output_dir / "grpo_adapter"
+
+        if grpo_merged_dir.exists():
+            print(f"Loading GRPO merged model from {grpo_merged_dir}")
+            tokenizer = AutoTokenizer.from_pretrained(str(grpo_merged_dir), trust_remote_code=True)
+            model = AutoModelForCausalLM.from_pretrained(
+                str(grpo_merged_dir), device_map="auto", trust_remote_code=True,
+                quantization_config=quant_config, **extra_kwargs,
+            )
+        elif grpo_adapter_dir.exists():
+            print(f"Loading GRPO adapter from {grpo_adapter_dir}")
+            tokenizer = AutoTokenizer.from_pretrained(str(grpo_adapter_dir), trust_remote_code=True)
+            model = AutoModelForCausalLM.from_pretrained(
+                cfg.model.name, device_map="auto", trust_remote_code=True,
+                quantization_config=quant_config, **extra_kwargs,
+            )
+            model = PeftModel.from_pretrained(model, str(grpo_adapter_dir))
+            if quantization == "fp16":
+                model = model.merge_and_unload()
+        else:
+            adapter_path = str(cfg.adapter_dir)
+            print(f"Loading SFT adapter from {adapter_path}")
+            tokenizer = AutoTokenizer.from_pretrained(adapter_path, trust_remote_code=True)
+            model = AutoModelForCausalLM.from_pretrained(
+                cfg.model.name, device_map="auto", trust_remote_code=True,
+                quantization_config=quant_config, **extra_kwargs,
+            )
+            model = PeftModel.from_pretrained(model, adapter_path)
+            if quantization == "fp16":
+                model = model.merge_and_unload()
 
     if tokenizer.pad_token is None:
         tokenizer.pad_token = tokenizer.eos_token
