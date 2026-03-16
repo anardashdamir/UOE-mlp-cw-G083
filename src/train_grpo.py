@@ -71,6 +71,7 @@ def main(cfg: Config = None):
         max_completion_length=grpo.max_completion_length,
         num_generations=grpo.num_generations,
         beta=grpo.beta,
+        max_steps=grpo.max_steps,
         logging_steps=10,
         bf16=True,
         report_to=report_to,

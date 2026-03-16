@@ -57,6 +57,7 @@ class GRPOConfig(BaseModel):
     max_completion_length: int = Field(256, gt=0)
     num_generations: int = Field(4, gt=0)
     beta: float = Field(0.1, ge=0.0)
+    max_steps: int = Field(-1)
 
 
 class GenerationConfig(BaseModel):
