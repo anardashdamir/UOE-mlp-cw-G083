@@ -70,18 +70,10 @@ class GenerationConfig(BaseModel):
 
 class PathsConfig(BaseModel):
     base_dir: Path = _PROJECT_ROOT
-    data_path: Path | None = None
+    train_path: Path | None = None
+    test_path: Path | None = None
     schema_dir: Path | None = None
     output_dir: Path | None = None
-
-
-class EvalConfig(BaseModel):
-    schemas: list[str] = [
-        "hotel_bookings", "restaurant_business_rankings_2020",
-        "wine_reviews", "zoo_animals", "diabetes", "diamonds",
-        "youtube_statistics", "anime", "olympic_athletes", "used_cars",
-    ]
-    exclude_schemas: list[str] = []
 
 
 class Config(BaseModel):
@@ -91,13 +83,14 @@ class Config(BaseModel):
     grpo: GRPOConfig = GRPOConfig()
     generation: GenerationConfig = GenerationConfig()
     paths: PathsConfig = PathsConfig()
-    eval: EvalConfig = EvalConfig()
     wandb: WandbConfig = WandbConfig()
 
     def model_post_init(self, __context):
         p = self.paths
-        if p.data_path is None:
-            p.data_path = p.base_dir / "data" / "data.json"
+        if p.train_path is None:
+            p.train_path = p.base_dir / "data" / "train.json"
+        if p.test_path is None:
+            p.test_path = p.base_dir / "data" / "test.json"
         if p.schema_dir is None:
             p.schema_dir = p.base_dir / "schemas"
         if p.output_dir is None:

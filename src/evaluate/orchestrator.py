@@ -288,6 +288,8 @@ def main(
     zero_shot: bool = False,
     quantizations: list[str] | None = None,
     verbose: bool = False,
+    sft_adapter: str | None = None,
+    grpo_adapter: str | None = None,
 ) -> EvaluationResult | list[EvaluationResult]:
     """Run evaluation, optionally across multiple quantization modes.
 
@@ -296,7 +298,8 @@ def main(
         max_samples: Limit eval to N samples.
         zero_shot: Evaluate base model without adapter.
         quantizations: List of quantization modes (e.g., ["fp16", "int8", "int4"]).
-                       Defaults to ["fp16"].
+        sft_adapter: Path to SFT LoRA adapter.
+        grpo_adapter: Path to GRPO LoRA adapter (requires sft_adapter).
 
     Returns:
         Single EvaluationResult or list of EvaluationResult if multiple quantizations.
@@ -316,7 +319,10 @@ def main(
 
     for quant in quantizations:
         print(f"\n>>> Loading model [{quant.upper()}] ...")
-        model, tokenizer = load_model(cfg, zero_shot=zero_shot, quantization=quant)
+        model, tokenizer = load_model(
+            cfg, zero_shot=zero_shot, quantization=quant,
+            sft_adapter=sft_adapter, grpo_adapter=grpo_adapter,
+        )
 
         result = _run_single(cfg, eval_ds, model, tokenizer, quantization=quant, verbose=verbose)
         all_results.append(result)

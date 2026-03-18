@@ -4,51 +4,35 @@
   "columns": {
     "pregnancies": {
       "type": "int",
-      "min": 0,
-      "max": 17,
-      "median": 3.0
+      "average": 3.0
     },
     "glucose": {
       "type": "int",
-      "min": 0,
-      "max": 199,
-      "median": 117.0
+      "average": 117.0
     },
     "blood_pressure": {
       "type": "int",
-      "min": 0,
-      "max": 122,
-      "median": 72.0
+      "average": 72.0
     },
     "skin_thickness": {
       "type": "int",
-      "min": 0,
-      "max": 99,
-      "median": 23.0
+      "average": 23.0
     },
     "insulin": {
       "type": "int",
-      "min": 0,
-      "max": 846,
-      "median": 30.5
+      "average": 30.5
     },
     "bmi": {
       "type": "float",
-      "min": 0.0,
-      "max": 67.1,
-      "median": 32.0
+      "average": 32.0
     },
     "diabetes_pedigree_function": {
       "type": "float",
-      "min": 0.08,
-      "max": 2.42,
-      "median": 0.37
+      "average": 0.37
     },
     "age": {
       "type": "int",
-      "min": 21,
-      "max": 81,
-      "median": 29.0
+      "average": 29.0
     },
     "outcome": {
       "type": "bool"

@@ -27,7 +27,7 @@ grpo:
   max_completion_length: 256
   num_generations: 8
   beta: 0.05
-  max_steps: 500
+  max_steps: 50
 
 generation:
   max_new_tokens: 256                  # longest filter is ~170 tokens
@@ -38,15 +38,31 @@ wandb:
   # wandb_project and wandb_api_key loaded from wandb.env
 
 paths:
-  data_path: data/data.json
+  train_path: data/train.json
+  test_path: data/test.json
   schema_dir: schemas
   output_dir: output
 
-eval:
-  exclude_schemas: []
-  schemas:
-    - diabetes
-    - diamonds
-    - anime
+schemas:
+  train:
+    - bank_transactions
+    - board_games
+    - books
+    - clothes
+    - cosmetics_csv
+    - dubai_rentals
+    - electronics_sales
+    - healthcare_insurance
+    - netflix_shows
+    - steam_game
+    - usa_housing_listings
     - zoo_animals
-    - airbnb_open_data
+    - imdb_movies
+    - udemy
+    - video_game_sales
+  eval:
+    - anime
+    - diamonds
+    - diabetes
+    - used_cars
+    - adidas_vs_nike

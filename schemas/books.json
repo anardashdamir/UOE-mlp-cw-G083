@@ -4,9 +4,7 @@
   "columns": {
     "average_rating": {
       "type": "float",
-      "min": 1.0,
-      "max": 5.0,
-      "median": 3.96
+      "average": 3.96
     },
     "language_code": {
       "type": "categorical",
@@ -25,26 +23,18 @@
     },
     "num_pages": {
       "type": "int",
-      "min": 1,
-      "max": 6576,
-      "median": 302
+      "average": 302
     },
     "ratings_count": {
       "type": "int",
-      "min": 1,
-      "max": 4597666,
-      "median": 784
+      "average": 784
     },
     "text_reviews_count": {
       "type": "int",
-      "min": 0,
-      "max": 94265,
-      "median": 49
+      "average": 49
     },
     "publication_date": {
-      "type": "date",
-      "min": "1900-01-01",
-      "max": "2020-03-31"
+      "type": "date"
     },
     "publisher": {
       "type": "str"

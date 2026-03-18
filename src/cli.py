@@ -66,6 +66,7 @@ def grpo(
     wandb: bool = typer.Option(False, "--wandb", help="Enable W&B logging."),
     run_name: str | None = typer.Option(None, "--run-name", "-r", help="Experiment name."),
     thinking: bool = typer.Option(False, "--thinking", help="Train with thinking mode."),
+    sft_adapter: str | None = typer.Option(None, "--sft-adapter", help="Path to SFT LoRA adapter."),
 ):
     """Fine-tune with GRPO (reward-based optimization)."""
     cfg = Config.from_yaml(config, lora_r=lora_r)
@@ -80,7 +81,7 @@ def grpo(
     print(f"GRPO | epochs={g.num_epochs} lr={g.learning_rate} generations={g.num_generations}")
 
     from .train_grpo import main as grpo_main
-    grpo_main(cfg)
+    grpo_main(cfg, sft_adapter=sft_adapter)
 
 
 @app.command()
@@ -91,6 +92,8 @@ def predict(
     temperature: float | None = typer.Option(None, "--temperature", "-t"),
     quantization: str = typer.Option("fp16", "--quantization", "-q"),
     thinking: bool = typer.Option(False, "--thinking"),
+    sft_adapter: str | None = typer.Option(None, "--sft-adapter", help="Path to SFT LoRA adapter."),
+    grpo_adapter: str | None = typer.Option(None, "--grpo-adapter", help="Path to GRPO LoRA adapter (requires --sft-adapter)."),
 ):
     """Generate a filter expression from a natural-language query."""
     from .inference import QUANTIZATION_MODES
@@ -101,13 +104,19 @@ def predict(
     if not schema.exists():
         print(f"Error: schema file not found: {schema}")
         raise typer.Exit(1)
+    if grpo_adapter and not sft_adapter:
+        print("Error: --grpo-adapter requires --sft-adapter (GRPO loads on top of SFT)")
+        raise typer.Exit(1)
 
     cfg = Config.from_yaml(config, temperature=temperature)
     if thinking:
         cfg.model.enable_thinking = True
 
     from .inference import load_model, predict as run_predict
-    model, tokenizer = load_model(cfg, quantization=quantization)
+    model, tokenizer = load_model(
+        cfg, quantization=quantization,
+        sft_adapter=sft_adapter, grpo_adapter=grpo_adapter,
+    )
     result = run_predict(query, str(schema), model=model, tokenizer=tokenizer, cfg=cfg)
     print(f"Query:   {query}")
     print(f"Filters: {result}")
@@ -121,6 +130,8 @@ def evaluate(
     quantization: list[str] = typer.Option(["fp16"], "--quantization", "-q"),
     thinking: bool = typer.Option(False, "--thinking"),
     verbose: bool = typer.Option(False, "--verbose", "-v", help="Print predictions vs expected."),
+    sft_adapter: str | None = typer.Option(None, "--sft-adapter", help="Path to SFT LoRA adapter."),
+    grpo_adapter: str | None = typer.Option(None, "--grpo-adapter", help="Path to GRPO LoRA adapter (requires --sft-adapter)."),
 ):
     """Evaluate the model on held-out schemas."""
     from .inference import QUANTIZATION_MODES
@@ -130,6 +141,10 @@ def evaluate(
             print(f"Error: invalid quantization '{q}'. Choose from: {', '.join(QUANTIZATION_MODES)}")
             raise typer.Exit(1)
 
+    if grpo_adapter and not sft_adapter:
+        print("Error: --grpo-adapter requires --sft-adapter (GRPO loads on top of SFT)")
+        raise typer.Exit(1)
+
     cfg = Config.from_yaml(config)
     if thinking:
         cfg.model.enable_thinking = True
@@ -137,7 +152,10 @@ def evaluate(
         print("Zero-shot evaluation (base model, no adapter)")
 
     from .evaluate import main as eval_main
-    eval_main(cfg, max_samples=max_samples, zero_shot=zero_shot, quantizations=quantization, verbose=verbose)
+    eval_main(
+        cfg, max_samples=max_samples, zero_shot=zero_shot, quantizations=quantization,
+        verbose=verbose, sft_adapter=sft_adapter, grpo_adapter=grpo_adapter,
+    )
 
 
 @app.command()
@@ -178,11 +196,8 @@ def data_stats(config: Path | None = _config_option):
     train_ds, eval_ds = load_datasets(cfg)
 
     print(f"Train:  {len(train_ds)}")
-    print(f"Eval:   {len(eval_ds)}")
+    print(f"Test:   {len(eval_ds)}")
     print(f"Total:  {len(train_ds) + len(eval_ds)}")
-    print(f"\nEval schemas: {', '.join(cfg.eval.schemas)}")
-    if cfg.eval.exclude_schemas:
-        print(f"Excluded:     {', '.join(cfg.eval.exclude_schemas)}")
 
 
 @app.command(name="check-schemas")

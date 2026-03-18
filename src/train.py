@@ -1,22 +1,11 @@
-"""SFT LoRA fine-tuning with TensorBoard / W&B logging."""
+"""SFT LoRA fine-tuning using Unsloth."""
 
-import logging
-
-import torch
-from peft import LoraConfig, TaskType
-from transformers import AutoModelForCausalLM, AutoTokenizer
+from unsloth import FastLanguageModel
 from trl import SFTConfig, SFTTrainer
 
 from .config import Config
 from .data_loader import load_datasets
-from .training_utils import (
-    build_run_name,
-    disable_thinking,
-    enable_thinking,
-    setup_logging,
-)
-
-logger = logging.getLogger(__name__)
+from .training_utils import build_run_name, disable_thinking, enable_thinking, setup_logging
 
 
 def main(cfg: Config = None):
@@ -25,15 +14,28 @@ def main(cfg: Config = None):
 
     run_name = cfg.wandb.run_name or build_run_name(cfg)
     print(f"Run: {run_name}")
-
     report_to, logging_dir = setup_logging(cfg, run_name)
 
-    print("Loading datasets...")
     train_ds, eval_ds = load_datasets(cfg)
     print(f"Train: {len(train_ds)} | Eval: {len(eval_ds)}")
 
-    print(f"Loading tokenizer: {cfg.model.name}")
-    tokenizer = AutoTokenizer.from_pretrained(cfg.model.name, trust_remote_code=True)
+    model, tokenizer = FastLanguageModel.from_pretrained(
+        cfg.model.name,
+        max_seq_length=cfg.training.max_seq_length,
+        load_in_4bit=cfg.training.use_qlora,
+        dtype=None,
+    )
+
+    model = FastLanguageModel.get_peft_model(
+        model,
+        r=cfg.lora.r,
+        lora_alpha=cfg.lora.alpha,
+        lora_dropout=cfg.lora.dropout,
+        target_modules=cfg.lora.target_modules if isinstance(cfg.lora.target_modules, list) else "all-linear",
+        use_gradient_checkpointing="unsloth" if cfg.training.gradient_checkpointing else False,
+        random_state=42,
+    )
+
     if tokenizer.pad_token is None:
         tokenizer.pad_token = tokenizer.eos_token
     if cfg.model.enable_thinking:
@@ -41,37 +43,13 @@ def main(cfg: Config = None):
     else:
         disable_thinking(tokenizer)
 
-    print(f"Loading model: {cfg.model.name} (QLoRA={cfg.training.use_qlora})")
-    load_kwargs = {"trust_remote_code": True}
-    if cfg.training.use_qlora:
-        from transformers import BitsAndBytesConfig
-
-        load_kwargs["quantization_config"] = BitsAndBytesConfig(
-            load_in_4bit=True,
-            bnb_4bit_compute_dtype=torch.bfloat16,
-            bnb_4bit_quant_type="nf4",
-            bnb_4bit_use_double_quant=True,
-        )
-    else:
-        load_kwargs["torch_dtype"] = torch.bfloat16
-    model = AutoModelForCausalLM.from_pretrained(cfg.model.name, **load_kwargs)
-    print("Model loaded.")
-
-    lora_config = LoraConfig(
-        task_type=TaskType.CAUSAL_LM,
-        r=cfg.lora.r,
-        lora_alpha=cfg.lora.alpha,
-        lora_dropout=cfg.lora.dropout,
-        target_modules=cfg.lora.target_modules,
-    )
-
     training_args = SFTConfig(
         output_dir=str(cfg.paths.output_dir),
         run_name=run_name,
         logging_dir=logging_dir,
         num_train_epochs=cfg.training.num_epochs,
         per_device_train_batch_size=cfg.training.batch_size,
-        per_device_eval_batch_size=8,
+        per_device_eval_batch_size=cfg.generation.eval_batch_size,
         gradient_accumulation_steps=cfg.training.gradient_accumulation_steps,
         learning_rate=cfg.training.learning_rate,
         lr_scheduler_type=cfg.training.lr_scheduler_type,
@@ -97,12 +75,10 @@ def main(cfg: Config = None):
         args=training_args,
         train_dataset=train_ds,
         eval_dataset=eval_ds,
-        peft_config=lora_config,
         processing_class=tokenizer,
     )
 
-    # Evaluate before training to get baseline metrics
-    print("Running baseline evaluation (before training)...")
+    print("Running baseline evaluation...")
     baseline = trainer.evaluate()
     print(f"Baseline eval_loss: {baseline['eval_loss']:.4f}")
 
@@ -113,5 +89,4 @@ def main(cfg: Config = None):
 
     if cfg.wandb.enabled:
         import wandb
-
         wandb.finish()

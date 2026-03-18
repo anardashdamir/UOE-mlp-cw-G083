@@ -24,21 +24,15 @@
     },
     "product_price": {
       "type": "float",
-      "min": 100.38,
-      "max": 2999.85,
-      "median": 1513.02
+      "average": 1513.02
     },
     "purchase_frequency": {
       "type": "int",
-      "min": 1,
-      "max": 19,
-      "median": 10
+      "average": 10
     },
     "customer_satisfaction": {
       "type": "int",
-      "min": 1,
-      "max": 5,
-      "median": 3
+      "average": 3
     }
   }
 }

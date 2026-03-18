@@ -6,9 +6,7 @@
       "type": "str"
     },
     "release_date": {
-      "type": "date",
-      "min": "1997-06-30",
-      "max": "2019-05-01"
+      "type": "date"
     },
     "platforms": {
       "type": "array",
@@ -54,21 +52,15 @@
     },
     "average_playtime": {
       "type": "int",
-      "min": 0,
-      "max": 190625,
-      "median": 0
+      "average": 0
     },
     "median_playtime": {
       "type": "int",
-      "min": 0,
-      "max": 190625,
-      "median": 0
+      "average": 0
     },
     "price": {
       "type": "float",
-      "min": 0.0,
-      "max": 421.99,
-      "median": 3.99
+      "average": 3.99
     }
   }
 }

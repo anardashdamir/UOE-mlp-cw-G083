@@ -1,10 +1,12 @@
 """Load fine-tuned model and generate filter expressions."""
 
 import json
+from pathlib import Path
 from typing import get_args
 
 from peft import PeftModel
-from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
+from transformers import AutoTokenizer, BitsAndBytesConfig
+from unsloth import FastLanguageModel
 
 from .config import Config, QuantizationMode
 from .data_loader import build_messages, format_schema
@@ -13,61 +15,58 @@ from .training_utils import strip_thinking_output
 QUANTIZATION_MODES = get_args(QuantizationMode)
 
 
-def _get_quant_config(quantization: str):
-    if quantization == "int8":
-        return BitsAndBytesConfig(load_in_8bit=True), {}
-    elif quantization == "int4":
-        return BitsAndBytesConfig(load_in_4bit=True, bnb_4bit_compute_dtype="bfloat16"), {}
-    return None, {"dtype": "auto"}
+def load_model(
+    cfg: Config = None,
+    zero_shot: bool = False,
+    quantization: str = "fp16",
+    sft_adapter: str | None = None,
+    grpo_adapter: str | None = None,
+):
+    """Load model with optional SFT and GRPO adapters.
 
-
-def load_model(cfg: Config = None, zero_shot: bool = False, quantization: str = "fp16"):
+    Args:
+        sft_adapter: Path to SFT LoRA adapter directory.
+        grpo_adapter: Path to GRPO LoRA adapter directory (requires sft_adapter).
+    """
     cfg = cfg or Config()
-    quant_config, extra_kwargs = _get_quant_config(quantization)
 
-    if zero_shot:
-        tokenizer = AutoTokenizer.from_pretrained(cfg.model.name, trust_remote_code=True)
-        model = AutoModelForCausalLM.from_pretrained(
-            cfg.model.name, device_map="auto", trust_remote_code=True,
-            quantization_config=quant_config, **extra_kwargs,
-        )
-    else:
-        # Check for fully merged GRPO model first, then fall back to SFT adapter
-        grpo_merged_dir = cfg.paths.output_dir / "grpo_merged"
-        grpo_adapter_dir = cfg.paths.output_dir / "grpo_adapter"
+    model, tokenizer = FastLanguageModel.from_pretrained(
+        cfg.model.name,
+        max_seq_length=cfg.training.max_seq_length,
+        load_in_4bit=(quantization == "int4"),
+        dtype=None,
+    )
 
-        if grpo_merged_dir.exists():
-            print(f"Loading GRPO merged model from {grpo_merged_dir}")
-            tokenizer = AutoTokenizer.from_pretrained(str(grpo_merged_dir), trust_remote_code=True)
-            model = AutoModelForCausalLM.from_pretrained(
-                str(grpo_merged_dir), device_map="auto", trust_remote_code=True,
-                quantization_config=quant_config, **extra_kwargs,
-            )
-        elif grpo_adapter_dir.exists():
-            print(f"Loading GRPO adapter from {grpo_adapter_dir}")
-            tokenizer = AutoTokenizer.from_pretrained(str(grpo_adapter_dir), trust_remote_code=True)
-            model = AutoModelForCausalLM.from_pretrained(
-                cfg.model.name, device_map="auto", trust_remote_code=True,
-                quantization_config=quant_config, **extra_kwargs,
-            )
-            model = PeftModel.from_pretrained(model, str(grpo_adapter_dir))
-            if quantization == "fp16":
-                model = model.merge_and_unload()
-        else:
-            adapter_path = str(cfg.adapter_dir)
-            print(f"Loading SFT adapter from {adapter_path}")
-            tokenizer = AutoTokenizer.from_pretrained(adapter_path, trust_remote_code=True)
-            model = AutoModelForCausalLM.from_pretrained(
-                cfg.model.name, device_map="auto", trust_remote_code=True,
-                quantization_config=quant_config, **extra_kwargs,
-            )
-            model = PeftModel.from_pretrained(model, adapter_path)
-            if quantization == "fp16":
-                model = model.merge_and_unload()
+    if not zero_shot:
+        sft_path = Path(sft_adapter) if sft_adapter else cfg.adapter_dir
+        grpo_path = Path(grpo_adapter) if grpo_adapter else None
+
+        if not sft_path.exists():
+            raise FileNotFoundError(f"SFT adapter not found: {sft_path}")
+
+        # Load and merge SFT adapter
+        print(f"Loading SFT adapter from {sft_path}")
+        model = PeftModel.from_pretrained(model, str(sft_path))
+        model = model.merge_and_unload()
+
+        # Load GRPO adapter on top
+        if grpo_path:
+            if not grpo_path.exists():
+                raise FileNotFoundError(f"GRPO adapter not found: {grpo_path}")
+            print(f"Loading GRPO adapter from {grpo_path}")
+            model = PeftModel.from_pretrained(model, str(grpo_path))
+            model = model.merge_and_unload()
+
+    # Load tokenizer from adapter if available (has chat template)
+    if not zero_shot:
+        sft_path = Path(sft_adapter) if sft_adapter else cfg.adapter_dir
+        if sft_path.exists():
+            tokenizer = AutoTokenizer.from_pretrained(str(sft_path), trust_remote_code=True)
 
     if tokenizer.pad_token is None:
         tokenizer.pad_token = tokenizer.eos_token
-    model.eval()
+
+    FastLanguageModel.for_inference(model)
     return model, tokenizer
 
 

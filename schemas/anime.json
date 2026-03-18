@@ -63,21 +63,15 @@
     },
     "episodes": {
       "type": "int",
-      "min": 1,
-      "max": 1818,
-      "median": 2
+      "average": 2
     },
     "rating": {
       "type": "float",
-      "min": 1.67,
-      "max": 10.0,
-      "median": 6.57
+      "average": 6.57
     },
     "members": {
       "type": "int",
-      "min": 5,
-      "max": 1013917,
-      "median": 1550
+      "average": 1550
     }
   }
 }

@@ -59,9 +59,7 @@
     },
     "price": {
       "type": "int",
-      "min": 10,
-      "max": 199,
-      "median": 108
+      "average": 108
     }
   }
 }

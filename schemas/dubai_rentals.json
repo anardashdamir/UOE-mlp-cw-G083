@@ -4,21 +4,15 @@
   "columns": {
     "rent": {
       "type": "int",
-      "min": 1,
-      "max": 5000000,
-      "median": 100000
+      "average": 100000
     },
     "beds": {
       "type": "int",
-      "min": 0,
-      "max": 12,
-      "median": 2
+      "average": 2
     },
     "baths": {
       "type": "int",
-      "min": 1,
-      "max": 11,
-      "median": 2
+      "average": 2
     },
     "type": {
       "type": "categorical",
@@ -36,9 +30,7 @@
     },
     "area_in_sqft": {
       "type": "int",
-      "min": 74,
-      "max": 210254,
-      "median": 1384
+      "average": 1384
     },
     "furnishing": {
       "type": "categorical",

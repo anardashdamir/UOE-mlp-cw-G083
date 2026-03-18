@@ -7,21 +7,15 @@
     },
     "listing_price": {
       "type": "int",
-      "min": 0,
-      "max": 29999,
-      "median": 5999
+      "average": 5999
     },
     "sale_price": {
       "type": "int",
-      "min": 449,
-      "max": 36500,
-      "median": 4799
+      "average": 4799
     },
     "discount": {
       "type": "int",
-      "min": 0,
-      "max": 60,
-      "median": 40
+      "average": 40
     },
     "brand": {
       "type": "categorical",
@@ -32,15 +26,11 @@
     },
     "rating": {
       "type": "float",
-      "min": 0.0,
-      "max": 5.0,
-      "median": 3.5
+      "average": 3.5
     },
     "reviews": {
       "type": "int",
-      "min": 0,
-      "max": 223,
-      "median": 37
+      "average": 37
     },
     "gender": {
       "type": "categorical",

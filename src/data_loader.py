@@ -10,51 +10,37 @@ from .config import Config
 
 logger = logging.getLogger(__name__)
 
-SYSTEM_PROMPT = """You are a filter extraction engine. Given a natural language query and a dataset schema, output ONLY the corresponding structured filter expression.
+SYSTEM_PROMPT = """You convert natural language queries into structured filter expressions based on a dataset schema.
 
 OPERATORS:
-- Equality:        column == 'value'  |  column == number  |  column == true/false
-- Inequality:      column != 'value'  |  column != number
-- Comparison:      column > number, column >= number, column < number, column <= number
-- Membership:      column IN ['a', 'b', 'c']
-- Exclusion:       column NOT IN ['a', 'b', 'c']
-- Array contains:  column CONTAINS 'value'
-- Array excludes:  column NOT CONTAINS 'value'
-- Array all:       column CONTAINS_ALL ['value1', 'value2']
-- Array any:       column CONTAINS_ANY ['value1', 'value2']
+  ==   Exact match         column == 'value'  |  column == 42  |  column == true
+  !=   Not equal           column != 'value'
+  > < >= <=                column > 100
+  IN   Any of (same field) column IN ['a', 'b', 'c']
+  NOT IN  Exclude set      column NOT IN ['x', 'y']
 
-LOGICAL CONNECTORS:
-- AND to combine conditions
-- Use IN [...] for multiple values of the same field: col IN ['a', 'b'] (NOT col == 'a' OR col == 'b')
-- Use OR only for conditions on DIFFERENT fields or different operators
-- Parentheses are REQUIRED when mixing AND and OR: (A OR B) AND C
-
-VALUE RULES:
-- String/categorical values ALWAYS use single quotes: col == 'value' (NEVER col == value)
-- Numbers and booleans do NOT use quotes: col > 5, col == true
-- Booleans are lowercase: true, false
-- Values must match the schema exactly (case-sensitive)
-
-FILTER SCOPE:
-- ONLY filter on what the query EXPLICITLY asks for
-- NEVER add extra conditions the user did not mention
+RULES:
+1. Same field, multiple values → IN:  brand IN ['Nike', 'Adidas']
+   NEVER use: brand == 'Nike' OR brand == 'Adidas'
+2. OR only for different fields or different operators on the same field:
+   (price < 50 OR rating > 4)  |  (num_pages > 400 OR num_pages < 150)
+3. Parentheses required when mixing AND and OR: (A OR B) AND C
+4. Strings in single quotes: col == 'value'. Numbers/booleans unquoted: col > 5, col == true
+5. Values must exactly match the schema (case-sensitive).
+6. Only filter on what the query explicitly asks — never add extra conditions.
+7. If a query term has no matching schema field, ignore it.
+8. If NO query terms match any schema field, output: EMPTY
 
 NUMERIC THRESHOLDS:
-- When the query uses vague terms for numeric fields, use the schema median as pivot:
-  "cheap/low/small/few" → column < median
-  "expensive/high/large/many" → column > median
-  "very cheap/budget" → column < (min + (median - min) * 0.25)
-  "very expensive/premium" → column > (median + (max - median) * 0.75)
-  "moderate/average/decent/mid-range" → column >= (median * 0.8) AND column <= (median * 1.2)
-  "best/top/top-rated/popular/recent/modern" → column > median
-  "worst/lowest/old/classic/vintage" → column < median
-  "not too expensive/not too cheap" → opposite direction from median
-- When the query states an explicit number, use that number exactly
+- Explicit number in query → use that exact number: "under 50" → price < 50
+- Vague word, no number → use the field's average from the schema:
+  cheap/affordable/low/small/few/short/young → column < average
+  expensive/premium/high/large/many/tall/old/senior → column > average
+  popular/top/best/highly-rated/recent/modern/new → column > average
+  worst/lowest/classic/vintage → column < average
+- Explicit number always overrides vague words: "cheap, under 50" → price < 50
 
-EMPTY FILTER:
-- If no query terms map to schema columns, output exactly: EMPTY
-
-Output ONLY the filter expression, no explanation."""
+Output ONLY the filter expression."""
 
 
 def format_schema(schema: dict) -> str:
@@ -65,10 +51,10 @@ def format_schema(schema: dict) -> str:
             values = ", ".join(col_info["values"])
             lines.append(f"{col_name}: categorical [{values}]")
         elif col_type in ("int", "float"):
-            stats = f"min={col_info['min']}, max={col_info['max']}"
-            if "median" in col_info:
-                stats += f", median={col_info['median']}"
-            lines.append(f"{col_name}: {col_type} ({stats})")
+            if "average" in col_info:
+                lines.append(f"{col_name}: {col_type} (average={col_info['average']})")
+            else:
+                lines.append(f"{col_name}: {col_type}")
         elif col_type == "bool":
             lines.append(f"{col_name}: bool")
         elif col_type == "array":
@@ -103,48 +89,45 @@ def _load_schemas(cfg: Config) -> dict[str, str]:
     return schemas
 
 
-def load_datasets(cfg: Config = None) -> tuple[Dataset, Dataset]:
-    """Split by schema name: eval schemas go to eval, rest to train."""
-    cfg = cfg or Config()
-    schemas = _load_schemas(cfg)
-
-    with open(cfg.paths.data_path) as f:
+def _load_split(cfg: Config, data_path, schemas: dict) -> list[dict]:
+    """Load a single data file and convert to chat message rows."""
+    with open(data_path) as f:
         raw_data = json.load(f)
 
-    eval_set = set(cfg.eval.schemas)
-    exclude_set = set(cfg.eval.exclude_schemas)
-    train_rows, eval_rows = [], []
+    rows = []
     missing_schemas = set()
 
     for sample in raw_data:
         file_path = sample.get("file_path", "")
         dataset_name = file_path.split("__")[0]
-        if dataset_name in exclude_set:
-            continue
         schema_text = schemas.get(dataset_name)
         if schema_text is None:
             missing_schemas.add(dataset_name)
             continue
 
-        # Normalize empty filters to the EMPTY sentinel
         filters = sample["filters"].strip()
         if not filters:
             filters = "EMPTY"
 
         reasoning = sample.get("reasoning") if cfg.model.enable_thinking else None
         messages = build_messages(sample["query"], schema_text, filters, reasoning)
-        row = {"messages": messages, "file_path": file_path}
-
-        if dataset_name in eval_set:
-            eval_rows.append(row)
-        else:
-            train_rows.append(row)
+        rows.append({"messages": messages, "file_path": file_path})
 
     if missing_schemas:
         logger.warning(
             "Schemas referenced in data but missing from %s: %s (samples dropped)",
             cfg.paths.schema_dir, sorted(missing_schemas),
         )
+    return rows
+
+
+def load_datasets(cfg: Config = None) -> tuple[Dataset, Dataset]:
+    """Load pre-split train and test datasets."""
+    cfg = cfg or Config()
+    schemas = _load_schemas(cfg)
+
+    train_rows = _load_split(cfg, cfg.paths.train_path, schemas)
+    eval_rows = _load_split(cfg, cfg.paths.test_path, schemas)
 
     random.seed(42)
     random.shuffle(train_rows)
@@ -153,28 +136,23 @@ def load_datasets(cfg: Config = None) -> tuple[Dataset, Dataset]:
 
 
 def load_grpo_dataset(cfg: Config = None) -> Dataset:
-    """Load prompts (without answers) for GRPO training."""
+    """Load prompts (without answers) for GRPO training from train split."""
     cfg = cfg or Config()
     schemas = _load_schemas(cfg)
 
-    with open(cfg.paths.data_path) as f:
+    with open(cfg.paths.train_path) as f:
         raw_data = json.load(f)
 
-    eval_set = set(cfg.eval.schemas)
-    exclude_set = set(cfg.eval.exclude_schemas)
     rows = []
     seen = set()
 
     for sample in raw_data:
         file_path = sample.get("file_path", "")
         dataset_name = file_path.split("__")[0]
-        if dataset_name in eval_set or dataset_name in exclude_set:
-            continue
         schema_text = schemas.get(dataset_name)
         if schema_text is None:
             continue
 
-        # Deduplicate: same query+schema = same prompt
         key = (sample["query"], dataset_name)
         if key in seen:
             continue
@@ -194,7 +172,7 @@ def load_grpo_dataset(cfg: Config = None) -> Dataset:
 
 if __name__ == "__main__":
     train_ds, eval_ds = load_datasets()
-    print(f"Train: {len(train_ds)}, Eval: {len(eval_ds)}")
+    print(f"Train: {len(train_ds)}, Test: {len(eval_ds)}")
     print("\n--- Sample ---")
     for msg in train_ds[0]["messages"]:
         print(f"[{msg['role']}]: {msg['content'][:200]}")

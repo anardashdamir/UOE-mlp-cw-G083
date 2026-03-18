@@ -18,15 +18,11 @@
     },
     "price": {
       "type": "int",
-      "min": 3,
-      "max": 370,
-      "median": 42
+      "average": 42
     },
     "rank": {
       "type": "float",
-      "min": 0.0,
-      "max": 5.0,
-      "median": 4.3
+      "average": 4.3
     },
     "dry_and_oily": {
       "type": "bool",

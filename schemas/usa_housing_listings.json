@@ -4,9 +4,7 @@
   "columns": {
     "price": {
       "type": "int",
-      "min": 344,
-      "max": 3395,
-      "median": 1150
+      "average": 1150
     },
     "type": {
       "type": "categorical",
@@ -26,15 +24,11 @@
     },
     "sqfeet": {
       "type": "int",
-      "min": 364,
-      "max": 2308,
-      "median": 966
+      "average": 966
     },
     "beds": {
       "type": "int",
-      "min": 0,
-      "max": 8,
-      "median": 2
+      "average": 2
     },
     "cats_allowed": {
       "type": "bool",

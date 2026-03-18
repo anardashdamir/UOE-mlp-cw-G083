@@ -40,9 +40,7 @@
     },
     "year": {
       "type": "int",
-      "min": 1980,
-      "max": 2020,
-      "median": 2007
+      "average": 2007
     },
     "genre": {
       "type": "categorical",
@@ -63,33 +61,23 @@
     },
     "na_sales": {
       "type": "float",
-      "min": 0.0,
-      "max": 41.49,
-      "median": 0.08
+      "average": 0.08
     },
     "eu_sales": {
       "type": "float",
-      "min": 0.0,
-      "max": 29.02,
-      "median": 0.02
+      "average": 0.02
     },
     "jp_sales": {
       "type": "float",
-      "min": 0.0,
-      "max": 10.22,
-      "median": 0.0
+      "average": 0.0
     },
     "other_sales": {
       "type": "float",
-      "min": 0.0,
-      "max": 10.57,
-      "median": 0.01
+      "average": 0.01
     },
     "global_sales": {
       "type": "float",
-      "min": 0.01,
-      "max": 82.74,
-      "median": 0.17
+      "average": 0.17
     }
   }
 }

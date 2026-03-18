@@ -11,9 +11,7 @@
     },
     "release_year": {
       "type": "int",
-      "min": 1925,
-      "max": 2021,
-      "median": 2017.0
+      "average": 2017.0
     },
     "rating": {
       "type": "categorical",
@@ -83,15 +81,11 @@
     },
     "duration_minutes": {
       "type": "int",
-      "min": 3,
-      "max": 312,
-      "median": 98
+      "average": 98
     },
     "duration_seasons": {
       "type": "int",
-      "min": 1,
-      "max": 17,
-      "median": 1
+      "average": 1
     }
   }
 }

@@ -11,27 +11,19 @@
     },
     "price": {
       "type": "int",
-      "min": 0,
-      "max": 200,
-      "median": 45
+      "average": 45
     },
     "num_subscribers": {
       "type": "int",
-      "min": 0,
-      "max": 268923,
-      "median": 911
+      "average": 911
     },
     "num_reviews": {
       "type": "int",
-      "min": 0,
-      "max": 27445,
-      "median": 18
+      "average": 18
     },
     "num_lectures": {
       "type": "int",
-      "min": 0,
-      "max": 779,
-      "median": 25
+      "average": 25
     },
     "level": {
       "type": "categorical",
@@ -44,14 +36,10 @@
     },
     "content_duration": {
       "type": "float",
-      "min": 0.0,
-      "max": 78.5,
-      "median": 2.0
+      "average": 2.0
     },
     "published_timestamp": {
-      "type": "date",
-      "min": "2011-07-09",
-      "max": "2017-07-06"
+      "type": "date"
     },
     "subject": {
       "type": "categorical",
