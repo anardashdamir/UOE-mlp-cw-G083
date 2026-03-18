@@ -21,4 +21,5 @@ dependencies = [
     "tqdm>=4.67.0",
     "huggingface-hub>=1.6.0",
     "tensorboard>=2.20.0",
+    "unsloth>=2025.3.0",
 ]
