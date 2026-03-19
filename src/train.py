@@ -71,9 +71,9 @@ def main(cfg: Config = None):
     )
 
     def formatting_func(example):
-        return tokenizer.apply_chat_template(
+        return [tokenizer.apply_chat_template(
             example["messages"], tokenize=False, add_generation_prompt=False
-        )
+        )]
 
     trainer = SFTTrainer(
         model=model,
