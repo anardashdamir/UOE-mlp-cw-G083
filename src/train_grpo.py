@@ -110,6 +110,8 @@ def main(cfg: Config = None, sft_adapter: str | None = None):
         lora_alpha=cfg.lora.alpha,
         lora_dropout=cfg.lora.dropout,
         target_modules=cfg.lora.target_modules if isinstance(cfg.lora.target_modules, list) else "all-linear",
+        use_gradient_checkpointing="unsloth" if cfg.training.gradient_checkpointing else False,
+        random_state=42,
     )
 
     tokenizer.padding_side = "left"

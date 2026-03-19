@@ -14,7 +14,7 @@ QuantizationMode = Literal["fp16", "int8", "int4"]
 
 
 class ModelConfig(BaseModel):
-    name: str = "Qwen/Qwen2.5-0.5B-Instruct"
+    name: str = "Qwen/Qwen3.5-4B"
     quantization: QuantizationMode = "fp16"
     enable_thinking: bool = False
 

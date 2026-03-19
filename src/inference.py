@@ -5,7 +5,7 @@ from pathlib import Path
 from typing import get_args
 
 from peft import PeftModel
-from transformers import AutoTokenizer, BitsAndBytesConfig
+from transformers import AutoTokenizer
 from unsloth import FastLanguageModel
 
 from .config import Config, QuantizationMode
@@ -44,24 +44,17 @@ def load_model(
         if not sft_path.exists():
             raise FileNotFoundError(f"SFT adapter not found: {sft_path}")
 
-        # Load and merge SFT adapter
         print(f"Loading SFT adapter from {sft_path}")
         model = PeftModel.from_pretrained(model, str(sft_path))
         model = model.merge_and_unload()
+        tokenizer = AutoTokenizer.from_pretrained(str(sft_path), trust_remote_code=True)
 
-        # Load GRPO adapter on top
         if grpo_path:
             if not grpo_path.exists():
                 raise FileNotFoundError(f"GRPO adapter not found: {grpo_path}")
             print(f"Loading GRPO adapter from {grpo_path}")
             model = PeftModel.from_pretrained(model, str(grpo_path))
             model = model.merge_and_unload()
-
-    # Load tokenizer from adapter if available (has chat template)
-    if not zero_shot:
-        sft_path = Path(sft_adapter) if sft_adapter else cfg.adapter_dir
-        if sft_path.exists():
-            tokenizer = AutoTokenizer.from_pretrained(str(sft_path), trust_remote_code=True)
 
     if tokenizer.pad_token is None:
         tokenizer.pad_token = tokenizer.eos_token

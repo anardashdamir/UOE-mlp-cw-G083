@@ -38,19 +38,14 @@ def enable_thinking(tokenizer):
 
 def strip_thinking_output(text: str) -> str:
     """Remove <think>...</think> block and any leaked prompt text from model output."""
-    # Strip thinking tags
-    if "<think>" in text and "</think>" in text:
-        end = text.find("</think>")
-        text = text[end + len("</think>"):].strip()
+    import re
+    # Strip all thinking blocks (greedy: handles nested or multiple)
+    text = re.sub(r'<think>.*?</think>', '', text, flags=re.DOTALL).strip()
     # If output contains "assistant" marker from chat template, take text after it
     if "\nassistant" in text:
         text = text.split("\nassistant")[-1].strip()
     if text.startswith("assistant"):
         text = text[len("assistant"):].strip()
-    # Strip any remaining think tags (empty or not)
-    import re
-    text = re.sub(r'<think>.*?</think>', '', text, flags=re.DOTALL).strip()
-    text = re.sub(r'<think>\s*</think>', '', text).strip()
     return text
 
 
