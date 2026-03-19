@@ -3,19 +3,19 @@ model:
   enable_thinking: true
 
 lora:
-  r: 32                                # doubled — 48 GB has headroom for higher capacity
-  alpha: 64                            # keep alpha = 2 * r
-  dropout: 0.0                         # unsloth optimizes for 0 dropout
+  r: 16
+  alpha: 32
+  dropout: 0.0
   target_modules: all-linear
 
 training:
   num_epochs: 1
-  batch_size: 32                       # 4B model leaves ~39 GB for activations
-  gradient_accumulation_steps: 1      # effective batch = 32, no accumulation overhead
-  learning_rate: 2e-4                  # linear scale with 2x batch size
+  batch_size: 32
+  gradient_accumulation_steps: 1
+  learning_rate: 5e-5
   lr_scheduler_type: cosine
-  warmup_steps: 30                     # proportional to fewer total steps
-  max_seq_length: 2048                 # L40S can handle 2x context
+  warmup_steps: 30
+  max_seq_length: 2048
   max_steps: -1
   logging_steps: 5
   gradient_checkpointing: true
