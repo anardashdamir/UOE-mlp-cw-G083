@@ -98,7 +98,9 @@ class Config(BaseModel):
 
     @property
     def adapter_dir(self) -> Path:
-        return self.paths.output_dir / "final_adapter"
+        model_short = self.model.name.split("/")[-1].lower()
+        thinking = "thinking" if self.model.enable_thinking else "no_thinking"
+        return self.paths.output_dir / f"{model_short}_{thinking}"
 
     @classmethod
     def from_yaml(cls, path: Path | str | None = None, **overrides) -> "Config":

@@ -132,55 +132,35 @@ AutoFilter/
 
 ## Installation
 
-Clone the repository first:
-
-```bash
-git clone <repo-url> && cd AutoFilter
-```
-
 ### Prerequisites
 
 - Python 3.10+
-- CUDA-capable GPU recommended (CPU works but is slow)
-- [uv](https://docs.astral.sh/uv/) — fast Python package and project manager
+- CUDA-capable GPU (L40S 48GB recommended)
+- [uv](https://docs.astral.sh/uv/) — fast Python package manager
 
-### Install uv
-
-| Platform | Command |
-|----------|---------|
-| **macOS** | `curl -LsSf https://astral.sh/uv/install.sh \| sh` or `brew install uv` |
-| **Linux** | `curl -LsSf https://astral.sh/uv/install.sh \| sh` |
-| **Windows** | `powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 \| iex"` |
-
-### Install Dependencies
+### Setup
 
 ```bash
-uv sync                              # Creates .venv and installs everything
-source .venv/bin/activate            # macOS / Linux
-# .venv\Scripts\activate             # Windows
+# 1. Install uv
+curl -LsSf https://astral.sh/uv/install.sh | sh
+source $HOME/.local/bin/env
+
+# 2. Clone and install
+git clone -b main https://github.com/anardashdamir/UOE-mlp-cw-G083.git
+cd UOE-mlp-cw-G083
+uv sync
+source .venv/bin/activate
+
+# 3. Install GPU dependencies (on GPU server only)
+pip install "unsloth[cu124-ampere-torch260] @ git+https://github.com/unslothai/unsloth.git" --no-build-isolation
+pip install flash-attn --no-build-isolation
 ```
 
-> **Tip:** You can skip activation and use `uv run python main.py ...` instead, which runs inside the venv automatically.
-
-### Verify Installation
+### Verify
 
 ```bash
 python main.py --help
-python main.py data-stats
-python main.py schemas
 ```
-
-You should see output like:
-
-```
-Train:  11250
-Eval:   1800
-Total:  13050
-
-Eval schemas: hotel_bookings, job_listings, restaurant_business_rankings_2020, ...
-```
-
-> **Note:** For GPU support, ensure you have CUDA drivers installed. On headless servers (e.g., RunPod, Lambda), CUDA is typically pre-installed.
 
 ---
 

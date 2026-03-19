@@ -36,6 +36,7 @@ generation:
 
 wandb:
   enabled: false
+  wandb_project: "AutoFilter-MLP"
   # wandb_project and wandb_api_key loaded from wandb.env
 
 paths:

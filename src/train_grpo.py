@@ -12,7 +12,7 @@ from .evaluate.parsing import normalize_clause, split_top_level_and
 from .training_utils import build_run_name, disable_thinking, setup_logging
 
 
-# ── Reward function ───────────────────────────────────────────────────────
+# ── Helpers ───────────────────────────────────────────────────────────────
 
 def _parse(text):
     """Parse filter into normalized clause set."""
@@ -22,45 +22,94 @@ def _parse(text):
     return {normalize_clause(c) for c in split_top_level_and(text)}
 
 
-def combined_reward(completions, expected, **kwargs):
-    """Multi-signal reward: exact match=1.0, partial credit capped at 0.8, hallucination penalty."""
+def _extract_text(pred):
+    return pred[0]["content"] if isinstance(pred, list) else pred
+
+
+_OP_RE = re.compile(r'(==|!=|>=|<=|>|<|\bNOT\s+IN\b|\bIN\b)', re.I)
+_FIELD_RE = re.compile(r'(\w+)\s*(?:==|!=|>=|<=|>|<|\bNOT\s+IN\b|\bIN\b)')
+_VALUE_RE = re.compile(r"'([^']*)'|([\d.]+)")
+
+
+# ── Reward functions (each returns 0.0 - 1.0) ────────────────────────────
+
+def exact_match_reward(completions, expected, **kwargs):
+    """Binary: 1.0 if filter matches exactly, else 0.0."""
     rewards = []
     for pred, exp in zip(completions, expected):
-        text = pred[0]["content"] if isinstance(pred, list) else pred
+        text = _extract_text(pred)
+        rewards.append(1.0 if _parse(text) == _parse(exp.strip()) else 0.0)
+    return rewards
+
+
+def syntax_reward(completions, expected, **kwargs):
+    """Valid structure: has operators, balanced parens and quotes."""
+    rewards = []
+    for pred, exp in zip(completions, expected):
+        text = _extract_text(pred).strip()
+        if text.upper() == "EMPTY":
+            rewards.append(1.0 if exp.strip().upper() == "EMPTY" else 0.0)
+            continue
+        has_op = bool(_OP_RE.search(text))
+        balanced_parens = text.count('(') == text.count(')')
+        balanced_quotes = text.count("'") % 2 == 0
+        score = (0.4 * has_op) + (0.3 * balanced_parens) + (0.3 * balanced_quotes)
+        rewards.append(score)
+    return rewards
+
+
+def field_reward(completions, expected, **kwargs):
+    """Proportion of correctly used field names."""
+    rewards = []
+    for pred, exp in zip(completions, expected):
+        text = _extract_text(pred)
+        pred_fields = set(_FIELD_RE.findall(text))
+        exp_fields = set(_FIELD_RE.findall(exp.strip()))
+        if not exp_fields:
+            rewards.append(1.0 if not pred_fields else 0.0)
+            continue
+        if not pred_fields:
+            rewards.append(0.0)
+            continue
+        overlap = pred_fields & exp_fields
+        prec = len(overlap) / len(pred_fields)
+        rec = len(overlap) / len(exp_fields)
+        rewards.append(2 * prec * rec / (prec + rec) if prec + rec > 0 else 0.0)
+    return rewards
+
+
+def clause_f1_reward(completions, expected, **kwargs):
+    """F1 score over normalized clauses."""
+    rewards = []
+    for pred, exp in zip(completions, expected):
+        text = _extract_text(pred)
         pred_clauses = _parse(text)
         exp_clauses = _parse(exp.strip())
-
         if pred_clauses == exp_clauses:
             rewards.append(1.0)
             continue
+        if not pred_clauses or not exp_clauses:
+            rewards.append(0.0)
+            continue
+        overlap = pred_clauses & exp_clauses
+        prec = len(overlap) / len(pred_clauses)
+        rec = len(overlap) / len(exp_clauses)
+        rewards.append(2 * prec * rec / (prec + rec) if prec + rec > 0 else 0.0)
+    return rewards
 
-        score = 0.0
 
-        # Clause F1 (0.0 - 0.5)
-        if pred_clauses and exp_clauses:
-            overlap = pred_clauses & exp_clauses
-            prec = len(overlap) / len(pred_clauses)
-            rec = len(overlap) / len(exp_clauses)
-            if prec + rec > 0:
-                score += 2 * prec * rec / (prec + rec) * 0.5
-
-        # Correct clause count (0.1)
-        if len(pred_clauses) == len(exp_clauses):
-            score += 0.1
-
-        # Valid syntax (0.1)
-        has_op = bool(re.search(r'(==|!=|>=|<=|>|<|\bNOT\s+IN\b|\bIN\b)', text, re.I))
-        balanced = text.count('(') == text.count(')') and text.count("'") % 2 == 0
-        if has_op and balanced:
-            score += 0.1
-
-        # Hallucination penalty (-0.3)
-        if pred_clauses and exp_clauses:
-            extra = len(pred_clauses - exp_clauses)
-            if extra > 0:
-                score -= (extra / len(pred_clauses)) * 0.3
-
-        rewards.append(max(min(score, 0.8), 0.0))
+def hallucination_penalty(completions, expected, **kwargs):
+    """Penalize extra clauses not in expected. Returns 0.0-1.0 (1.0 = no hallucination)."""
+    rewards = []
+    for pred, exp in zip(completions, expected):
+        text = _extract_text(pred)
+        pred_clauses = _parse(text)
+        exp_clauses = _parse(exp.strip())
+        if not pred_clauses or pred_clauses == exp_clauses:
+            rewards.append(1.0)
+            continue
+        extra = len(pred_clauses - exp_clauses)
+        rewards.append(max(1.0 - (extra / len(pred_clauses)), 0.0))
     return rewards
 
 
@@ -142,7 +191,8 @@ def main(cfg: Config = None, sft_adapter: str | None = None):
         args=training_args,
         train_dataset=dataset,
         processing_class=tokenizer,
-        reward_funcs=[combined_reward],
+        reward_funcs=[exact_match_reward, syntax_reward, field_reward, clause_f1_reward, hallucination_penalty],
+        reward_weights=[5.0, 1.0, 1.0, 2.0, 1.0],
     )
 
     trainer.train()
