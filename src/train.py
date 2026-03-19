@@ -70,12 +70,18 @@ def main(cfg: Config = None):
         report_to=report_to,
     )
 
+    def formatting_func(example):
+        return tokenizer.apply_chat_template(
+            example["messages"], tokenize=False, add_generation_prompt=False
+        )
+
     trainer = SFTTrainer(
         model=model,
         args=training_args,
         train_dataset=train_ds,
         eval_dataset=eval_ds,
         processing_class=tokenizer,
+        formatting_func=formatting_func,
     )
 
     print("Running baseline evaluation...")

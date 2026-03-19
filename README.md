@@ -162,37 +162,6 @@ source .venv/bin/activate            # macOS / Linux
 
 > **Tip:** You can skip activation and use `uv run python main.py ...` instead, which runs inside the venv automatically.
 
-### Install Unsloth (GPU only)
-
-Unsloth must be installed separately from GitHub with a hardware-specific flag — the PyPI version is outdated and incompatible with TRL 0.29+.
-
-**Auto-detect the correct command for your environment:**
-
-```python
-python3 -c "
-import torch, re
-from packaging.version import Version as V
-v = V(re.match(r'[0-9\.]{3,}', torch.__version__).group(0))
-cuda = str(torch.version.cuda)
-is_ampere = torch.cuda.get_device_capability()[0] >= 8
-if   v < V('2.5.0'): x = 'cu{}{}-torch240'
-elif v < V('2.5.1'): x = 'cu{}{}-torch250'
-elif v <= V('2.5.1'): x = 'cu{}{}-torch251'
-elif v < V('2.7.0'): x = 'cu{}{}-torch260'
-else: x = 'cu{}{}-torch270'
-x = x.format(cuda.replace('.',''), '-ampere' if is_ampere else '')
-print(f'pip install --upgrade pip && pip install --no-deps git+https://github.com/unslothai/unsloth-zoo.git && pip install \"unsloth[{x}] @ git+https://github.com/unslothai/unsloth.git\" --no-build-isolation')
-"
-```
-
-**L40S (CUDA 12.4, torch 2.6):**
-
-```bash
-pip install --upgrade pip && \
-pip install --no-deps git+https://github.com/unslothai/unsloth-zoo.git && \
-pip install "unsloth[cu124-ampere-torch260] @ git+https://github.com/unslothai/unsloth.git" --no-build-isolation
-```
-
 ### Verify Installation
 
 ```bash
