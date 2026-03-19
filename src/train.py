@@ -43,6 +43,15 @@ def main(cfg: Config = None):
     else:
         disable_thinking(tokenizer)
 
+    def apply_chat_template(examples):
+        return {"text": [
+            tokenizer.apply_chat_template(msgs, tokenize=False, add_generation_prompt=False)
+            for msgs in examples["messages"]
+        ]}
+
+    train_ds = train_ds.map(apply_chat_template, batched=True, remove_columns=["messages", "file_path"])
+    eval_ds = eval_ds.map(apply_chat_template, batched=True, remove_columns=["messages", "file_path"])
+
     training_args = SFTConfig(
         output_dir=str(cfg.paths.output_dir),
         run_name=run_name,
@@ -70,18 +79,13 @@ def main(cfg: Config = None):
         report_to=report_to,
     )
 
-    def formatting_func(example):
-        return [tokenizer.apply_chat_template(
-            example["messages"], tokenize=False, add_generation_prompt=False
-        )]
-
     trainer = SFTTrainer(
         model=model,
         args=training_args,
         train_dataset=train_ds,
         eval_dataset=eval_ds,
         processing_class=tokenizer,
-        formatting_func=formatting_func,
+        dataset_text_field="text",
     )
 
     print("Running baseline evaluation...")
