@@ -35,5 +35,4 @@ schemas 2/
 # Raw/archive data
 data/archive/
 
-# Scripts (local utilities)
-scripts/
+
