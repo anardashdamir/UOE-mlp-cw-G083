@@ -98,9 +98,10 @@ class Config(BaseModel):
 
     @property
     def adapter_dir(self) -> Path:
-        model_short = self.model.name.split("/")[-1].lower()
+        """output/Qwen3.5-4B/thinking/ or output/Qwen3.5-4B/no_thinking/"""
+        model_short = self.model.name.split("/")[-1]
         thinking = "thinking" if self.model.enable_thinking else "no_thinking"
-        return self.paths.output_dir / f"{model_short}_{thinking}"
+        return self.paths.output_dir / model_short / thinking
 
     @classmethod
     def from_yaml(cls, path: Path | str | None = None, **overrides) -> "Config":

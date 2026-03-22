@@ -128,7 +128,7 @@ def main(cfg: Config = None, sft_adapter: str | None = None):
     print(f"GRPO samples: {len(dataset)}")
 
     # Load SFT model as starting point
-    adapter_dir = Path(sft_adapter) if sft_adapter else cfg.adapter_dir
+    adapter_dir = Path(sft_adapter) if sft_adapter else cfg.adapter_dir / "sft"
 
     if adapter_dir.exists():
         print(f"Loading SFT adapter from {adapter_dir}, merging into base model...")
@@ -169,8 +169,9 @@ def main(cfg: Config = None, sft_adapter: str | None = None):
     if not cfg.model.enable_thinking:
         disable_thinking(tokenizer)
 
+    grpo_dir = cfg.adapter_dir / "grpo"
     training_args = GRPOConfig(
-        output_dir=str(cfg.paths.output_dir / "grpo"),
+        output_dir=str(grpo_dir),
         run_name=run_name,
         logging_dir=logging_dir,
         num_train_epochs=grpo.num_epochs,
@@ -197,10 +198,9 @@ def main(cfg: Config = None, sft_adapter: str | None = None):
 
     trainer.train()
 
-    grpo_adapter_dir = cfg.paths.output_dir / "grpo_adapter"
-    trainer.save_model(str(grpo_adapter_dir))
-    tokenizer.save_pretrained(str(grpo_adapter_dir))
-    print(f"GRPO adapter saved to {grpo_adapter_dir}")
+    trainer.save_model(str(grpo_dir))
+    tokenizer.save_pretrained(str(grpo_dir))
+    print(f"GRPO adapter saved to {grpo_dir}")
 
     if cfg.wandb.enabled:
         import wandb

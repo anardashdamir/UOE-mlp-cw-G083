@@ -52,9 +52,9 @@ def main(cfg: Config = None):
     train_ds = train_ds.map(apply_chat_template, batched=True, remove_columns=["messages", "file_path"])
     eval_ds = eval_ds.map(apply_chat_template, batched=True, remove_columns=["messages", "file_path"])
 
-    run_dir = cfg.adapter_dir  # output/<model>_<thinking>/
+    sft_dir = cfg.adapter_dir / "sft"
     training_args = SFTConfig(
-        output_dir=str(run_dir),
+        output_dir=str(sft_dir),
         run_name=run_name,
         logging_dir=logging_dir,
         num_train_epochs=cfg.training.num_epochs,
@@ -93,10 +93,9 @@ def main(cfg: Config = None):
     print(f"Baseline eval_loss: {baseline['eval_loss']:.4f}")
 
     trainer.train()
-    final_dir = run_dir / "final_adapter"
-    trainer.save_model(str(final_dir))
-    tokenizer.save_pretrained(str(final_dir))
-    print(f"Adapter saved to {final_dir}")
+    trainer.save_model(str(sft_dir))
+    tokenizer.save_pretrained(str(sft_dir))
+    print(f"Adapter saved to {sft_dir}")
 
     if cfg.wandb.enabled:
         import wandb

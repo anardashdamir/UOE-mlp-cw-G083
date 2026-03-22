@@ -19,6 +19,8 @@ _config_option = typer.Option(None, "--config", "-c", help="Path to config.yaml.
 @app.command()
 def sft(
     config: Path | None = _config_option,
+    model: str | None = typer.Option(None, "--model", "-m", help="Model name (e.g. Qwen/Qwen3.5-4B)."),
+    enable_thinking: str | None = typer.Option(None, "--enable-thinking", help="true/false"),
     epochs: int | None = typer.Option(None, "--epochs", "-e"),
     batch_size: int | None = typer.Option(None, "--batch-size", "-b"),
     lr: float | None = typer.Option(None, "--lr"),
@@ -27,7 +29,6 @@ def sft(
     max_steps: int | None = typer.Option(None, "--max-steps"),
     wandb: bool = typer.Option(False, "--wandb", help="Enable W&B logging."),
     run_name: str | None = typer.Option(None, "--run-name", "-r", help="Experiment name."),
-    thinking: bool = typer.Option(False, "--thinking", help="Train with thinking mode."),
     grad_ckpt: bool = typer.Option(False, "--grad-ckpt", help="Enable gradient checkpointing."),
     qlora: bool = typer.Option(False, "--qlora", help="Load model in 4-bit (QLoRA)."),
 ):
@@ -41,12 +42,14 @@ def sft(
         output_dir=output_dir,
         max_steps=max_steps,
     )
+    if model:
+        cfg.model.name = model
+    if enable_thinking is not None:
+        cfg.model.enable_thinking = enable_thinking.lower() == "true"
     if wandb:
         cfg.wandb.enabled = True
     if run_name:
         cfg.wandb.run_name = run_name
-    if thinking:
-        cfg.model.enable_thinking = True
     if grad_ckpt:
         cfg.training.gradient_checkpointing = True
     if qlora:
@@ -125,10 +128,11 @@ def predict(
 @app.command()
 def evaluate(
     config: Path | None = _config_option,
+    model: str | None = typer.Option(None, "--model", "-m", help="Model name (e.g. Qwen/Qwen3.5-4B)."),
+    enable_thinking: str | None = typer.Option(None, "--enable-thinking", help="true/false"),
     max_samples: int | None = typer.Option(None, "--max-samples", "-n"),
     zero_shot: bool = typer.Option(False, "--zero-shot"),
     quantization: list[str] = typer.Option(["fp16"], "--quantization", "-q"),
-    thinking: bool = typer.Option(False, "--thinking"),
     verbose: bool = typer.Option(False, "--verbose", "-v", help="Print predictions vs expected."),
     sft_adapter: str | None = typer.Option(None, "--sft-adapter", help="Path to SFT LoRA adapter."),
     grpo_adapter: str | None = typer.Option(None, "--grpo-adapter", help="Path to GRPO LoRA adapter (requires --sft-adapter)."),
@@ -146,8 +150,10 @@ def evaluate(
         raise typer.Exit(1)
 
     cfg = Config.from_yaml(config)
-    if thinking:
-        cfg.model.enable_thinking = True
+    if model:
+        cfg.model.name = model
+    if enable_thinking is not None:
+        cfg.model.enable_thinking = enable_thinking.lower() == "true"
     if zero_shot:
         print("Zero-shot evaluation (base model, no adapter)")
 

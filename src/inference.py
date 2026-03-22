@@ -38,7 +38,7 @@ def load_model(
     )
 
     if not zero_shot:
-        sft_path = Path(sft_adapter) if sft_adapter else cfg.adapter_dir
+        sft_path = Path(sft_adapter) if sft_adapter else cfg.adapter_dir / "sft"
         grpo_path = Path(grpo_adapter) if grpo_adapter else None
 
         if not sft_path.exists():

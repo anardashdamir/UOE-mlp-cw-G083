@@ -369,9 +369,12 @@ def main(
 
         _print_results(result, len(eval_ds))
 
-        # Save predictions for LLM-as-judge
-        adapter_name = Path(sft_adapter).name if sft_adapter else ("zero_shot" if zero_shot else "base")
-        save_path = Path(cfg.paths.output_dir) / "eval_results" / f"{adapter_name}_{quant}.json"
+        # Save predictions to output/<model>/<thinking>/metrics/
+        if zero_shot:
+            save_dir = Path(cfg.paths.output_dir) / cfg.model.name.split("/")[-1] / "zero_shot" / "metrics"
+        else:
+            save_dir = cfg.adapter_dir / "metrics"
+        save_path = save_dir / f"eval_{quant}.json"
         _save_predictions(result, eval_ds, expected_list, queries, schema_names, difficulties, str(save_path))
 
         # Free GPU memory before loading next quantization
