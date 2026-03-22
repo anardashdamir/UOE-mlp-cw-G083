@@ -13,12 +13,35 @@ for model in "${MODELS[@]}"; do
             --enable-thinking "$think" \
             --wandb
 
-        echo "============================================"
-        echo "Evaluating: $model | thinking=$think"
-        echo "============================================"
+        # Determine adapter directory
+        model_short=$(echo "$model" | cut -d'/' -f2)
+        if [ "$think" = "true" ]; then
+            adapter_dir="output/${model_short}/thinking/sft"
+        else
+            adapter_dir="output/${model_short}/no_thinking/sft"
+        fi
+
+        # Evaluate every checkpoint
+        for ckpt in "$adapter_dir"/checkpoint-*; do
+            if [ -d "$ckpt" ]; then
+                echo "--------------------------------------------"
+                echo "Evaluating checkpoint: $ckpt"
+                echo "--------------------------------------------"
+                python main.py evaluate \
+                    --model "$model" \
+                    --enable-thinking "$think" \
+                    --sft-adapter "$ckpt"
+            fi
+        done
+
+        # Evaluate final adapter
+        echo "--------------------------------------------"
+        echo "Evaluating final: $adapter_dir"
+        echo "--------------------------------------------"
         python main.py evaluate \
             --model "$model" \
-            --enable-thinking "$think"
+            --enable-thinking "$think" \
+            --sft-adapter "$adapter_dir"
     done
 done
 

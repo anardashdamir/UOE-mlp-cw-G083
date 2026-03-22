@@ -372,9 +372,12 @@ def main(
         # Save predictions to output/<model>/<thinking>/metrics/
         if zero_shot:
             save_dir = Path(cfg.paths.output_dir) / cfg.model.name.split("/")[-1] / "zero_shot" / "metrics"
+            eval_name = f"eval_{quant}.json"
         else:
             save_dir = cfg.adapter_dir / "metrics"
-        save_path = save_dir / f"eval_{quant}.json"
+            adapter_name = Path(sft_adapter).name if sft_adapter else "sft"
+            eval_name = f"eval_{adapter_name}_{quant}.json"
+        save_path = save_dir / eval_name
         _save_predictions(result, eval_ds, expected_list, queries, schema_names, difficulties, str(save_path))
 
         # Free GPU memory before loading next quantization
