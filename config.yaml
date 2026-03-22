@@ -49,18 +49,15 @@ schemas:
   train:
     - bank_transactions
     - board_games
-    - books
     - clothes
     - cosmetics_csv
     - dubai_rentals
     - electronics_sales
     - healthcare_insurance
     - netflix_shows
-    - steam_game
     - usa_housing_listings
     - zoo_animals
     - imdb_movies
-    - udemy
     - video_game_sales
   eval:
     - anime

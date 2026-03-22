@@ -2,9 +2,6 @@
   "name": "adidas_vs_nike",
   "row_count": 3267,
   "columns": {
-    "product_name": {
-      "type": "str"
-    },
     "listing_price": {
       "type": "int",
       "average": 5999

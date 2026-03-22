@@ -4,7 +4,7 @@
   "columns": {
     "year": {
       "type": "int",
-      "average": 2017
+      "average": 2019
     },
     "price": {
       "type": "int",
@@ -21,7 +21,7 @@
     },
     "mileage": {
       "type": "int",
-      "average": 17515
+      "average": 35000
     },
     "fuel_type": {
       "type": "categorical",
@@ -35,7 +35,7 @@
     },
     "engine_size": {
       "type": "float",
-      "average": 1.6
+      "average": 2.0
     },
     "brand": {
       "type": "categorical",

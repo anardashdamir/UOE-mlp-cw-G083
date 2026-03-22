@@ -63,7 +63,7 @@
     },
     "episodes": {
       "type": "int",
-      "average": 2
+      "average": 10
     },
     "rating": {
       "type": "float",

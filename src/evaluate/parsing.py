@@ -136,15 +136,17 @@ def extract_schema_columns(user_content: str) -> set[str]:
     columns = set()
     in_schema = False
     for line in user_content.split("\n"):
-        if "<schema>" in line:
+        stripped = line.strip()
+        if stripped == "Schema:":
             in_schema = True
             continue
-        if "</schema>" in line:
-            break
-        if in_schema and ":" in line:
-            col_name = line.split(":")[0].strip().lower()
-            if col_name:
-                columns.add(col_name)
+        if in_schema:
+            if not stripped:
+                continue
+            if ":" in stripped and not stripped.startswith("User query:"):
+                col_name = stripped.split(":")[0].strip().lower()
+                if col_name:
+                    columns.add(col_name)
     return columns
 
 

@@ -10,8 +10,10 @@ This is the central entry point for evaluation. It:
 """
 
 import gc
+import json
 import time
 from collections import defaultdict
+from pathlib import Path
 
 import torch
 from tqdm import tqdm
@@ -193,13 +195,49 @@ def _run_single(
     # Add model size
     overall["model_size_mb"] = _get_model_size_mb(model)
 
-    return EvaluationResult(
+    eval_result = EvaluationResult(
         quantization=quantization,
         overall=overall,
         per_schema=dict(per_schema_results),
         per_difficulty=dict(per_difficulty_results),
         predictions=predictions,
     )
+    return eval_result, expected_list, queries, schema_names, difficulties
+
+
+def _save_predictions(
+    result: EvaluationResult,
+    eval_ds,
+    expected_list: list[str],
+    queries: list[str],
+    schema_names: list[str],
+    difficulties: list[str],
+    output_path: str,
+):
+    """Save per-sample predictions to JSON for LLM-as-judge evaluation."""
+    samples = []
+    for i, pred in enumerate(result.predictions):
+        expected = expected_list[i]
+        samples.append({
+            "index": i,
+            "schema_name": schema_names[i],
+            "query_type": difficulties[i],
+            "query": queries[i],
+            "expected": expected,
+            "predicted": pred,
+            "exact_match": pred.strip() == expected.strip(),
+        })
+
+    out = {
+        "model": result.quantization,
+        "overall": result.overall,
+        "samples": samples,
+    }
+
+    Path(output_path).parent.mkdir(parents=True, exist_ok=True)
+    with open(output_path, "w") as f:
+        json.dump(out, f, indent=2, ensure_ascii=False)
+    print(f"\nPredictions saved to {output_path}")
 
 
 def _print_results(result: EvaluationResult, num_samples: int):
@@ -324,10 +362,17 @@ def main(
             sft_adapter=sft_adapter, grpo_adapter=grpo_adapter,
         )
 
-        result = _run_single(cfg, eval_ds, model, tokenizer, quantization=quant, verbose=verbose)
+        result, expected_list, queries, schema_names, difficulties = _run_single(
+            cfg, eval_ds, model, tokenizer, quantization=quant, verbose=verbose,
+        )
         all_results.append(result)
 
         _print_results(result, len(eval_ds))
+
+        # Save predictions for LLM-as-judge
+        adapter_name = Path(sft_adapter).name if sft_adapter else ("zero_shot" if zero_shot else "base")
+        save_path = Path(cfg.paths.output_dir) / "eval_results" / f"{adapter_name}_{quant}.json"
+        _save_predictions(result, eval_ds, expected_list, queries, schema_names, difficulties, str(save_path))
 
         # Free GPU memory before loading next quantization
         if len(quantizations) > 1:
