@@ -22,6 +22,3 @@ dependencies = [
     "huggingface-hub>=1.6.0",
     "tensorboard>=2.20.0",
 ]
-
-# GPU dependencies — install manually on server:
-#   pip install "unsloth[cu124-ampere-torch260] @ git+https://github.com/unslothai/unsloth.git" --no-build-isolation
