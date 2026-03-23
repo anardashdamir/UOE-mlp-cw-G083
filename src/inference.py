@@ -5,8 +5,7 @@ from pathlib import Path
 from typing import get_args
 
 from peft import PeftModel
-from transformers import AutoTokenizer
-from unsloth import FastLanguageModel
+from transformers import AutoModelForCausalLM, AutoTokenizer
 
 from .config import Config, QuantizationMode
 from .data_loader import build_messages, format_schema
@@ -30,12 +29,18 @@ def load_model(
     """
     cfg = cfg or Config()
 
-    model, tokenizer = FastLanguageModel.from_pretrained(
-        cfg.model.name,
-        max_seq_length=cfg.training.max_seq_length,
-        load_in_4bit=(quantization == "int4"),
-        dtype=None,
+    load_kwargs = dict(
+        pretrained_model_name_or_path=cfg.model.name,
+        torch_dtype="auto",
+        device_map="auto",
+        trust_remote_code=True,
     )
+    if quantization == "int4":
+        from transformers import BitsAndBytesConfig
+        load_kwargs["quantization_config"] = BitsAndBytesConfig(load_in_4bit=True)
+
+    model = AutoModelForCausalLM.from_pretrained(**load_kwargs)
+    tokenizer = AutoTokenizer.from_pretrained(cfg.model.name, trust_remote_code=True)
 
     if not zero_shot:
         sft_path = Path(sft_adapter) if sft_adapter else cfg.adapter_dir / "sft"
@@ -59,7 +64,7 @@ def load_model(
     if tokenizer.pad_token is None:
         tokenizer.pad_token = tokenizer.eos_token
 
-    FastLanguageModel.for_inference(model)
+    model.eval()
     return model, tokenizer
 
 
