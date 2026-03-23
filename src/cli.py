@@ -65,20 +65,23 @@ def sft(
 @app.command()
 def grpo(
     config: Path | None = _config_option,
+    model: str | None = typer.Option(None, "--model", "-m", help="Model name (e.g. Qwen/Qwen3.5-4B)."),
+    enable_thinking: str | None = typer.Option(None, "--enable-thinking", help="true/false"),
     lora_r: int | None = typer.Option(None, "--lora-r"),
     wandb: bool = typer.Option(False, "--wandb", help="Enable W&B logging."),
     run_name: str | None = typer.Option(None, "--run-name", "-r", help="Experiment name."),
-    thinking: bool = typer.Option(False, "--thinking", help="Train with thinking mode."),
     sft_adapter: str | None = typer.Option(None, "--sft-adapter", help="Path to SFT LoRA adapter."),
 ):
     """Fine-tune with GRPO (reward-based optimization)."""
     cfg = Config.from_yaml(config, lora_r=lora_r)
+    if model:
+        cfg.model.name = model
+    if enable_thinking is not None:
+        cfg.model.enable_thinking = enable_thinking.lower() == "true"
     if wandb:
         cfg.wandb.enabled = True
     if run_name:
         cfg.wandb.run_name = run_name
-    if thinking:
-        cfg.model.enable_thinking = True
 
     g = cfg.grpo
     print(f"GRPO | epochs={g.num_epochs} lr={g.learning_rate} generations={g.num_generations}")
