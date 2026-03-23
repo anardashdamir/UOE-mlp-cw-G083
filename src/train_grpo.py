@@ -1,9 +1,10 @@
-"""GRPO LoRA training using Unsloth — reward-based optimization for filter generation."""
+"""GRPO LoRA training — reward-based optimization for filter generation."""
 
 import re
 from pathlib import Path
 
-from unsloth import FastLanguageModel
+from transformers import AutoModelForCausalLM, AutoTokenizer
+from peft import PeftModel, get_peft_model, LoraConfig
 from trl import GRPOConfig, GRPOTrainer
 
 from .config import Config
@@ -130,38 +131,33 @@ def main(cfg: Config = None, sft_adapter: str | None = None):
     # Load SFT model as starting point
     adapter_dir = Path(sft_adapter) if sft_adapter else cfg.adapter_dir / "sft"
 
+    print(f"Loading base model: {cfg.model.name}")
+    model = AutoModelForCausalLM.from_pretrained(
+        cfg.model.name,
+        torch_dtype="auto",
+        device_map="auto",
+        trust_remote_code=True,
+    )
+    tokenizer = AutoTokenizer.from_pretrained(cfg.model.name, trust_remote_code=True)
+
     if adapter_dir.exists():
-        print(f"Loading SFT adapter from {adapter_dir}, merging into base model...")
-        model, tokenizer = FastLanguageModel.from_pretrained(
-            cfg.model.name,
-            max_seq_length=cfg.training.max_seq_length,
-            load_in_4bit=False,
-            dtype=None,
-        )
-        # Load and merge SFT adapter
-        from peft import PeftModel
+        print(f"Loading and merging SFT adapter from {adapter_dir}...")
         model = PeftModel.from_pretrained(model, str(adapter_dir))
         model = model.merge_and_unload()
         print("SFT adapter merged.")
     else:
         print(f"WARNING: No SFT adapter at {adapter_dir}, starting from base model")
-        model, tokenizer = FastLanguageModel.from_pretrained(
-            cfg.model.name,
-            max_seq_length=cfg.training.max_seq_length,
-            load_in_4bit=False,
-            dtype=None,
-        )
 
     # Apply new LoRA for GRPO
-    model = FastLanguageModel.get_peft_model(
-        model,
+    lora_config = LoraConfig(
         r=cfg.lora.r,
         lora_alpha=cfg.lora.alpha,
         lora_dropout=cfg.lora.dropout,
-        target_modules=cfg.lora.target_modules if isinstance(cfg.lora.target_modules, list) else "all-linear",
-        use_gradient_checkpointing="unsloth" if cfg.training.gradient_checkpointing else False,
-        random_state=42,
+        target_modules="all-linear" if cfg.lora.target_modules == "all-linear" else cfg.lora.target_modules,
+        task_type="CAUSAL_LM",
     )
+    model = get_peft_model(model, lora_config)
+    model.print_trainable_parameters()
 
     tokenizer.padding_side = "left"
     if tokenizer.pad_token is None:
@@ -184,6 +180,7 @@ def main(cfg: Config = None, sft_adapter: str | None = None):
         max_steps=grpo.max_steps,
         logging_steps=1,
         bf16=True,
+        gradient_checkpointing=cfg.training.gradient_checkpointing,
         report_to=report_to,
     )
 
