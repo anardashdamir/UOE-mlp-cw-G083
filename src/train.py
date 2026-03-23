@@ -1,6 +1,7 @@
-"""SFT LoRA fine-tuning using Unsloth."""
+"""SFT LoRA fine-tuning."""
 
-from unsloth import FastLanguageModel
+from transformers import AutoModelForCausalLM, AutoTokenizer
+from peft import get_peft_model, LoraConfig
 from trl import SFTConfig, SFTTrainer
 
 from .config import Config
@@ -19,22 +20,28 @@ def main(cfg: Config = None):
     train_ds, eval_ds = load_datasets(cfg)
     print(f"Train: {len(train_ds)} | Eval: {len(eval_ds)}")
 
-    model, tokenizer = FastLanguageModel.from_pretrained(
-        cfg.model.name,
-        max_seq_length=cfg.training.max_seq_length,
-        load_in_4bit=cfg.training.use_qlora,
-        dtype=None,
+    load_kwargs = dict(
+        pretrained_model_name_or_path=cfg.model.name,
+        torch_dtype="auto",
+        device_map="auto",
+        trust_remote_code=True,
     )
+    if cfg.training.use_qlora:
+        from transformers import BitsAndBytesConfig
+        load_kwargs["quantization_config"] = BitsAndBytesConfig(load_in_4bit=True)
 
-    model = FastLanguageModel.get_peft_model(
-        model,
+    model = AutoModelForCausalLM.from_pretrained(**load_kwargs)
+    tokenizer = AutoTokenizer.from_pretrained(cfg.model.name, trust_remote_code=True)
+
+    lora_config = LoraConfig(
         r=cfg.lora.r,
         lora_alpha=cfg.lora.alpha,
         lora_dropout=cfg.lora.dropout,
-        target_modules=cfg.lora.target_modules if isinstance(cfg.lora.target_modules, list) else "all-linear",
-        use_gradient_checkpointing="unsloth" if cfg.training.gradient_checkpointing else False,
-        random_state=42,
+        target_modules="all-linear" if cfg.lora.target_modules == "all-linear" else cfg.lora.target_modules,
+        task_type="CAUSAL_LM",
     )
+    model = get_peft_model(model, lora_config)
+    model.print_trainable_parameters()
 
     if tokenizer.pad_token is None:
         tokenizer.pad_token = tokenizer.eos_token

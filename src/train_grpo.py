@@ -182,6 +182,7 @@ def main(cfg: Config = None, sft_adapter: str | None = None):
         bf16=True,
         gradient_checkpointing=cfg.training.gradient_checkpointing,
         report_to=report_to,
+        reward_weights=[5.0, 1.0, 1.0, 2.0, 1.0],
     )
 
     trainer = GRPOTrainer(
@@ -190,7 +191,6 @@ def main(cfg: Config = None, sft_adapter: str | None = None):
         train_dataset=dataset,
         processing_class=tokenizer,
         reward_funcs=[exact_match_reward, syntax_reward, field_reward, clause_f1_reward, hallucination_penalty],
-        reward_weights=[5.0, 1.0, 1.0, 2.0, 1.0],
     )
 
     trainer.train()
