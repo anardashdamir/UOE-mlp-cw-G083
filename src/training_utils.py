@@ -1,5 +1,6 @@
-"""Shared utilities for SFT and GRPO training."""
+"""Shared helpers for training and evaluation."""
 
+import inspect
 from datetime import datetime
 
 from .config import Config
@@ -9,12 +10,16 @@ def build_run_name(cfg: Config, prefix: str = "") -> str:
     model_short = cfg.model.name.split("/")[-1].lower()
     ts = datetime.now().strftime("%Y%m%d-%H%M%S")
     tag = f"{prefix}_" if prefix else ""
-    return f"{tag}{model_short}_r{cfg.lora.r}_a{cfg.lora.alpha}_lr{cfg.training.learning_rate:.0e}_ep{cfg.training.num_epochs}_{ts}"
+    if prefix == "grpo":
+        lr = cfg.grpo.learning_rate
+        ep = cfg.grpo.num_epochs
+    else:
+        lr = cfg.training.learning_rate
+        ep = cfg.training.num_epochs
+    return f"{tag}{model_short}_r{cfg.lora.r}_a{cfg.lora.alpha}_lr{lr:.0e}_ep{ep}_{ts}"
 
 
 def disable_thinking(tokenizer):
-    """Wrap apply_chat_template to pass enable_thinking=False for models that support it."""
-    import inspect
     if "enable_thinking" not in inspect.signature(tokenizer.apply_chat_template).parameters:
         return
     original = tokenizer.apply_chat_template
@@ -25,8 +30,6 @@ def disable_thinking(tokenizer):
 
 
 def enable_thinking(tokenizer):
-    """Wrap apply_chat_template to pass enable_thinking=True for models that support it."""
-    import inspect
     if "enable_thinking" not in inspect.signature(tokenizer.apply_chat_template).parameters:
         return
     original = tokenizer.apply_chat_template
@@ -37,11 +40,8 @@ def enable_thinking(tokenizer):
 
 
 def strip_thinking_output(text: str) -> str:
-    """Remove <think>...</think> block and any leaked prompt text from model output."""
     import re
-    # Strip all thinking blocks (greedy: handles nested or multiple)
     text = re.sub(r'<think>.*?</think>', '', text, flags=re.DOTALL).strip()
-    # If output contains "assistant" marker from chat template, take text after it
     if "\nassistant" in text:
         text = text.split("\nassistant")[-1].strip()
     if text.startswith("assistant"):

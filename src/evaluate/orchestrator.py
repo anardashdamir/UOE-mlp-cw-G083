@@ -1,13 +1,4 @@
-"""Orchestrator: loads model, runs batched inference, computes all metrics.
-
-This is the central entry point for evaluation. It:
-1. Loads the model and tokenizer (with optional quantization)
-2. Prepares all eval samples
-3. Runs batched inference with timing
-4. Passes each (predicted, expected) pair to every registered metric
-5. Aggregates and prints results with per-schema and per-difficulty breakdowns
-6. Supports running multiple quantization modes in one invocation for comparison
-"""
+"""Evaluation orchestrator: batched inference + metric computation."""
 
 import gc
 import json
@@ -25,8 +16,6 @@ from ..training_utils import strip_thinking_output
 from .base import SampleContext, EvaluationResult
 from .parsing import extract_schema_columns
 
-# ── Register all metrics here ───────────────────────────────────────────────
-# To add a new metric, import it and append to METRICS.
 from .precision import PrecisionMetric
 from .recall import RecallMetric
 from .f1 import F1Metric
@@ -41,60 +30,36 @@ from .operator_accuracy import OperatorAccuracyMetric
 from .value_accuracy import ValueAccuracyMetric
 
 METRICS = [
-    PrecisionMetric(),
-    RecallMetric(),
-    F1Metric(),
-    ExactMatchMetric(),
-    FieldAccuracyMetric(),
-    HallucinationMetric(),
-    MisalignmentMetric(),
-    LatencyMetric(),
-    StructuralValidityMetric(),
-    ComplexityAccuracyMetric(),
-    OperatorAccuracyMetric(),
-    ValueAccuracyMetric(),
+    PrecisionMetric(), RecallMetric(), F1Metric(), ExactMatchMetric(),
+    FieldAccuracyMetric(), HallucinationMetric(), MisalignmentMetric(),
+    LatencyMetric(), StructuralValidityMetric(), ComplexityAccuracyMetric(),
+    OperatorAccuracyMetric(), ValueAccuracyMetric(),
 ]
 
 
-def _extract_query(user_content: str) -> str:
-    """Extract the natural language query from the user message."""
+def _extract_query(user_content):
     for line in user_content.split("\n"):
         if line.strip().startswith("User query:"):
             return line.split("User query:", 1)[1].strip()
     return ""
 
 
-def _extract_difficulty(file_path: str) -> str:
-    """Extract difficulty/type from file_path (second __ segment)."""
+def _extract_difficulty(file_path):
     parts = file_path.split("__")
     return parts[1] if len(parts) > 1 else "unknown"
 
 
-def _get_model_size_mb(model) -> float:
-    """Estimate model memory footprint in MB."""
+def _get_model_size_mb(model):
     param_bytes = sum(p.nelement() * p.element_size() for p in model.parameters())
     return param_bytes / (1024 * 1024)
 
 
-def _run_single(
-    cfg: Config,
-    eval_ds,
-    model,
-    tokenizer,
-    quantization: str = "fp16",
-    verbose: bool = False,
-) -> dict:
-    """Run evaluation for a single model/quantization configuration."""
+def _run_single(cfg, eval_ds, model, tokenizer, quantization="fp16", verbose=False):
     gen = cfg.generation
     batch_size = gen.eval_batch_size
 
-    # ── Prepare all prompts and metadata ────────────────────────────────────
-    prompts = []
-    expected_list = []
-    schema_columns_list = []
-    schema_names = []
-    difficulties = []
-    queries = []
+    prompts, expected_list, schema_columns_list = [], [], []
+    schema_names, difficulties, queries = [], [], []
 
     for sample in eval_ds:
         messages = sample["messages"]
@@ -113,21 +78,16 @@ def _run_single(
 
     tokenizer.padding_side = "left"
 
-    # ── Batched inference ───────────────────────────────────────────────────
-    predictions = []
-    latencies = []
+    predictions, latencies = [], []
     num_batches = (len(prompts) + batch_size - 1) // batch_size
-    pbar = tqdm(
-        range(0, len(prompts), batch_size),
-        total=num_batches,
-        desc=f"Inference [{quantization}]",
-    )
+    pbar = tqdm(range(0, len(prompts), batch_size), total=num_batches,
+                desc=f"Inference [{quantization}]")
 
     for batch_start in pbar:
         batch_prompts = prompts[batch_start: batch_start + batch_size]
         inputs = tokenizer(
-            batch_prompts, return_tensors="pt", padding=True, truncation=True,
-            max_length=2048,
+            batch_prompts, return_tensors="pt", padding=True,
+            truncation=True, max_length=2048,
         ).to(model.device)
 
         do_sample = gen.temperature > 0
@@ -149,25 +109,20 @@ def _run_single(
             prompt_len = inputs["attention_mask"][j].sum().item()
             generated = output_ids[j][prompt_len:]
             predicted = tokenizer.decode(generated, skip_special_tokens=True).strip()
-            # Always strip thinking tags (model may emit them even when disabled)
             predicted = strip_thinking_output(predicted)
             predictions.append(predicted)
             latencies.append(per_sample_ms)
 
         pbar.set_postfix(ms_per_sample=f"{per_sample_ms:.0f}")
 
-    # ── Debug: print predictions vs expected ─────────────────────────────
     if verbose:
-        print(f"\n{'=' * 60}")
-        print(f"  PREDICTIONS vs EXPECTED")
-        print(f"{'=' * 60}")
+        print(f"\n{'=' * 60}\n  PREDICTIONS vs EXPECTED\n{'=' * 60}")
         for i in range(len(predictions)):
-            match = "✓" if predictions[i].strip() == expected_list[i].strip() else "✗"
+            match = "Y" if predictions[i].strip() == expected_list[i].strip() else "N"
             print(f"\n  [{i}] {match} {difficulties[i]}")
             print(f"    Expected:  {expected_list[i][:200]}")
             print(f"    Predicted: {predictions[i][:200]}")
 
-    # ── Compute all metrics ─────────────────────────────────────────────────
     per_metric_results = {m.name: [] for m in METRICS}
     per_schema_results = defaultdict(lambda: {m.name: [] for m in METRICS})
     per_difficulty_results = defaultdict(lambda: {m.name: [] for m in METRICS})
@@ -186,62 +141,42 @@ def _run_single(
             per_schema_results[schema_names[i]][metric.name].append(value)
             per_difficulty_results[difficulties[i]][metric.name].append(value)
 
-    # ── Aggregate ───────────────────────────────────────────────────────────
     overall = {}
     for metric in METRICS:
-        agg = metric.aggregate(per_metric_results[metric.name])
-        overall.update(agg)
-
-    # Add model size
+        overall.update(metric.aggregate(per_metric_results[metric.name]))
     overall["model_size_mb"] = _get_model_size_mb(model)
 
-    eval_result = EvaluationResult(
-        quantization=quantization,
-        overall=overall,
+    result = EvaluationResult(
+        quantization=quantization, overall=overall,
         per_schema=dict(per_schema_results),
         per_difficulty=dict(per_difficulty_results),
         predictions=predictions,
     )
-    return eval_result, expected_list, queries, schema_names, difficulties
+    return result, expected_list, queries, schema_names, difficulties
 
 
-def _save_predictions(
-    result: EvaluationResult,
-    eval_ds,
-    expected_list: list[str],
-    queries: list[str],
-    schema_names: list[str],
-    difficulties: list[str],
-    output_path: str,
-):
-    """Save per-sample predictions to JSON for LLM-as-judge evaluation."""
+def _save_predictions(result, eval_ds, expected_list, queries, schema_names,
+                      difficulties, output_path):
     samples = []
     for i, pred in enumerate(result.predictions):
-        expected = expected_list[i]
         samples.append({
             "index": i,
             "schema_name": schema_names[i],
             "query_type": difficulties[i],
             "query": queries[i],
-            "expected": expected,
+            "expected": expected_list[i],
             "predicted": pred,
-            "exact_match": pred.strip() == expected.strip(),
+            "exact_match": pred.strip() == expected_list[i].strip(),
         })
 
-    out = {
-        "model": result.quantization,
-        "overall": result.overall,
-        "samples": samples,
-    }
-
+    out = {"model": result.quantization, "overall": result.overall, "samples": samples}
     Path(output_path).parent.mkdir(parents=True, exist_ok=True)
     with open(output_path, "w") as f:
         json.dump(out, f, indent=2, ensure_ascii=False)
     print(f"\nPredictions saved to {output_path}")
 
 
-def _print_results(result: EvaluationResult, num_samples: int):
-    """Print results for a single quantization run."""
+def _print_results(result, num_samples):
     quant = result.quantization
     overall = result.overall
 
@@ -254,17 +189,14 @@ def _print_results(result: EvaluationResult, num_samples: int):
         if key == "model_size_mb":
             continue
         if isinstance(val, float):
-            if val > 1.0 or "ms" in key:
-                print(f"  {key:<30s} {val:.2f}")
-            else:
-                print(f"  {key:<30s} {val:.3f}")
+            fmt = f"{val:.2f}" if val > 1.0 or "ms" in key else f"{val:.3f}"
+            print(f"  {key:<30s} {fmt}")
 
     if len(result.per_schema) > 1:
         print(f"\n{'=' * 60}")
         print(f"  PER-SCHEMA BREAKDOWN [{quant.upper()}]")
         print(f"{'=' * 60}")
-        header = f"  {'Schema':<30s} {'N':>5s} {'F1':>7s} {'EM':>7s} {'FA':>7s} {'Prec':>7s} {'Rec':>7s}"
-        print(header)
+        print(f"  {'Schema':<30s} {'N':>5s} {'F1':>7s} {'EM':>7s} {'FA':>7s} {'Prec':>7s} {'Rec':>7s}")
         print("  " + "-" * 74)
         for schema in sorted(result.per_schema.keys()):
             data = result.per_schema[schema]
@@ -280,8 +212,7 @@ def _print_results(result: EvaluationResult, num_samples: int):
         print(f"\n{'=' * 60}")
         print(f"  PER-DIFFICULTY BREAKDOWN [{quant.upper()}]")
         print(f"{'=' * 60}")
-        header = f"  {'Difficulty':<35s} {'N':>5s} {'F1':>7s} {'EM':>7s} {'FA':>7s} {'SV':>7s}"
-        print(header)
+        print(f"  {'Difficulty':<35s} {'N':>5s} {'F1':>7s} {'EM':>7s} {'FA':>7s} {'SV':>7s}")
         print("  " + "-" * 66)
         for diff in sorted(result.per_difficulty.keys()):
             data = result.per_difficulty[diff]
@@ -293,55 +224,30 @@ def _print_results(result: EvaluationResult, num_samples: int):
             print(f"  {diff:<35s} {n:>5d} {f1:>7.3f} {em:>7.3f} {fa:>7.3f} {sv:>7.3f}")
 
 
-def _print_comparison(all_results: list[EvaluationResult]):
-    """Print side-by-side comparison of multiple quantization runs."""
+def _print_comparison(all_results):
     print(f"\n{'=' * 80}")
     print("  QUANTIZATION COMPARISON")
     print(f"{'=' * 80}")
 
     quants = [r.quantization.upper() for r in all_results]
-    header = f"  {'Metric':<30s}" + "".join(f" {q:>10s}" for q in quants)
-    print(header)
+    print(f"  {'Metric':<30s}" + "".join(f" {q:>10s}" for q in quants))
     print("  " + "-" * (30 + 11 * len(quants)))
 
-    keys = list(all_results[0].overall.keys())
-    for key in keys:
+    for key in all_results[0].overall:
         row = f"  {key:<30s}"
         for result in all_results:
             val = result.overall.get(key, 0)
             if isinstance(val, float):
-                if val > 1.0 or "ms" in key:
-                    row += f" {val:>10.2f}"
-                else:
-                    row += f" {val:>10.3f}"
+                fmt = f"{val:>10.2f}" if val > 1.0 or "ms" in key else f"{val:>10.3f}"
+                row += fmt
             else:
                 row += f" {val:>10s}"
         print(row)
     print()
 
 
-def main(
-    cfg: Config = None,
-    max_samples: int = None,
-    zero_shot: bool = False,
-    quantizations: list[str] | None = None,
-    verbose: bool = False,
-    sft_adapter: str | None = None,
-    grpo_adapter: str | None = None,
-) -> EvaluationResult | list[EvaluationResult]:
-    """Run evaluation, optionally across multiple quantization modes.
-
-    Args:
-        cfg: Config object.
-        max_samples: Limit eval to N samples.
-        zero_shot: Evaluate base model without adapter.
-        quantizations: List of quantization modes (e.g., ["fp16", "int8", "int4"]).
-        sft_adapter: Path to SFT LoRA adapter.
-        grpo_adapter: Path to GRPO LoRA adapter (requires sft_adapter).
-
-    Returns:
-        Single EvaluationResult or list of EvaluationResult if multiple quantizations.
-    """
+def main(cfg=None, max_samples=None, zero_shot=False, quantizations=None,
+         verbose=False, sft_adapter=None, grpo_adapter=None):
     cfg = cfg or Config()
     quantizations = quantizations or ["fp16"]
 
@@ -366,30 +272,24 @@ def main(
             cfg, eval_ds, model, tokenizer, quantization=quant, verbose=verbose,
         )
         all_results.append(result)
-
         _print_results(result, len(eval_ds))
 
-        # Save predictions to output/<model>/<thinking>/metrics/
         if zero_shot:
             save_dir = Path(cfg.paths.output_dir) / cfg.model.name.split("/")[-1] / "zero_shot" / "metrics"
             eval_name = f"eval_{quant}.json"
         else:
             save_dir = cfg.adapter_dir / "metrics"
-            adapter_name = Path(sft_adapter).name if sft_adapter else "sft"
-            eval_name = f"eval_{adapter_name}_{quant}.json"
-        save_path = save_dir / eval_name
-        _save_predictions(result, eval_ds, expected_list, queries, schema_names, difficulties, str(save_path))
+            stage = "grpo" if grpo_adapter else "sft"
+            eval_name = f"eval_{stage}_{quant}.json"
+        _save_predictions(result, eval_ds, expected_list, queries, schema_names,
+                          difficulties, str(save_dir / eval_name))
 
-        # Free GPU memory before loading next quantization
         if len(quantizations) > 1:
             del model, tokenizer
             gc.collect()
             torch.cuda.empty_cache()
 
-    # Print comparison table if multiple quantizations
     if len(all_results) > 1:
         _print_comparison(all_results)
 
-    if len(all_results) == 1:
-        return all_results[0]
-    return all_results
+    return all_results[0] if len(all_results) == 1 else all_results

@@ -1,4 +1,4 @@
-"""GRPO LoRA training — reward-based optimization for filter generation."""
+"""GRPO training with reward-based optimization."""
 
 import re
 from pathlib import Path
@@ -13,10 +13,7 @@ from .evaluate.parsing import normalize_clause, split_top_level_and
 from .training_utils import build_run_name, disable_thinking, enable_thinking, setup_logging
 
 
-# ── Helpers ───────────────────────────────────────────────────────────────
-
 def _parse(text):
-    """Parse filter into normalized clause set."""
     text = text.strip()
     if text.upper() == "EMPTY":
         return {"EMPTY"}
@@ -25,8 +22,9 @@ def _parse(text):
 
 def _extract_text(pred):
     text = pred[0]["content"] if isinstance(pred, list) else pred
-    # Strip <think>...</think> blocks from thinking-enabled models
     text = re.sub(r'<think>.*?</think>', '', text, flags=re.DOTALL).strip()
+    if '<think>' in text:
+        text = text.split('</think>')[-1].strip() if '</think>' in text else ''
     return text
 
 
@@ -35,26 +33,50 @@ _FIELD_RE = re.compile(r'(\w+)\s*(?:==|!=|>=|<=|>|<|\bNOT\s+IN\b|\bIN\b)')
 _VALUE_RE = re.compile(r"'([^']*)'|([\d.]+)")
 
 
-# ── Reward functions ──────────────────────────────────────────────────────
+# --- Active reward function ---
 
-def exact_match_reward(completions, expected, **kwargs):
-    """Binary reward: 1.0 if filter matches exactly, else 0.0."""
+def f1_with_em_bonus(completions, expected, **kwargs):
+    """Clause F1 (0.0-0.7) + exact match bonus (0.3). Smooth signal with EM incentive."""
     rewards = []
     for pred, exp in zip(completions, expected):
-        text = _extract_text(pred)
-        rewards.append(1.0 if _parse(text) == _parse(exp.strip()) else 0.0)
+        try:
+            text = _extract_text(pred)
+            pred_clauses = _parse(text)
+            exp_clauses = _parse(exp.strip())
+
+            if pred_clauses == exp_clauses:
+                rewards.append(1.0)
+                continue
+            if not pred_clauses or not exp_clauses:
+                rewards.append(0.0)
+                continue
+
+            overlap = pred_clauses & exp_clauses
+            prec = len(overlap) / len(pred_clauses)
+            rec = len(overlap) / len(exp_clauses)
+            f1 = 2 * prec * rec / (prec + rec) if prec + rec > 0 else 0.0
+            rewards.append(0.7 * f1)
+        except Exception:
+            rewards.append(0.0)
     return rewards
 
 
-def composite_reward(completions, expected, **kwargs):
-    """Layered reward that provides partial credit across 4 levels.
+def exact_match_reward(completions, expected, **kwargs):
+    """1.0 if predicted filter matches expected exactly, else 0.0."""
+    rewards = []
+    for pred, exp in zip(completions, expected):
+        try:
+            text = _extract_text(pred)
+            rewards.append(1.0 if _parse(text) == _parse(exp.strip()) else 0.0)
+        except Exception:
+            rewards.append(0.0)
+    return rewards
 
-    Scoring (0.0 – 1.0):
-      +0.10  format   — has at least one operator, or correctly says EMPTY
-      +0.20  fields   — F1 over field names used in the filter
-      +0.40  clauses  — F1 over normalized clauses
-      +0.30  exact    — bonus for perfect match
-    """
+
+# --- Alternative reward functions (not currently used) ---
+
+def composite_reward(completions, expected, **kwargs):
+    """Partial credit: +0.1 format, +0.2 fields, +0.4 clause F1, +0.3 exact."""
     rewards = []
     for pred, exp in zip(completions, expected):
         text = _extract_text(pred)
@@ -93,7 +115,6 @@ def composite_reward(completions, expected, **kwargs):
 
 
 def clause_f1_reward(completions, expected, **kwargs):
-    """F1 score over normalized clauses."""
     rewards = []
     for pred, exp in zip(completions, expected):
         text = _extract_text(pred)
@@ -113,7 +134,6 @@ def clause_f1_reward(completions, expected, **kwargs):
 
 
 def syntax_reward(completions, expected, **kwargs):
-    """Valid structure: has operators, balanced parens and quotes."""
     rewards = []
     for pred, exp in zip(completions, expected):
         text = _extract_text(pred).strip()
@@ -129,7 +149,6 @@ def syntax_reward(completions, expected, **kwargs):
 
 
 def field_reward(completions, expected, **kwargs):
-    """Proportion of correctly used field names."""
     rewards = []
     for pred, exp in zip(completions, expected):
         text = _extract_text(pred)
@@ -149,7 +168,6 @@ def field_reward(completions, expected, **kwargs):
 
 
 def hallucination_penalty(completions, expected, **kwargs):
-    """Penalize extra clauses not in expected. Returns 0.0-1.0 (1.0 = no hallucination)."""
     rewards = []
     for pred, exp in zip(completions, expected):
         text = _extract_text(pred)
@@ -163,8 +181,6 @@ def hallucination_penalty(completions, expected, **kwargs):
     return rewards
 
 
-# ── Main ──────────────────────────────────────────────────────────────────
-
 def main(cfg: Config = None, sft_adapter: str | None = None):
     cfg = cfg or Config()
     cfg.paths.output_dir.mkdir(parents=True, exist_ok=True)
@@ -177,31 +193,23 @@ def main(cfg: Config = None, sft_adapter: str | None = None):
     dataset = load_grpo_dataset(cfg)
     print(f"GRPO samples: {len(dataset)}")
 
-    # Load SFT model as starting point
     adapter_dir = Path(sft_adapter) if sft_adapter else cfg.adapter_dir / "sft"
 
     print(f"Loading base model: {cfg.model.name}")
     model = AutoModelForCausalLM.from_pretrained(
-        cfg.model.name,
-        torch_dtype="auto",
-        device_map="auto",
-        trust_remote_code=True,
+        cfg.model.name, torch_dtype="auto", device_map="auto", trust_remote_code=True,
     )
     tokenizer = AutoTokenizer.from_pretrained(cfg.model.name, trust_remote_code=True)
 
     if adapter_dir.exists():
-        print(f"Loading and merging SFT adapter from {adapter_dir}...")
+        print(f"Merging SFT adapter from {adapter_dir}")
         model = PeftModel.from_pretrained(model, str(adapter_dir))
         model = model.merge_and_unload()
-        print("SFT adapter merged.")
     else:
-        print(f"WARNING: No SFT adapter at {adapter_dir}, starting from base model")
+        print(f"WARNING: no SFT adapter at {adapter_dir}, using base model")
 
-    # Apply new LoRA for GRPO
     lora_config = LoraConfig(
-        r=cfg.lora.r,
-        lora_alpha=cfg.lora.alpha,
-        lora_dropout=cfg.lora.dropout,
+        r=cfg.lora.r, lora_alpha=cfg.lora.alpha, lora_dropout=cfg.lora.dropout,
         target_modules="all-linear" if cfg.lora.target_modules == "all-linear" else cfg.lora.target_modules,
         task_type="CAUSAL_LM",
     )
@@ -240,11 +248,10 @@ def main(cfg: Config = None, sft_adapter: str | None = None):
         args=training_args,
         train_dataset=dataset,
         processing_class=tokenizer,
-        reward_funcs=[exact_match_reward],
+        reward_funcs=[f1_with_em_bonus],
     )
 
     trainer.train()
-
     trainer.save_model(str(grpo_dir))
     tokenizer.save_pretrained(str(grpo_dir))
     print(f"GRPO adapter saved to {grpo_dir}")

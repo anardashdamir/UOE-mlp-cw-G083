@@ -1,4 +1,4 @@
-"""Load fine-tuned model and generate filter expressions."""
+"""Model loading and filter generation."""
 
 import json
 from pathlib import Path
@@ -14,26 +14,13 @@ from .training_utils import strip_thinking_output
 QUANTIZATION_MODES = get_args(QuantizationMode)
 
 
-def load_model(
-    cfg: Config = None,
-    zero_shot: bool = False,
-    quantization: str = "fp16",
-    sft_adapter: str | None = None,
-    grpo_adapter: str | None = None,
-):
-    """Load model with optional SFT and GRPO adapters.
-
-    Args:
-        sft_adapter: Path to SFT LoRA adapter directory.
-        grpo_adapter: Path to GRPO LoRA adapter directory (requires sft_adapter).
-    """
+def load_model(cfg=None, zero_shot=False, quantization="fp16",
+               sft_adapter=None, grpo_adapter=None):
     cfg = cfg or Config()
 
     load_kwargs = dict(
         pretrained_model_name_or_path=cfg.model.name,
-        torch_dtype="auto",
-        device_map="auto",
-        trust_remote_code=True,
+        torch_dtype="auto", device_map="auto", trust_remote_code=True,
     )
     if quantization == "int4":
         from transformers import BitsAndBytesConfig
@@ -68,7 +55,7 @@ def load_model(
     return model, tokenizer
 
 
-def predict(query: str, schema_path: str, model=None, tokenizer=None, cfg: Config = None):
+def predict(query, schema_path, model=None, tokenizer=None, cfg=None):
     cfg = cfg or Config()
     if model is None or tokenizer is None:
         model, tokenizer = load_model(cfg)
