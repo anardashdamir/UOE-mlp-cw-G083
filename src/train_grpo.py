@@ -10,7 +10,7 @@ from trl import GRPOConfig, GRPOTrainer
 from .config import Config
 from .data_loader import load_grpo_dataset
 from .evaluate.parsing import normalize_clause, split_top_level_and
-from .training_utils import build_run_name, disable_thinking, setup_logging
+from .training_utils import build_run_name, disable_thinking, enable_thinking, setup_logging
 
 
 # ── Helpers ───────────────────────────────────────────────────────────────
@@ -211,7 +211,9 @@ def main(cfg: Config = None, sft_adapter: str | None = None):
     tokenizer.padding_side = "left"
     if tokenizer.pad_token is None:
         tokenizer.pad_token = tokenizer.eos_token
-    if not cfg.model.enable_thinking:
+    if cfg.model.enable_thinking:
+        enable_thinking(tokenizer)
+    else:
         disable_thinking(tokenizer)
 
     grpo_dir = cfg.adapter_dir / "grpo"
