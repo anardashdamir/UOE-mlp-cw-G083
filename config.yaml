@@ -28,7 +28,7 @@ grpo:
   max_completion_length: 512
   num_generations: 8
   beta: 0.05
-  max_steps: 200
+  max_steps: 50
 
 generation:
   max_new_tokens: 512                  # thinking + filter needs more tokens
