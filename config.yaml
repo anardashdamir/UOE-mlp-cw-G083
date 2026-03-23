@@ -25,10 +25,10 @@ grpo:
   batch_size: 8                        # doubled — effective batch = 8 * 4 = 32
   gradient_accumulation_steps: 4      # halved — same effective batch, fewer sync steps
   learning_rate: 5e-6
-  max_completion_length: 256
+  max_completion_length: 512
   num_generations: 8
   beta: 0.05
-  max_steps: 50
+  max_steps: 200
 
 generation:
   max_new_tokens: 512                  # thinking + filter needs more tokens

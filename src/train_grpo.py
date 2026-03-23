@@ -35,85 +35,56 @@ _FIELD_RE = re.compile(r'(\w+)\s*(?:==|!=|>=|<=|>|<|\bNOT\s+IN\b|\bIN\b)')
 _VALUE_RE = re.compile(r"'([^']*)'|([\d.]+)")
 
 
-# ── Reward functions (each returns 0.0 - 1.0) ────────────────────────────
+# ── Reward function ───────────────────────────────────────────────────────
 
-def exact_match_reward(completions, expected, **kwargs):
-    """Binary: 1.0 if filter matches exactly, else 0.0."""
+def composite_reward(completions, expected, **kwargs):
+    """Layered reward that always produces variance across generations.
+
+    Scoring (0.0 – 1.0):
+      +0.10  format   — has at least one operator, or correctly says EMPTY
+      +0.20  fields   — F1 over field names used in the filter
+      +0.40  clauses  — F1 over normalized clauses
+      +0.30  exact    — bonus for perfect match
+    """
     rewards = []
     for pred, exp in zip(completions, expected):
         text = _extract_text(pred)
-        rewards.append(1.0 if _parse(text) == _parse(exp.strip()) else 0.0)
-    return rewards
+        exp_text = exp.strip()
+        score = 0.0
 
-
-def syntax_reward(completions, expected, **kwargs):
-    """Valid structure: has operators, balanced parens and quotes."""
-    rewards = []
-    for pred, exp in zip(completions, expected):
-        text = _extract_text(pred).strip()
-        if text.upper() == "EMPTY":
-            rewards.append(1.0 if exp.strip().upper() == "EMPTY" else 0.0)
+        # Handle EMPTY
+        if exp_text.upper() == "EMPTY":
+            rewards.append(1.0 if text.upper() == "EMPTY" else 0.0)
             continue
-        has_op = bool(_OP_RE.search(text))
-        balanced_parens = text.count('(') == text.count(')')
-        balanced_quotes = text.count("'") % 2 == 0
-        score = (0.4 * has_op) + (0.3 * balanced_parens) + (0.3 * balanced_quotes)
-        rewards.append(score)
-    return rewards
 
+        # Level 1: Format — has a valid operator?
+        if _OP_RE.search(text):
+            score += 0.10
 
-def field_reward(completions, expected, **kwargs):
-    """Proportion of correctly used field names."""
-    rewards = []
-    for pred, exp in zip(completions, expected):
-        text = _extract_text(pred)
+        # Level 2: Field overlap (F1)
         pred_fields = set(_FIELD_RE.findall(text))
-        exp_fields = set(_FIELD_RE.findall(exp.strip()))
-        if not exp_fields:
-            rewards.append(1.0 if not pred_fields else 0.0)
-            continue
-        if not pred_fields:
-            rewards.append(0.0)
-            continue
-        overlap = pred_fields & exp_fields
-        prec = len(overlap) / len(pred_fields)
-        rec = len(overlap) / len(exp_fields)
-        rewards.append(2 * prec * rec / (prec + rec) if prec + rec > 0 else 0.0)
-    return rewards
+        exp_fields = set(_FIELD_RE.findall(exp_text))
+        if exp_fields and pred_fields:
+            overlap = pred_fields & exp_fields
+            p = len(overlap) / len(pred_fields)
+            r = len(overlap) / len(exp_fields)
+            score += 0.20 * (2 * p * r / (p + r)) if (p + r) > 0 else 0.0
 
-
-def clause_f1_reward(completions, expected, **kwargs):
-    """F1 score over normalized clauses."""
-    rewards = []
-    for pred, exp in zip(completions, expected):
-        text = _extract_text(pred)
+        # Level 3: Clause F1
         pred_clauses = _parse(text)
-        exp_clauses = _parse(exp.strip())
+        exp_clauses = _parse(exp_text)
+        if pred_clauses and exp_clauses:
+            overlap = pred_clauses & exp_clauses
+            p = len(overlap) / len(pred_clauses)
+            r = len(overlap) / len(exp_clauses)
+            f1 = 2 * p * r / (p + r) if (p + r) > 0 else 0.0
+            score += 0.40 * f1
+
+        # Level 4: Exact match bonus
         if pred_clauses == exp_clauses:
-            rewards.append(1.0)
-            continue
-        if not pred_clauses or not exp_clauses:
-            rewards.append(0.0)
-            continue
-        overlap = pred_clauses & exp_clauses
-        prec = len(overlap) / len(pred_clauses)
-        rec = len(overlap) / len(exp_clauses)
-        rewards.append(2 * prec * rec / (prec + rec) if prec + rec > 0 else 0.0)
-    return rewards
+            score += 0.30
 
-
-def hallucination_penalty(completions, expected, **kwargs):
-    """Penalize extra clauses not in expected. Returns 0.0-1.0 (1.0 = no hallucination)."""
-    rewards = []
-    for pred, exp in zip(completions, expected):
-        text = _extract_text(pred)
-        pred_clauses = _parse(text)
-        exp_clauses = _parse(exp.strip())
-        if not pred_clauses or pred_clauses == exp_clauses:
-            rewards.append(1.0)
-            continue
-        extra = len(pred_clauses - exp_clauses)
-        rewards.append(max(1.0 - (extra / len(pred_clauses)), 0.0))
+        rewards.append(score)
     return rewards
 
 
@@ -192,7 +163,7 @@ def main(cfg: Config = None, sft_adapter: str | None = None):
         args=training_args,
         train_dataset=dataset,
         processing_class=tokenizer,
-        reward_funcs=[clause_f1_reward],
+        reward_funcs=[composite_reward],
     )
 
     trainer.train()
