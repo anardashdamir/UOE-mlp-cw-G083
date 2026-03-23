@@ -24,7 +24,10 @@ def _parse(text):
 
 
 def _extract_text(pred):
-    return pred[0]["content"] if isinstance(pred, list) else pred
+    text = pred[0]["content"] if isinstance(pred, list) else pred
+    # Strip <think>...</think> blocks from thinking-enabled models
+    text = re.sub(r'<think>.*?</think>', '', text, flags=re.DOTALL).strip()
+    return text
 
 
 _OP_RE = re.compile(r'(==|!=|>=|<=|>|<|\bNOT\s+IN\b|\bIN\b)', re.I)
