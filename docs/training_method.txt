@@ -1,0 +1,19 @@
+Training Pipeline for NL-Filter: Natural Language to Structured Filter Extraction
+
+Stage 1 - Supervised Fine-Tuning (SFT):
+- Base model: Qwen3.5 family (0.8B, 2B, 4B parameters), frozen weights
+- LoRA adapters applied to all linear layers: rank=16, alpha=32, dropout=0.05
+- Trainable parameters: 12.5M (0.8B), 22M (2B), 32.5M (4B) — less than 1.6% of total
+- Input: natural language query + dataset schema → Output: structured filter expression
+- Training: 1 epoch, batch size 32, learning rate 5e-5, cosine schedule
+- Two modes: standard (direct output) and thinking (chain-of-thought in <think> tags)
+- Framework: HuggingFace TRL + PEFT on NVIDIA L40S 48GB
+
+Stage 2 - GRPO (Group Relative Policy Optimization):
+- Applied only to best SFT model (4B + thinking)
+- SFT adapter merged into base model, then new LoRA adapter applied
+- For each prompt, generates 8 candidate completions
+- Reward function: R = 0.7 × ClauseF1 + 0.3 × ExactMatch bonus
+- KL penalty beta=0.01 to prevent divergence from SFT policy
+- Early stopping at 50 steps (KL rising, entropy dropping)
+- Result: +5.9% exact match improvement over SFT baseline
