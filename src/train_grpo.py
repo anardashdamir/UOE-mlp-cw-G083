@@ -33,7 +33,6 @@ _FIELD_RE = re.compile(r'(\w+)\s*(?:==|!=|>=|<=|>|<|\bNOT\s+IN\b|\bIN\b)')
 _VALUE_RE = re.compile(r"'([^']*)'|([\d.]+)")
 
 
-# --- Active reward function ---
 
 def f1_with_em_bonus(completions, expected, **kwargs):
     """Clause F1 (0.0-0.7) + exact match bonus (0.3). Smooth signal with EM incentive."""
@@ -73,7 +72,6 @@ def exact_match_reward(completions, expected, **kwargs):
     return rewards
 
 
-# --- Alternative reward functions (not currently used) ---
 
 def composite_reward(completions, expected, **kwargs):
     """Partial credit: +0.1 format, +0.2 fields, +0.4 clause F1, +0.3 exact."""
