@@ -40,17 +40,10 @@ cd UOE-mlp-cw-G083
 uv venv venv --python 3.11
 source venv/bin/activate
 uv pip install -e .
+# Or if uv.lock exists: uv sync
 
 # Verify
 python main.py --help
-```
-
-For **SLURM** (UoE cluster), pre-download the model on the login node:
-
-```bash
-huggingface-cli download Qwen/Qwen3.5-4B
-srun --partition=Teaching --gres=gpu:1 --time=12:00:00 --mem=36G --pty bash
-# then activate venv and run training on the GPU node
 ```
 
 ---
